@@ -2,3 +2,7 @@
 backend/build.bat
 backend/clean.bat
 backend/run.bat
+backend/gradle/wrapper/gradle-wrapper.jar
+backend/gradle/wrapper/gradle-wrapper.properties
+backend/gradlew
+backend/gradlew.bat
