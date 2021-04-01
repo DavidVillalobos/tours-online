@@ -4,7 +4,9 @@
  * Date: 2021/03/31
  */
 
-package com.getyourtour;
+package com.getyourtour.model;
+
+import com.getyourtour.logic.Country;
 
 import java.sql.SQLException;
 import java.sql.ResultSet;

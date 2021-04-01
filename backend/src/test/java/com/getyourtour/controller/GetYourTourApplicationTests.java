@@ -3,13 +3,12 @@
  * author: David Villalobos
  * Date: 2021/03/31
  */
-package com.getyourtour;
+package com.getyourtour.controller;
 
+import com.getyourtour.logic.Country;
+import com.getyourtour.model.DaoModel;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
 import java.util.List;
 
 

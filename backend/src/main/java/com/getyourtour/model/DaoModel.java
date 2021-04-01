@@ -3,9 +3,9 @@
  * author: David Villalobos
  * Date: 2021/03/31
  */
-package com.getyourtour;
+package com.getyourtour.model;
 
-import java.util.ArrayList;
+import com.getyourtour.logic.Country;
 import java.util.List;
 
 public class DaoModel{

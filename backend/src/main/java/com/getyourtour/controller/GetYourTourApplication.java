@@ -4,7 +4,7 @@
  * Date: 2021/03/31
  */
 
-package com.getyourtour;
+package com.getyourtour.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

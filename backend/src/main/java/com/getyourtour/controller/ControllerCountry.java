@@ -3,8 +3,10 @@
  * author: David Villalobos
  * Date: 2021/03/31
  */
-package com.getyourtour;
+package com.getyourtour.controller;
 
+import com.getyourtour.logic.Country;
+import com.getyourtour.model.DaoModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;

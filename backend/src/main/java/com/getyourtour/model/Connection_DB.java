@@ -3,7 +3,7 @@
  * @author David Villalobos
  * @Date 2021/03/31
  */
-package com.getyourtour;
+package com.getyourtour.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
