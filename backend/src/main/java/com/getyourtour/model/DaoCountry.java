@@ -1,7 +1,7 @@
 /*
  * File: DaoCountry.java
  * author: David Villalobos
- * Date: 2021/03/31
+ * Date: 2021/04/01
  */
 
 package com.getyourtour.model;
@@ -29,7 +29,7 @@ public class DaoCountry{
             if(rs.next()){
                 return map(rs);
             }else{
-                System.out.println("Error: GET/country/{" + id + "} Does not exist in DataBase");
+                System.out.println("Log: GET/country/{" + id + "} Does not exist in DataBase");
                 return null;
             }
         } catch(Exception e){
@@ -46,7 +46,7 @@ public class DaoCountry{
                 countries.add(map(resultSet));
             }
             if(0 == countries.size()){
-                System.out.println("Error: GET/countries Does not exist any country in DataBase");
+                System.out.println("Log: GET/countries Does not exist any country in DataBase");
             }
         } catch(Exception e) {
             System.out.println("Exception: " + e.getMessage());
@@ -71,7 +71,7 @@ public class DaoCountry{
             sql=String.format(sql, c.getName(), c.getId());   
             int result = db.executeUpdate(sql); 
             if(result == 0){
-                System.out.println("Error: PUT/country/{" + c.getId() + "} Does not exist in DataBase");
+                System.out.println("Log: PUT/country/{" + c.getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
@@ -86,7 +86,7 @@ public class DaoCountry{
             sql = String.format(sql, Id);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Error: DELETE/country/{" + Id + "} Does not exist in DataBase");
+                System.out.println("Log: DELETE/country/{" + Id + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){

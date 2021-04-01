@@ -1,46 +1,45 @@
 /*
  * File: Controller.java
  * author: David Villalobos
- * Date: 2021/03/31
+ * Date: 2021/04/01
  */
 package com.getyourtour.controller;
 
-import com.getyourtour.logic.Country;
-import com.getyourtour.model.DaoModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.getyourtour.logic.*;
+import com.getyourtour.model.*;
 
-import java.util.ArrayList;
+import org.springframework.lang.Nullable;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ControllerCountry {
- 
+
     @GetMapping("/country")
-    public Country get(@RequestParam int Id){
-        return new DaoModel().getCountry(Id);
+    public Country get(@RequestParam Integer id){
+        return new DaoModel().getCountry(id);
     }
 
     @GetMapping("/countries")
     public List<Country> getAllCountries(){
         return new DaoModel().getAllCountries();
     }
-    /*
-        public Country getCountry(int Id){
-        return new DaoModel().get(Id);
+
+    @PostMapping("/country")
+    public int addCountry(@RequestBody Country country){
+        return new DaoModel().addCountry(country);
     }
-    public List<Country> getAllCountries(){
-        return dao_country.get();
+
+    @PutMapping("/country")
+    public int updateCountry(@RequestBody Country country){
+        return new DaoModel().updateCountry(country);
     }
-    public int addCountry(Country c){
-        return dao_country.post(c);
+
+    @DeleteMapping("/country")
+    public int deleteCountry(@RequestParam Integer id){
+        return new DaoModel().deleteCountry(id);
     }
-    public int updateCountry(Country c){
-        return dao_country.put(c);
-    }
-    public int deleteCountry(int id){
-        return dao_country.put(c);
-    }
-    */
 }
