@@ -1,3 +1,8 @@
+/*
+ * File: Country.java
+ * author: David Villalobos
+ * Date: 2021/03/31
+ */
 package com.getyourtour;
 
 public class Country{
@@ -16,6 +21,10 @@ public class Country{
 
     public String getName(){
         return Name;
+    }
+
+    public void setName(String Name){
+        this.Name = Name;
     }
 
 }
