@@ -1,7 +1,7 @@
 /*
  * File: DaoCountry.java
  * author: David Villalobos
- * Date: 2021/04/01
+ * Date: 2021/04/02
  */
 
 package com.getyourtour.dao;
@@ -14,13 +14,13 @@ import java.util.List;
 
 public class DaoCountry{
 
-    private Connection_DB db;
+    private ConnectionDB db;
    
     public DaoCountry(){
-        db = Connection_DB.instance();
+        db = ConnectionDB.instance();
     } 
 
-    public Country get(int id){
+    public Country get(Integer id){
         try{
             String sql = "SELECT * FROM Country WHERE Id=%d";
             sql = String.format(sql, id);
@@ -53,7 +53,7 @@ public class DaoCountry{
         return countries;
     }
 
-    public int post(Country c){
+    public Integer post(Country c){
         try{
             String sql = "INSERT INTO Country(Name) VALUES('%s')";
             sql = String.format(sql, c.getName());
@@ -64,7 +64,7 @@ public class DaoCountry{
         return 0;
     }
 
-    public int put(Country c){
+    public Integer put(Country c){
         try{
             String sql="UPDATE Country SET Name='%s' WHERE Id=%d";
             sql=String.format(sql, c.getName(), c.getId());   
@@ -79,7 +79,7 @@ public class DaoCountry{
         return 0;
     }
 
-    public int delete(int Id){
+    public Integer delete(Integer Id){
         try{
             String sql="DELETE FROM Country WHERE Id=%d";
             sql = String.format(sql, Id);
@@ -95,7 +95,7 @@ public class DaoCountry{
     }
 
     private Country map(ResultSet rs) throws Exception{
-        int id = rs.getInt("Id");
+        Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         return new Country(id, name);
     }
