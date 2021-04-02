@@ -5,41 +5,40 @@
  */
 package com.getyourtour.controller;
 
-import com.getyourtour.logic.*;
 import com.getyourtour.model.*;
 
-import org.springframework.lang.Nullable;
-import org.springframework.validation.BindingResult;
+import com.getyourtour.service.ServiceCountry;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class ControllerCountry {
 
+    private ServiceCountry service;
+
     @GetMapping("/country")
     public Country get(@RequestParam Integer id){
-        return new DaoModel().getCountry(id);
+        return service.getCountry(id);
     }
 
     @GetMapping("/countries")
     public List<Country> getAllCountries(){
-        return new DaoModel().getAllCountries();
+        return service.getAllCountries();
     }
 
     @PostMapping("/country")
     public int addCountry(@RequestBody Country country){
-        return new DaoModel().addCountry(country);
+        return service.addCountry(country);
     }
 
     @PutMapping("/country")
     public int updateCountry(@RequestBody Country country){
-        return new DaoModel().updateCountry(country);
+        return service.updateCountry(country);
     }
 
     @DeleteMapping("/country")
     public int deleteCountry(@RequestParam Integer id){
-        return new DaoModel().deleteCountry(id);
+        return service.deleteCountry(id);
     }
 }
