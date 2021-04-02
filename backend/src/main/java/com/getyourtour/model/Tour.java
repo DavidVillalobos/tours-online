@@ -10,7 +10,7 @@ import java.sql.Time;
 
 public class Tour {
     private Integer id;
-    private Country country;
+    private City city;
     private String name;
     private String category;
     private String description;
@@ -23,7 +23,7 @@ public class Tour {
 
     public Tour() {
         this.id = 0;
-        this.country = null;
+        this.city = null;
         this.name = "";
         this.category  = "";
         this.description = "";
@@ -35,9 +35,9 @@ public class Tour {
         this.notIncludes = "";
     }
 
-    public Tour(Integer id, Country country, String name, String category, String description, Integer quota, Time duration, float price, Short rating, String includes, String notIncludes) {
+    public Tour(Integer id, City city, String name, String category, String description, Integer quota, Time duration, float price, Short rating, String includes, String notIncludes) {
         this.id = id;
-        this.country = country;
+        this.city = city;
         this.name = name;
         this.category = category;
         this.description = description;
@@ -57,12 +57,12 @@ public class Tour {
         this.id = id;
     }
 
-    public Country getCountry() {
-        return country;
+    public City getCity() {
+        return city;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public String getName() {
