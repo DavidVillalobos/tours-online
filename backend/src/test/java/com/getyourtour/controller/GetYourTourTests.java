@@ -10,27 +10,30 @@ import com.getyourtour.model.*;
 import com.getyourtour.service.ServiceCountry;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 
-@SpringBootTest
-class GetYourTourTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class GetYourTourTests {
 
-	private ServiceCountry serviceCountry = new ServiceCountry();
-	private final int port = 8001;
+	@LocalServerPort
+	private int port;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
 	@Test
 	public void TestConnection() throws Exception {
-		assertThat(serviceCountry).isNotNull();
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+				String.class)).contains("RestFul Api Get Your Tours Backend");
 	}
 
 	@Test
-	void TestCountry(){
-		List<Country> list = serviceCountry.getAllCountries();
-		// if(list.size() == 0 ){
-			// add data
-		// }
-		// assertEquals(list.get(0).getName(), "Costa Rica");
-		// assertEquals(list.get(1).getName(), "Mexico");
+	public void TestGetAllCountries() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/countries",
+				String.class)).contains("[]");
 	}
 
 }
