@@ -4,7 +4,7 @@
  * Date: 2021/04/01
  */
 
-package com.getyourtour.logic;
+package com.getyourtour.model;
 
 public class Country{
 

@@ -4,11 +4,10 @@
  * Date: 2021/04/01
  */
 
-package com.getyourtour.model;
+package com.getyourtour.dao;
 
-import com.getyourtour.logic.Country;
+import com.getyourtour.model.Country;
 
-import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class DaoCountry{
         List<Country> countries = new ArrayList<Country>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Country");
-            while (resultSet.next()) { // for each register
+            while (resultSet.next()) {
                 countries.add(map(resultSet));
             }
             if(0 == countries.size()){

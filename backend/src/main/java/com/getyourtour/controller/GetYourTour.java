@@ -1,7 +1,7 @@
 /*
- * File: GetYourTourApplication.java
+ * File: GetYourTour.java
  * author: David Villalobos
- * Date: 2021/03/31
+ * Date: 2021/04/01
  */
 
 package com.getyourtour.controller;
@@ -10,10 +10,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GetYourTourApplication {
+public class GetYourTour {
 
     public static void main(String[] args) {
-        SpringApplication.run(GetYourTourApplication.class, args);
+        SpringApplication.run(GetYourTour.class, args);
     }
 
 }
