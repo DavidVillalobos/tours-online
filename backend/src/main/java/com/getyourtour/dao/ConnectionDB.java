@@ -1,5 +1,5 @@
 /*
- * @File Connection_DB.java
+ * @File ConnectionDB.java
  * @author David Villalobos
  * @Date 2021/03/31
  */
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
-public class Connection_DB{
+public class ConnectionDB{
 
     private final String server = "DESKTOP-UPQBQ3T\\\\SQLEXPRESS";
     private final String port = "1433";
@@ -19,15 +19,15 @@ public class Connection_DB{
     private final String username = "root";
     private final String password = "root";
     private Connection connection;
-    private static Connection_DB _instance;
+    private static ConnectionDB _instance;
 
-    public static Connection_DB instance(){
+    public static ConnectionDB instance(){
         if(_instance == null){
-            _instance = new Connection_DB();
+            _instance = new ConnectionDB();
         }
         return _instance;
     }
-    private Connection_DB(){
+    private ConnectionDB(){
         connection = getConnection();
     }
 
