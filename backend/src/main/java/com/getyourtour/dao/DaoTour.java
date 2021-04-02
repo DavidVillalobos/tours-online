@@ -75,7 +75,7 @@ public class DaoTour {
                     "Price=%f, Rating=%d, Includes='%s', NotIncludes='%s' WHERE Id=%d";
             sql=String.format(sql, t.getName(), t.getCategory(), t.getDescription(), t.getQuota(),
                     t.getDuration().toString(), t.getPrice(), t.getRating(),
-                    t.getIncludes(), t.getNotIncludes());
+                    t.getIncludes(), t.getNotIncludes(), t.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
                 System.out.println("Log: PUT/Tour/{" + t.getId() + "} Does not exist in DataBase");
