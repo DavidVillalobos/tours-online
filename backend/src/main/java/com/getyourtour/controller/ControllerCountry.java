@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class ControllerCountry {
 
-    private ServiceCountry service;
+    private ServiceCountry service = new ServiceCountry();
 
     @GetMapping("/country")
     public Country get(@RequestParam Integer id){
