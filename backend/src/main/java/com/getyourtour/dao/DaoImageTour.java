@@ -1,5 +1,5 @@
 /*
- * File: DaoImage_Tour.java
+ * File: DaoImageTour.java
  * author: David Villalobos
  * Date: 2021/04/02
  */

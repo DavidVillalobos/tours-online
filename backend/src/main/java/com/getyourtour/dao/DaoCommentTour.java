@@ -1,5 +1,5 @@
 /*
- * File: DaoComment_Tour.java
+ * File: DaoCommentTour.java
  * author: David Villalobos
  * Date: 2021/04/02
  */
@@ -124,6 +124,21 @@ public class DaoCommentTour {
             int result = db.executeUpdate(sql);
             if(result == 0){
                 System.out.println("Log: DELETE/Comment_Tour/{" + Id + "} Does not exist in DataBase");
+            }
+            return result;
+        }catch(Exception e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public Integer delete(Integer idTour, Integer idUser){
+        try{
+            String sql="DELETE FROM Comment_Tour WHERE Id_Tour=%d AND Id_User=%d";
+            sql = String.format(sql, idTour, idUser);
+            int result = db.executeUpdate(sql);
+            if(result == 0){
+                System.out.println("Log: DELETE/Comment_Tour/tour={" + idTour + "}&user={" + idUser + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
