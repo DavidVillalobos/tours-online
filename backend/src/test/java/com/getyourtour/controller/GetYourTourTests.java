@@ -27,7 +27,7 @@ public class GetYourTourTests {
 	@Test
 	public void TestConnection() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
-				String.class)).contains("RestFul Api Get Your Tours Backend");
+				String.class)).contains("RestFul Api of App GetYourTours");
 	}
 
 	@Test
