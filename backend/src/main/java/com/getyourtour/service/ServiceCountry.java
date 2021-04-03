@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ServiceCountry {
 
-    private DaoCountry dao_country = new DaoCountry();
+    private final DaoCountry dao_country = new DaoCountry();
 
     public Country getCountry(Integer id){
         return dao_country.get(id);

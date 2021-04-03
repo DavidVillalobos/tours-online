@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ServiceDetailReservationTour {
 
-    private DaoDetailReservationTour dao_detail_reservation_tour = new DaoDetailReservationTour();
+    private final DaoDetailReservationTour dao_detail_reservation_tour = new DaoDetailReservationTour();
 
     public DetailReservationTour getDetail(Integer id){
         return dao_detail_reservation_tour.get(id);

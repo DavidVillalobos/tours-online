@@ -13,13 +13,13 @@ import java.util.List;
 
 public class ServiceReservationTour {
 
-    private DaoReservationTour dao_reservation_tour = new DaoReservationTour();
+    private final DaoReservationTour dao_reservation_tour = new DaoReservationTour();
 
     public ReservationTour getReservation(Integer id){
         return dao_reservation_tour.get(id);
     }
 
-    public List<ReservationTour> getAllReservation(){
+    public List<ReservationTour> getAllReservations(){
         return dao_reservation_tour.get();
     }
 

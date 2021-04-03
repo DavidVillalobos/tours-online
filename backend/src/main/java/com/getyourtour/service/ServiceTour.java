@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServiceTour {
 
-    private DaoTour dao_tour = new DaoTour();
+    private final DaoTour dao_tour = new DaoTour();
 
     public Tour getTour(Integer id){
         return dao_tour.get(id);

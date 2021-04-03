@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServiceCommentTour {
 
-    private DaoCommentTour dao_commentTour = new DaoCommentTour();
+    private final DaoCommentTour dao_commentTour = new DaoCommentTour();
 
     public CommentTour getCommentTour(Integer id){
         return dao_commentTour.get(id);
@@ -38,11 +38,15 @@ public class ServiceCommentTour {
         return dao_commentTour.post(commentTour);
     }
 
+    public int updateCommentTour(CommentTour c){
+        return dao_commentTour.put(c);
+    }
+
     public int deleteCommentTour(Integer id){
         return dao_commentTour.delete(id);
     }
 
-    public int deleteCommentTour(Integer id_tour, Integer id_user){
+    public int deleteCommentTourByUser(Integer id_tour, Integer id_user){
         return dao_commentTour.delete(id_tour, id_user);
     }
 

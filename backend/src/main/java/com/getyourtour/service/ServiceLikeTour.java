@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServiceLikeTour {
 
-    private DaoLikeTour dao_likeTour = new DaoLikeTour();
+    private final DaoLikeTour dao_likeTour = new DaoLikeTour();
 
     public LikeTour getLikeTour(Integer id){
         return dao_likeTour.get(id);

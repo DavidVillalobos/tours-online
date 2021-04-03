@@ -13,18 +13,18 @@ import java.util.List;
 
 public class ServiceCity {
 
-    private DaoCity dao_city = new DaoCity();
+    private final DaoCity dao_city = new DaoCity();
 
     public City getCity(Integer id){
         return dao_city.get(id);
     }
 
-    public List<City> getAllCountries(){
+    public List<City> getAllCities(){
         return dao_city.get();
     }
 
-    public List<City> getByCountry(Integer id){
-        return dao_city.getByCountry(id);
+    public List<City> getCitiesByCountry(Integer id){
+        return dao_city.getCitiesByCountry(id);
     }
 
     public int addCity(City city){

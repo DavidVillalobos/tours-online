@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ServiceUser {
 
-    private DaoUser dao_user = new DaoUser();
+    private final DaoUser dao_user = new DaoUser();
 
     public User getUser(Integer id){
         return dao_user.get(id);
@@ -24,7 +24,7 @@ public class ServiceUser {
     }
 
     public int addUser(User user){
-        if(user.getName().isEmpty()){
+        if(user.getEmail().isEmpty() || user.getPassword().isEmpty()){
             return -1;
         }
         return dao_user.post(user);
