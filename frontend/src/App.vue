@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar user=""/>
-    <SearchTour user="" id="search"/>
+    <SearchTour id="search"/>
   </div>
 </template>
 
@@ -20,7 +20,12 @@ export default {
 
 <style>
 
+#app{
+  background-color: #55567c
+}
+
 #search{
   margin: 3% 5% 0% 5%;
 }
+
 </style>
