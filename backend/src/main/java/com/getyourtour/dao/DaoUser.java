@@ -57,6 +57,23 @@ public class DaoUser {
         return users;
     }
 
+    public User getByEmail(String email) {
+        try{
+            String sql = "SELECT * FROM User WHERE Email='%s'";
+            sql = String.format(sql, email);
+            ResultSet rs = db.executeQuery(sql);
+            if(rs.next()){
+                return map(rs);
+            }else{
+                System.out.println("Log: GET/User/Email/{" + email + "} Does not exist in DataBase");
+                return null;
+            }
+        } catch(Exception e){
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return null;
+    }
+
     public Integer post(User u){
         try{
             String sql = "INSERT INTO User(Id_Country, Email, Password, Name, LastName, Identification, Birthday)"

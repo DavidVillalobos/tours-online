@@ -30,6 +30,16 @@ public class ServiceUser {
         return dao_user.post(user);
     }
 
+    public User authenticate(User user) {
+        User user_database =  dao_user.getByEmail(user.getEmail());
+        if(user_database != null){
+            if(user_database.getPassword().equals(user.getPassword())){
+                return user_database;
+            }
+        }
+        return null;
+    }
+
     public int updateUser(User user){
         return dao_user.put(user);
     }
@@ -37,5 +47,6 @@ public class ServiceUser {
     public int deleteUser(Integer id){
         return dao_user.delete(id);
     }
+
 
 }

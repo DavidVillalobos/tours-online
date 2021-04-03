@@ -26,6 +26,11 @@ public class ControllerUser {
         return service.getAllUsers();
     }
 
+    @PostMapping("/user/authenticate")
+    public User get(@RequestBody User user){
+        return service.authenticate(user);
+    }
+
     @PostMapping("/user")
     public int addUser(@RequestBody User user){
         return service.addUser(user);
