@@ -54,7 +54,7 @@ public class DaoCity{
         return cities;
     }
 
-    public List<City> getByCountry(Integer id_country){
+    public List<City> getCitiesByCountry(Integer id_country){
         List<City> cities = new ArrayList<City>();
         try{
             String sql = "SELECT * from City where Id_Country = %d";
