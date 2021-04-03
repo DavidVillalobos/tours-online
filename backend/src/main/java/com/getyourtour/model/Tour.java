@@ -7,10 +7,14 @@
 package com.getyourtour.model;
 
 import java.sql.Time;
+import java.util.List;
 
 public class Tour {
     private Integer id;
     private City city;
+    private List<LikeTour> likes;
+    private List<ImageTour> images;
+    private List<CommentTour> comments;
     private String name;
     private String category;
     private String description;
@@ -33,11 +37,13 @@ public class Tour {
         this.rating = 0;
         this.includes = "";
         this.notIncludes = "";
+        likes = null;
+        images = null;
+        comments = null;
     }
 
-    public Tour(Integer id, City city, String name, String category, String description, Integer quota, Time duration, float price, Short rating, String includes, String notIncludes) {
+    public Tour(Integer id, String name, String category, String description, Integer quota, Time duration, float price, Short rating, String includes, String notIncludes) {
         this.id = id;
-        this.city = city;
         this.name = name;
         this.category = category;
         this.description = description;
@@ -47,6 +53,10 @@ public class Tour {
         this.rating = rating;
         this.includes = includes;
         this.notIncludes = notIncludes;
+        this.city = null;
+        this.likes = null;
+        this.images = null;
+        this.comments = null;
     }
 
     public Integer getId() {
@@ -135,5 +145,29 @@ public class Tour {
 
     public void setNotIncludes(String notIncludes) {
         this.notIncludes = notIncludes;
+    }
+
+    public List<LikeTour> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<LikeTour> likes) {
+        this.likes = likes;
+    }
+
+    public List<ImageTour> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ImageTour> images) {
+        this.images = images;
+    }
+
+    public List<CommentTour> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentTour> comments) {
+        this.comments = comments;
     }
 }

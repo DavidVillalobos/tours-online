@@ -6,24 +6,29 @@
 
 package com.getyourtour.model;
 
+import java.util.List;
+
 public class ReservationTour{
     private Integer id;
     private User user;
     private float subTotal;
     private float total;
+    private List<DetailReservationTour> details;
 
     public ReservationTour() {
         this.id = 0;
         this.user = null;
         this.subTotal = 0;
         this.total = 0;
+        this.details = null;
     }
 
-    public ReservationTour(Integer id, User user, float subTotal, float total) {
+    public ReservationTour(Integer id, float subTotal, float total) {
         this.id = id;
-        this.user = user;
         this.subTotal = subTotal;
         this.total = total;
+        this.user = null;
+        this.details = null;
     }
 
     public Integer getId() {
@@ -56,5 +61,13 @@ public class ReservationTour{
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public List<DetailReservationTour> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<DetailReservationTour> details) {
+        this.details = details;
     }
 }

@@ -6,9 +6,7 @@
 
 package com.getyourtour.dao;
 
-import com.getyourtour.model.City;
-import com.getyourtour.model.Tour;
-import com.getyourtour.model.Country;
+import com.getyourtour.model.*;
 
 import java.sql.ResultSet;
 import java.sql.Time;
@@ -109,13 +107,29 @@ public class DaoTour {
         String description = rs.getString("Description");
         Integer quota = rs.getInt("Quota");
         Time duration = rs.getTime("Duration");
-        Float price = rs.getFloat("Price");
+        float price = rs.getFloat("Price");
         Short rating = rs.getShort("Rating");
         String includes = rs.getString("Includes");
         String notIncludes = rs.getString("NotIncludes");
+
+        Tour result = new Tour(id, name, category, description, quota, duration, price, rating, includes, notIncludes);
+
         DaoCity dc = new DaoCity();
+        DaoCommentTour dct = new DaoCommentTour();
+        DaoImageTour di = new DaoImageTour();
+        DaoLikeTour dl = new DaoLikeTour();
+
         City city = dc.get(rs.getInt("Id_City"));
-        return new Tour(id, city, name, category, description, quota, duration, price, rating, includes, notIncludes);
+        List<LikeTour> likes = dl.getByTour(id);
+        List<CommentTour> comments = dct.getByTour(id);
+        List<ImageTour> images = di.getByTour(id);
+
+        result.setCity(city);
+        result.setLikes(likes);
+        result.setComments(comments);
+        result.setImages(images);
+
+        return result;
     }
 
 }

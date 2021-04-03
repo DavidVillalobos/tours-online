@@ -7,6 +7,7 @@
 package com.getyourtour.dao;
 
 import com.getyourtour.model.Country;
+import com.getyourtour.model.DetailReservationTour;
 import com.getyourtour.model.ReservationTour;
 import com.getyourtour.model.User;
 
@@ -102,9 +103,18 @@ public class DaoReservationTour {
         Integer id = rs.getInt("Id");
         float subtotal = rs.getFloat("SubTotal");
         float total = rs.getFloat("Total");
+        ReservationTour result = new ReservationTour(id, subtotal, total);
+
         DaoUser dc = new DaoUser();
-        User user = dc.get(rs.getInt("Id_Country"));
-        return new ReservationTour(id, user, subtotal, total);
+        DaoDetailReservationTour dd = new DaoDetailReservationTour();
+
+        User user = dc.get(rs.getInt("Id_User"));
+        List<DetailReservationTour> details = dd.getByReservationTour(id);
+
+        result.setUser(user);
+        result.setDetails(details);
+
+        return result;
     }
 
 }

@@ -136,10 +136,10 @@ public class DaoLikeTour {
 
     private LikeTour map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
-        DaoTour dt = new DaoTour();
-        DaoUser du = new DaoUser();
-        Tour tour = dt.get(rs.getInt("Id_Tour"));
-        User user = du.get(rs.getInt("Id_User"));
+        Tour tour = new Tour();
+        tour.setId(rs.getInt("Id_Tour"));
+        User user = new User();
+        user.setId(rs.getInt("Id_User"));
         return new LikeTour(id, user, tour);
     }
 
