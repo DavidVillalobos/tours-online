@@ -17,7 +17,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class GetYourTourTests {
+public class HomeTests {
 
 	@LocalServerPort
 	private int port;
@@ -25,15 +25,21 @@ public class GetYourTourTests {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	public void TestConnection() throws Exception {
+	public void TestIndex() throws Exception {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
 				String.class)).contains("RestFul Api of App GetYourTours");
 	}
 
 	@Test
-	public void TestGetAllCountries() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/countries",
-				String.class)).contains("[]");
+	public void TestAbout() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/about",
+				String.class)).contains("Get Your Tours :D \n Backend Build with Java, Spring boot and Gradle");
+	}
+
+	@Test
+	public void TestAuthor() throws Exception {
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/author",
+				String.class)).contains("\"author\":\"Luis David Villalobos Gonzalez\",\"github\":\"https://github.com/DavidVillalobos\"");
 	}
 
 }
