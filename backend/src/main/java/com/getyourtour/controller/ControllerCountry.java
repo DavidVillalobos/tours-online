@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class ControllerCountry {
 
-    private ServiceCountry service = new ServiceCountry();
+    private final ServiceCountry service = new ServiceCountry();
 
     @GetMapping("/country")
     public Country get(@RequestParam Integer id){
@@ -41,4 +41,5 @@ public class ControllerCountry {
     public int deleteCountry(@RequestParam Integer id){
         return service.deleteCountry(id);
     }
+
 }
