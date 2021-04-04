@@ -38,7 +38,7 @@ public class Tour {
         this.date = new Date();
         this.quota = 0;
         this.reviews = 0;
-        this.duration = Time.valueOf("00:00");
+        this.duration = Time.valueOf("00:00:00");
         this.price = 0;
         this.rating = 0;
         this.includes = "";

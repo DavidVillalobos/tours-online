@@ -41,7 +41,7 @@ public class DaoUser {
     public List<User> get(){
         List<User> users = new ArrayList<>();
         try{
-            ResultSet resultSet = db.executeQuery("SELECT * from User");
+            ResultSet resultSet = db.executeQuery("SELECT * from [User]");
             while (resultSet.next()) {
                 users.add(map(resultSet));
             }
