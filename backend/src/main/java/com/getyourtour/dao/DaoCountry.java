@@ -1,13 +1,12 @@
 /*
  * File: DaoCountry.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
 
 import com.getyourtour.model.Country;
-
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class DaoCountry{
     }
 
     public List<Country> get(){
-        List<Country> countries = new ArrayList<Country>();
+        List<Country> countries = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Country");
             while (resultSet.next()) {

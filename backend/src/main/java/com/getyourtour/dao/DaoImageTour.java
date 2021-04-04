@@ -1,19 +1,17 @@
 /*
  * File: DaoImageTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
 
-import com.getyourtour.model.CommentTour;
 import com.getyourtour.model.ImageTour;
 import com.getyourtour.model.Tour;
-import com.getyourtour.model.User;
 
-import java.awt.*;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DaoImageTour {
@@ -42,7 +40,7 @@ public class DaoImageTour {
     }
 
     public List<ImageTour> get(){
-        List<ImageTour> images = new ArrayList<ImageTour>();
+        List<ImageTour> images = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Image_Tour");
             while (resultSet.next()) {
@@ -58,7 +56,7 @@ public class DaoImageTour {
     }
 
     public List<ImageTour> getByTour(Integer id_tour){
-        List<ImageTour> images = new ArrayList<ImageTour>();
+        List<ImageTour> images = new ArrayList<>();
         try{
             String sql = "SELECT * from Image_Tour where Id_Tour = %d";
             sql = String.format(sql, id_tour);
@@ -75,10 +73,27 @@ public class DaoImageTour {
         return images;
     }
 
+    public ImageTour getMainTourImage(Integer id_tour) {
+        try{
+            String sql = "SELECT * from Image_Tour where Id_Tour = %d AND MainPhoto = 1";
+            sql = String.format(sql, id_tour);
+            ResultSet rs = db.executeQuery(sql);
+            if(rs.next()){
+                return map(rs);
+            }else{
+                System.out.println("Log: GET/image/main/{" + id_tour + "} Does not exist in DataBase");
+                return null;
+            }
+        } catch(Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return null;
+    }
+
     public Integer post(ImageTour c){
         try{
-            String sql = "INSERT INTO Image_Tour(Id_Tour, Photo) VALUES(%d,'%s')";
-            sql = String.format(sql, c.getTour().getId(), c.getPhoto().toString());
+            String sql = "INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES(%d,'%s', %b)";
+            sql = String.format(sql, c.getTour().getId(), Arrays.toString(c.getPhoto()), c.getMainPhoto());
             return db.executeUpdate(sql);
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
@@ -121,7 +136,10 @@ public class DaoImageTour {
     private ImageTour map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
         byte[] photo = rs.getBytes("Photo");
-        return new ImageTour(id, null, photo);
+        Boolean mainPhoto = rs.getBoolean("MainPhoto");
+        Tour tour = new Tour();
+        tour.setId(rs.getInt("Id_Tour"));
+        return new ImageTour(id, tour, photo, mainPhoto);
     }
 
 }

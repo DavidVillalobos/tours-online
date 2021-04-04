@@ -1,17 +1,14 @@
 /*
  * File: DaoReservationTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
 
-import com.getyourtour.model.Country;
 import com.getyourtour.model.DetailReservationTour;
 import com.getyourtour.model.ReservationTour;
 import com.getyourtour.model.User;
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +39,7 @@ public class DaoReservationTour {
     }
 
     public List<ReservationTour> get(){
-        List<ReservationTour> reservationTours = new ArrayList<ReservationTour>();
+        List<ReservationTour> reservationTours = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Reservation_Tour");
             while (resultSet.next()) {

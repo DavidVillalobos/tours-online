@@ -1,18 +1,15 @@
 /*
  * File: DaoUser.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
 
-import com.getyourtour.model.City;
 import com.getyourtour.model.Country;
 import com.getyourtour.model.User;
-
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class DaoUser {
 
     public User get(Integer id){
         try{
-            String sql = "SELECT * FROM User WHERE Id=%d";
+            String sql = "SELECT * FROM [User] WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
@@ -42,7 +39,7 @@ public class DaoUser {
     }
 
     public List<User> get(){
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from User");
             while (resultSet.next()) {
@@ -59,7 +56,7 @@ public class DaoUser {
 
     public User getByEmail(String email) {
         try{
-            String sql = "SELECT * FROM User WHERE Email='%s'";
+            String sql = "SELECT * FROM [User] WHERE Email='%s'";
             sql = String.format(sql, email);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
@@ -76,10 +73,10 @@ public class DaoUser {
 
     public Integer post(User u){
         try{
-            String sql = "INSERT INTO User(Id_Country, Email, Password, Name, LastName, Identification, Birthday)"
-            + " VALUES(%d,'%s','%s','%s', '%s', %d,'%s')";
+            String sql = "INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin)"
+            + " VALUES(%d,'%s','%s','%s', '%s', '%s','%s', %b)";
             sql = String.format(sql, u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
-                    u.getLastName(), u.getIdentification(), u.getBirthday());
+                    u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
             return db.executeUpdate(sql);
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
@@ -89,10 +86,10 @@ public class DaoUser {
 
     public Integer put(User u){
         try{
-            String sql="UPDATE User SET Email='%s', Password='%s', Name='%s', LastName='%s', Identification=%d, " +
-                    "Birthday='%s' WHERE Id=%d";
+            String sql="UPDATE [User] SET Email='%s', Password='%s', Name='%s', LastName='%s', Identification='%s', " +
+                    "Birthday='%s', Admin=%b WHERE Id=%d";
             sql=String.format(sql, u.getEmail(), u.getPassword(), u.getName(), u.getLastName(), u.getIdentification(),
-                    u.getBirthday(), u.getId());
+                    u.getStringDate(), u.getId(), u.getAdmin());
             int result = db.executeUpdate(sql);
             if(result == 0){
                 System.out.println("Log: PUT/User/{" + u.getId() + "} Does not exist in DataBase");
@@ -106,7 +103,7 @@ public class DaoUser {
 
     public Integer delete(Integer Id){
         try{
-            String sql="DELETE FROM User WHERE Id=%d";
+            String sql="DELETE FROM [User] WHERE Id=%d";
             sql = String.format(sql, Id);
             int result = db.executeUpdate(sql);
             if(result == 0){
@@ -125,11 +122,12 @@ public class DaoUser {
         String password = rs.getString("Password");
         String name = rs.getString("Name");
         String lastName = rs.getString("LastName");
-        Integer identification = rs.getInt("Identification");
+        String identification = rs.getString("Identification");
         Date birthday = rs.getDate("Birthday");
+        Boolean admin = rs.getBoolean("Admin");
         DaoCountry dc = new DaoCountry();
         Country country = dc.get(rs.getInt("Id_Country"));
-        return new User(id, country, email, password, name, lastName, identification, birthday);
+        return new User(id, country, email, password, name, lastName, identification, birthday, admin);
     }
 
 }

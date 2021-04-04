@@ -1,7 +1,7 @@
 /*
  * File: DaoCity.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
@@ -39,7 +39,7 @@ public class DaoCity{
     }
 
     public List<City> get(){
-        List<City> cities = new ArrayList<City>();
+        List<City> cities = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from City");
             while (resultSet.next()) {
@@ -55,7 +55,7 @@ public class DaoCity{
     }
 
     public List<City> getCitiesByCountry(Integer id_country){
-        List<City> cities = new ArrayList<City>();
+        List<City> cities = new ArrayList<>();
         try{
             String sql = "SELECT * from City where Id_Country = %d";
             sql = String.format(sql, id_country);

@@ -1,7 +1,7 @@
 /*
  * File: ServiceImageTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.service;
@@ -40,7 +40,7 @@ public class ServiceImageTour {
     }
 
     public int deleteImageTourByTour(Integer id_tour){
-        return dao_image_Tour.delete(id_tour);
+        return dao_image_Tour.deleteByTour(id_tour);
     }
 
 }

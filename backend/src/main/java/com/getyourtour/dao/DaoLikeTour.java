@@ -1,7 +1,7 @@
 /*
  * File: DaoLikeTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/03
  */
 
 package com.getyourtour.dao;
@@ -40,7 +40,7 @@ public class DaoLikeTour {
     }
 
     public List<LikeTour> get(){
-        List<LikeTour> likes = new ArrayList<LikeTour>();
+        List<LikeTour> likes = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Like_Tour");
             while (resultSet.next()) {
@@ -56,7 +56,7 @@ public class DaoLikeTour {
     }
 
     public List<LikeTour> getByTour(Integer id_tour){
-        List<LikeTour> likes = new ArrayList<LikeTour>();
+        List<LikeTour> likes = new ArrayList<>();
         try{
             String sql = "SELECT * from Like_Tour where Id_Tour = %d";
             sql = String.format(sql, id_tour);
@@ -74,7 +74,7 @@ public class DaoLikeTour {
     }
 
     public List<LikeTour> getByUser(Integer id_user){
-        List<LikeTour> likes = new ArrayList<LikeTour>();
+        List<LikeTour> likes = new ArrayList<>();
         try{
             String sql = "SELECT * from Like_Tour where Id_User = %d";
             sql = String.format(sql, id_user);
