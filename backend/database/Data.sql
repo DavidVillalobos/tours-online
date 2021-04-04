@@ -32,8 +32,13 @@ INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota,
 Reviews, Duration, Price, Rating, Includes, NotIncludes) 
 VALUES (1, 'Visita Museo Nacional', 'Museo', 'Tour guiado por el museo nacional de Costa Rica',
 '04-29-2021', 20, 0, '02:00', 10.5, 4, 'Almuerzo en el Museo', 'Transporte al lugar')
+-- Insert of Images
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museo.jpg', SINGLE_BLOB) as T1), 1);
+
 -- SELECTS
 -- SELECT * FROM Country;
 -- SELECT * FROM City;
 -- SELECT * FROM Tour;
 -- SELECT * FROM [User];
+-- SELECT * FROM Image_Tour;
