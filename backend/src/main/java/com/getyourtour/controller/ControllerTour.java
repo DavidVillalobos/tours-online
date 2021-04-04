@@ -9,6 +9,8 @@ import com.getyourtour.model.Tour;
 import com.getyourtour.service.ServiceTour;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,6 +26,13 @@ public class ControllerTour {
     @GetMapping("/tours")
     public List<Tour> getAllTours() {
         return service.getAllTours();
+    }
+
+    @GetMapping("/tours/filter")
+    public List<Tour> getFilterTours(@RequestParam(defaultValue = "") String place,
+                                     @RequestParam(defaultValue = "") String departure,
+                                     @RequestParam(defaultValue = "") String arrival){
+        return service.getFilterTours(place, departure, arrival);
     }
 
     @PostMapping("/tour")

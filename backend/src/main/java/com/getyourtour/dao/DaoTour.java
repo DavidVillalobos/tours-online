@@ -10,7 +10,9 @@ import com.getyourtour.model.*;
 
 import java.sql.ResultSet;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DaoTour {
@@ -21,13 +23,17 @@ public class DaoTour {
         db = ConnectionDB.instance();
     }
 
-    public Tour get(Integer id){
+    public Tour get(Integer id, boolean simpleTour){
         try{
             String sql = "SELECT * FROM Tour WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
-                return map(rs);
+                if(simpleTour){
+                    return mapSimple(rs);
+                } else {
+                    return map(rs);
+                }
             }else{
                 System.out.println("Log: GET/Tour/{" + id + "} Does not exist in DataBase");
                 return null;
@@ -39,11 +45,11 @@ public class DaoTour {
     }
 
     public List<Tour> get(){
-        List<Tour> tours = new ArrayList<Tour>();
+        List<Tour> tours = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Tour");
             while (resultSet.next()) {
-                tours.add(map(resultSet));
+                tours.add(mapSimple(resultSet));
             }
             if(0 == tours.size()){
                 System.out.println("Log: GET/tours Does not exist any Tour in DataBase");
@@ -54,12 +60,32 @@ public class DaoTour {
         return tours;
     }
 
+    public List<Tour> getFilterTours(String place, String departure, String arrival){
+        List<Tour> tours = new ArrayList<>();
+        try{
+            if(!place.equals("default")) place = "'" + place + "'";
+            if(!arrival.equals("default")) arrival = "'" + arrival + "'";
+            String sql = "SELECT * FROM F_FilterTours(%s,'%s',%s)";
+            sql = String.format(sql, place, departure, arrival);
+            ResultSet rs = db.executeQuery(sql);
+            while (rs.next()) {
+                tours.add(mapSimple(rs));
+            }
+            if(0 == tours.size()){
+                System.out.println("Log: GET/tours/filter/ Does not exist any Tour in DataBase with that filter");
+            }
+        } catch(Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return tours;
+    }
+
     public Integer post(Tour t){
         try{
-            String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Quota, Duration, " +
-            "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s',%d,'%s',%f,%d,'%s','%s')";
-            sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(),
-                    t.getQuota(), t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
+            String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Date, Quota, Reviews, Duration, " +
+            "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %d,'%s','%s')";
+            sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
+                    t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
             return db.executeUpdate(sql);
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
@@ -69,10 +95,10 @@ public class DaoTour {
 
     public Integer put(Tour t){
         try{
-            String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', Quota=%d, Duration='%s', " +
+            String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', Date='%s', Quota=%d, Reviews=%d, Duration='%s', " +
                     "Price=%f, Rating=%d, Includes='%s', NotIncludes='%s' WHERE Id=%d";
-            sql=String.format(sql, t.getName(), t.getCategory(), t.getDescription(), t.getQuota(),
-                    t.getDuration().toString(), t.getPrice(), t.getRating(),
+            sql=String.format(sql, t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
+                    t.getQuota(), t.getReviews(), t.getDuration().toString(), t.getPrice(), t.getRating(),
                     t.getIncludes(), t.getNotIncludes(), t.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
@@ -105,14 +131,16 @@ public class DaoTour {
         String name = rs.getString("Name");
         String category = rs.getString("Category");
         String description = rs.getString("Description");
+        Date date = rs.getDate("StartDate");
         Integer quota = rs.getInt("Quota");
+        Integer reviews = rs.getInt("Reviews");
         Time duration = rs.getTime("Duration");
         float price = rs.getFloat("Price");
         Short rating = rs.getShort("Rating");
         String includes = rs.getString("Includes");
         String notIncludes = rs.getString("NotIncludes");
 
-        Tour result = new Tour(id, name, category, description, quota, duration, price, rating, includes, notIncludes);
+        Tour result = new Tour(id, name, category, description, date, quota, reviews, duration, price, rating, includes, notIncludes);
 
         DaoCity dc = new DaoCity();
         DaoCommentTour dct = new DaoCommentTour();
@@ -129,6 +157,28 @@ public class DaoTour {
         result.setComments(comments);
         result.setImages(images);
 
+        return result;
+    }
+
+    private Tour mapSimple(ResultSet rs)  throws Exception{
+        Integer id = rs.getInt("Id");
+        String name = rs.getString("Name");
+        Date date = rs.getDate("StartDate");
+        Integer reviews = rs.getInt("Reviews");
+        Time duration = rs.getTime("Duration");
+        float price = rs.getFloat("Price");
+        Short rating = rs.getShort("Rating");
+
+        Tour result = new Tour(id, name, "", "", date, 0, reviews, duration, price, rating, "", "");
+
+        DaoCity dc = new DaoCity();
+        DaoImageTour di = new DaoImageTour();
+        City city = dc.get(rs.getInt("Id_City"));
+        List<ImageTour> images = new ArrayList<>();
+
+        images.add(di.getMainTourImage(id));
+        result.setCity(city);
+        result.setImages(images);
         return result;
     }
 
