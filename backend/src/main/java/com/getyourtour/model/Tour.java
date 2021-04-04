@@ -7,6 +7,8 @@
 package com.getyourtour.model;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Tour {
@@ -18,7 +20,9 @@ public class Tour {
     private String name;
     private String category;
     private String description;
+    private Date date;
     private Integer quota;
+    private Integer reviews;
     private Time duration;
     private float price;
     private Short rating;
@@ -31,7 +35,9 @@ public class Tour {
         this.name = "";
         this.category  = "";
         this.description = "";
+        this.date = new Date();
         this.quota = 0;
+        this.reviews = 0;
         this.duration = Time.valueOf("00:00");
         this.price = 0;
         this.rating = 0;
@@ -42,12 +48,14 @@ public class Tour {
         comments = null;
     }
 
-    public Tour(Integer id, String name, String category, String description, Integer quota, Time duration, float price, Short rating, String includes, String notIncludes) {
+    public Tour(Integer id, String name, String category, String description, Date date, Integer quota, Integer reviews, Time duration, float price, Short rating, String includes, String notIncludes) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.description = description;
+        this.date = date;
         this.quota = quota;
+        this.reviews = reviews;
         this.duration = duration;
         this.price = price;
         this.rating = rating;
@@ -99,12 +107,33 @@ public class Tour {
         this.description = description;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getStringDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(date);
+    }
+
     public Integer getQuota() {
         return quota;
     }
 
     public void setQuota(Integer quota) {
         this.quota = quota;
+    }
+
+    public Integer getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Integer reviews) {
+        this.reviews = reviews;
     }
 
     public Time getDuration() {

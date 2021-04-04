@@ -6,6 +6,7 @@
 
 package com.getyourtour.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
@@ -15,8 +16,9 @@ public class User {
     private String password;
     private String name;
     private String lastName;
-    private Integer identification;
+    private String identification;
     private Date birthday;
+    private Boolean admin;
 
     public User() {
         this.id= 0 ;
@@ -25,11 +27,12 @@ public class User {
         this.password = "";
         this.name = "";
         this.lastName = "";
-        this.identification = 0;
+        this.identification = "";
         this.birthday = null;
+        this.admin = false;
     }
 
-    public User(Integer id, Country country, String email, String password, String name, String lastName, Integer identification, Date birthday) {
+    public User(Integer id, Country country, String email, String password, String name, String lastName, String identification, Date birthday, Boolean admin) {
         this.id = id;
         this.country = country;
         this.email = email;
@@ -38,6 +41,7 @@ public class User {
         this.lastName = lastName;
         this.identification = identification;
         this.birthday = birthday;
+        this.admin = admin;
     }
 
     public Integer getId() {
@@ -88,11 +92,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Integer getIdentification() {
+    public String getIdentification() {
         return identification;
     }
 
-    public void setIdentification(Integer identification) {
+    public void setIdentification(String identification) {
         this.identification = identification;
     }
 
@@ -103,4 +107,18 @@ public class User {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+    public String getStringDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(birthday);
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
 }

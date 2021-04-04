@@ -10,16 +10,19 @@ public class ImageTour {
     private Integer id;
     private Tour tour;
     private byte[] photo;
+    private Boolean mainPhoto;
 
     public ImageTour() {
         this.id = 0;
         this.tour = null;
+        this.mainPhoto = false;
     }
 
-    public ImageTour(Integer id, Tour tour, byte[] photo) {
+    public ImageTour(Integer id, Tour tour, byte[] photo, Boolean mainPhoto) {
         this.id = id;
         this.tour = tour;
         this.photo = photo;
+        this.mainPhoto = mainPhoto;
     }
 
     public Integer getId() {
@@ -45,4 +48,13 @@ public class ImageTour {
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+
+    public Boolean getMainPhoto() {
+        return mainPhoto;
+    }
+
+    public void setMainPhoto(Boolean mainPhoto) {
+        this.mainPhoto = mainPhoto;
+    }
+
 }
