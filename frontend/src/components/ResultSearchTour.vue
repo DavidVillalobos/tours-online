@@ -35,6 +35,6 @@ export default {
 <style scoped>
 
 .tour{
-  margin-top: 10px;
+  margin-top: 5px;
 }
 </style>

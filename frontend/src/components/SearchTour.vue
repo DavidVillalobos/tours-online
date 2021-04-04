@@ -34,7 +34,7 @@ export default {
     ResultSearchTour
   },
   data() {
-      const minDate = new Date()
+    const minDate = new Date()
     return {
       departure: '',
       arrival: '',
@@ -57,7 +57,11 @@ export default {
 </script>
 <style scoped>
 #result-search{
-  margin-top: 1%;
   height: 700px;
+  margin-top: 5px;
+}
+
+#result-search, #card-search{
+  border-radius: 0%;
 }
 </style>

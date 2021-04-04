@@ -7,22 +7,19 @@
         GetYourTour
         </h3>
       </b-navbar-brand>
-      <template v-if="user !== ''">
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-        <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav class="ml-auto">
+      <template v-if="username !== ''">
+        <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <template #button-content>
-                <em>{{ user }}</em>
+                <em>{{ username }}</em>
               </template>
-              <b-dropdown-item href="#">Perfil</b-dropdown-item>
-              <b-dropdown-item href="#">Cerrar Sesion</b-dropdown-item>
+              <b-dropdown-item-button href="#">Perfil</b-dropdown-item-button>
+              <b-dropdown-item-button v-on:click="logout">Cerrar Sesion</b-dropdown-item-button>
             </b-nav-item-dropdown>
-          </b-navbar-nav>
+        </b-navbar-nav>
         <b-avatar variant="warning">
-          <strong> {{ avatarName() }} </strong>
+          <strong> {{ avatarname }} </strong>
         </b-avatar>
-        </b-collapse>
       </template>
       <template v-else>
       <b-navbar-nav class="ml-auto">
@@ -59,25 +56,46 @@
 <script>
 export default {
   name: 'Navbar',
-  props: {
-    user: String,
-    email: String,
-    password: String,
+  data(){
+    return {
+      username: "",
+      avatarname: "",
+      email: "",
+      password: ""
+    }
   },
   methods: {
-    avatarName() {
-      var result = ''
-      for(let word of this.user.split(' ')){
-        result += word[0];
-      }
-      return result;
-    },
     resetModal(){
       this.email = ''
       this.password = ''
     },
-    login(){
-      alert("Login email: " + this.email + "  password: " + this.password)
+    async login(){
+        try {
+          const response = await fetch('http://localhost:8001/user/authenticate', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              email: this.email,
+              password: this.password
+            })
+          });
+          const user = (await response.json());
+          if(!this.$session.exists()){
+            this.$session.start()
+          }
+          this.$session.set('user', user);
+          this.username = user['name'] + ' ' + user['lastName'];
+          this.avatarname = user['name'][0] + user['lastName'][0];
+        } catch (err) {
+          alert("Login failed")
+        }
+    },
+    logout(){
+      this.$session.remove('user');
+      this.username = '';
+      this.avatarname = ''
     }
   }
 }

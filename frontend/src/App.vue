@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar user=""/>
+    <Navbar/>
     <SearchTour id="search"/>
   </div>
 </template>
