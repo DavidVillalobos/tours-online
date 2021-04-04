@@ -1,7 +1,7 @@
 /*
- * @File ConnectionDB.java
- * @author David Villalobos
- * @Date 2021/03/31
+ * File ConnectionDB.java
+ * author David Villalobos
+ * Date 2021/04/03
  */
 package com.getyourtour.dao;
 
@@ -12,13 +12,12 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class ConnectionDB{
-
-    private final String server = "DESKTOP-UPQBQ3T\\\\SQLEXPRESS";
-    private final String port = "1433";
-    private final String model = "GYTModel";
-    private final String username = "root";
-    private final String password = "root";
-    private Connection connection;
+    private static final String server = "DESKTOP-UPQBQ3T\\\\SQLEXPRESS";
+    private static final String port = "1433";
+    private static final String model = "GYTModel";
+    private static final String username = "root";
+    private static final String password = "root";
+    private final Connection connection;
     private static ConnectionDB _instance;
 
     public static ConnectionDB instance(){
@@ -33,7 +32,7 @@ public class ConnectionDB{
 
     private Connection getConnection(){
         try {
-            String connectionUrl = "jdbc:sqlserver://" + server + ":" + port + ";" 
+            String connectionUrl = "jdbc:sqlserver://" + server + ":" + port + ";"
             + "database=" + model + ";"
             + "user=" + username + ";"
             + "password=" + password + ";"
