@@ -21,6 +21,11 @@ public class ControllerImageTour {
         return service.getImageTour(id);
     }
 
+    @GetMapping("/only-image")
+    public byte[] getImage(@RequestParam Integer id){
+        return service.getOnlyImageTour(id);
+    }
+
     @GetMapping("/images")
     public List<ImageTour> getAllImages(){
         return service.getAllImageTours();

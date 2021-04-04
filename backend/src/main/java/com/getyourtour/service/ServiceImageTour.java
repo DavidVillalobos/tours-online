@@ -20,6 +20,10 @@ public class ServiceImageTour {
         return dao_image_Tour.get(id);
     }
 
+    public byte[] getOnlyImageTour(Integer id_tour) {
+        return dao_image_Tour.getOnlyImageByTour(id_tour);
+    }
+
     public List<ImageTour> getAllImageTours(){
         return dao_image_Tour.get();
     }

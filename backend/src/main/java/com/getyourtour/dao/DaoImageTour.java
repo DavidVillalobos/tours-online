@@ -39,6 +39,23 @@ public class DaoImageTour {
         return null;
     }
 
+    public byte[] getOnlyImageByTour(Integer id_tour) {
+        try{
+            String sql = "select Photo from Image_Tour where Id_Tour = %d";
+            sql = String.format(sql, id_tour);
+            ResultSet rs = db.executeQuery(sql);
+            if(rs.next()){
+                return rs.getBytes("Photo");
+            }else{
+                System.out.println("Log: GET/only-image/{" + id_tour + "} Does not exist in DataBase");
+                return null;
+            }
+        } catch(Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+        return null;
+    }
+
     public List<ImageTour> get(){
         List<ImageTour> images = new ArrayList<>();
         try{
