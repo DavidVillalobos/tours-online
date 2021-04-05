@@ -54,10 +54,12 @@
         <b-col cols=12>
           <b-card class="tour" v-on:click="viewTour(tour)">
              <b-row>
-              <b-col cols=2 class="text-right">
-                <b-img rounded v-bind="propsSimpleView" :src="getImageUrl(tour.images[0].id)"  fluid alt="Fluid image">
-                </b-img>
-                 <b-button class="like-button" pill variant="transparent"><b-icon-heart variant="danger"></b-icon-heart></b-button>
+              <b-col cols=3 class="text-right">
+                <b-img rounded :src="'data:image/jpeg;base64,'+tour.images[0].photo"  fluid alt="Main image Tour"></b-img>
+                <template v-if="isLogin">
+                    <b-icon-heart-fill v-if="likeTour(tour.id)" class="like-button" variant="danger"></b-icon-heart-fill>
+                    <b-icon-heart v-if="!likeTour(tour.id)" class="like-button" variant="secondary"></b-icon-heart>
+                </template>
               </b-col>
               <b-col cols=7>
                 <strong>{{ tour.city.name}}: {{ tour.name}}</strong> <br>
@@ -101,16 +103,18 @@ export default {
   data() {
     const minDate = new Date()
     return {
-      propsSimpleView: { width: 220, height: 220 },
       tours: [],
       departure: '',
       arrival: '',
       min: minDate,
-      place: ''
+      place: '',
+      isLogin: false
     }
   },
   methods: {
     async filterTours(){
+      this.tours = []
+      this.updateLogin();
         try {
           const response = await fetch(
             'http://localhost:8001/tours/filter' +
@@ -126,8 +130,42 @@ export default {
     viewTour(tour){
       alert("Got to tour " + tour.name)
     },
-    getImageUrl(imageId) {
-      return `http://localhost:8001/only-image?id=${imageId}`;
+    hexToBase64(str) {
+      return 'data:image/jpeg;base64,' + str;
+    },
+    async likeTour(Id_Tour){
+        if(this.isLogin){
+          var Id_User = this.$session.get('user').id;
+          try {
+            const response = await fetch(
+              'http://localhost:8001/like/tour/user?' +
+              'id_tour=' + Id_Tour + 
+              '&&id_user=' + Id_User
+            , {method: 'GET'});
+            return (await response.json());
+          } catch (err) {
+            console.log(err)
+          }
+        }
+        return false;
+    },
+    updateLogin(){
+      this.isLogin =  (this.$session.exists() && this.$session.get('user'))
+    },
+    async removeLike(Id_Tour){
+      if(this.isLogin){
+        var Id_User = this.$session.get('user').id;
+        try {
+          const response = await fetch(
+            'http://localhost:8001/like/tour/user?' +
+            'id_tour=' + Id_Tour + 
+            '&&id_user=' + Id_User
+          , {method: 'DELETE'});
+          return (await response.json());
+        } catch (err) {
+          console.log(err)
+        }
+      }
     }
   }
 }
@@ -145,6 +183,15 @@ export default {
 
 .tour{
   margin-top: 5px;
+}
+
+
+.like-button{
+  position:absolute; z-index:1;
+  width: 20%;
+  height: 20%;
+  margin-top: 1%;
+  margin-left: -16%;
 }
 
 </style>
