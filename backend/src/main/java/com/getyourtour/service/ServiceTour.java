@@ -19,15 +19,15 @@ public class ServiceTour {
 
     private final DaoTour dao_tour = new DaoTour();
 
-    public Tour getTour(Integer id){
+    public Tour getTour(Integer id) throws Exception {
         return dao_tour.get(id, false);
     }
 
-    public List<Tour> getAllTours(){
+    public List<Tour> getAllTours() throws Exception {
         return dao_tour.get();
     }
 
-    public List<Tour> getFilterTours(String place, String departure, String arrival){
+    public List<Tour> getFilterTours(String place, String departure, String arrival) throws Exception {
         if(place.isEmpty()) place = "default";
         if(arrival.isEmpty()) arrival = "default";
         if(departure.isEmpty()){
@@ -37,18 +37,18 @@ public class ServiceTour {
         return dao_tour.getFilterTours(place, departure, arrival);
     }
 
-    public int addTour(Tour tour){
+    public int addTour(Tour tour) throws Exception {
         if(tour.getName().isEmpty()){
-            return -1;
+            throw new Exception("The Name of tour is required");
         }
         return dao_tour.post(tour);
     }
 
-    public int updateTour(Tour tour){
+    public int updateTour(Tour tour) throws Exception {
         return dao_tour.put(tour);
     }
 
-    public int deleteTour(Integer id){
+    public int deleteTour(Integer id) throws Exception {
         return dao_tour.delete(id);
     }
 

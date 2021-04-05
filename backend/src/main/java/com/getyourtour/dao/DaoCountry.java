@@ -13,30 +13,26 @@ import java.util.List;
 
 public class DaoCountry{
 
-    private ConnectionDB db;
+    private final ConnectionDB db = ConnectionDB.instance();
    
     public DaoCountry(){
-        db = ConnectionDB.instance();
     } 
 
-    public Country get(Integer id){
+    public Country get(Integer id) throws Exception {
         try{
             String sql = "SELECT * FROM Country WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
                 return map(rs);
-            }else{
-                System.out.println("Log: GET/country/{" + id + "} Does not exist in DataBase");
-                return null;
             }
+            throw new Exception("Log: GET/country/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<Country> get(){
+    public List<Country> get() throws Exception {
         List<Country> countries = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Country");
@@ -44,53 +40,46 @@ public class DaoCountry{
                 countries.add(map(resultSet));
             }
             if(0 == countries.size()){
-                System.out.println("Log: GET/countries Does not exist any country in DataBase");
+                throw new Exception("/countries Does not exist any country in DataBase");
             }
         } catch(Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
         return countries;
     }
 
-    public Integer post(Country c){
-        try{
-            String sql = "INSERT INTO Country(Name) VALUES('%s')";
-            sql = String.format(sql, c.getName());
-            return db.executeUpdate(sql);
-        } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
-        }
-        return 0;
+    public Integer post(Country c) throws Exception {
+        String sql = "INSERT INTO Country(Name) VALUES('%s')";
+        sql = String.format(sql, c.getName());
+        return db.executeUpdate(sql);
     }
 
-    public Integer put(Country c){
+    public Integer put(Country c) throws Exception {
         try{
             String sql="UPDATE Country SET Name='%s' WHERE Id=%d";
             sql=String.format(sql, c.getName(), c.getId());   
             int result = db.executeUpdate(sql); 
             if(result == 0){
-                System.out.println("Log: PUT/country/{" + c.getId() + "} Does not exist in DataBase");
+                throw new Exception("/country/{" + c.getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
-    public Integer delete(Integer Id){
+    public Integer delete(Integer Id) throws Exception {
         try{
             String sql="DELETE FROM Country WHERE Id=%d";
             sql = String.format(sql, Id);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Log: DELETE/country/{" + Id + "} Does not exist in DataBase");
+                throw new Exception("Log: DELETE/country/{" + Id + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
     private Country map(ResultSet rs) throws Exception{

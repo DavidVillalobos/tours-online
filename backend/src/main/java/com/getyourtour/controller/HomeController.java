@@ -24,7 +24,10 @@ public class HomeController {
         return "Get Your Tours :D \n Backend Build with Java, Spring boot and Gradle";
     }
 
-    @RequestMapping(value = "/author", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/author",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public String author() {
         return "{\"author\":\"Luis David Villalobos Gonzalez\",\"github\":\"https://github.com/DavidVillalobos\"}";
     }

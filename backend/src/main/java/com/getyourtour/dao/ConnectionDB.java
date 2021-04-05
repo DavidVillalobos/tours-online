@@ -46,25 +46,23 @@ public class ConnectionDB{
         return null;
     }
 
-    public int executeUpdate(String statement) {
+    public int executeUpdate(String statement) throws Exception {
         try {
             Statement stm = connection.createStatement();
             stm.executeUpdate(statement);
             return stm.getUpdateCount();
         } catch (SQLException e) {
-            System.out.println("Error SQLException: " + e.getMessage());
-            return 0;
+            throw new Exception("Error SQLException: " + e.getMessage());
         }
     }
     
-    public ResultSet executeQuery(String statement){
+    public ResultSet executeQuery(String statement) throws Exception {
         try {
             Statement stm = connection.createStatement();
             return stm.executeQuery(statement);
         } catch (SQLException e) {
-            System.out.println("Error SQLException: " + e.getMessage());
+            throw new Exception("Error SQLException: " + e.getMessage());
         }
-        return null;
     }
 
 }

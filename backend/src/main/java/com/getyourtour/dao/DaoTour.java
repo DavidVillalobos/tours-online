@@ -17,13 +17,12 @@ import java.util.List;
 
 public class DaoTour {
 
-    private ConnectionDB db;
+    private final ConnectionDB db = ConnectionDB.instance();
 
     public DaoTour(){
-        db = ConnectionDB.instance();
     }
 
-    public Tour get(Integer id, boolean simpleTour){
+    public Tour get(Integer id, boolean simpleTour) throws Exception {
         try{
             String sql = "SELECT * FROM Tour WHERE Id=%d";
             sql = String.format(sql, id);
@@ -34,17 +33,14 @@ public class DaoTour {
                 } else {
                     return map(rs);
                 }
-            }else{
-                System.out.println("Log: GET/Tour/{" + id + "} Does not exist in DataBase");
-                return null;
             }
+            throw new Exception("/tour/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<Tour> get(){
+    public List<Tour> get() throws Exception {
         List<Tour> tours = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Tour");
@@ -52,15 +48,15 @@ public class DaoTour {
                 tours.add(mapSimple(resultSet));
             }
             if(0 == tours.size()){
-                System.out.println("Log: GET/tours Does not exist any Tour in DataBase");
+                throw new Exception("/tours Does not exist any Tour in DataBase");
             }
         } catch(Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
         return tours;
     }
 
-    public List<Tour> getFilterTours(String place, String departure, String arrival){
+    public List<Tour> getFilterTours(String place, String departure, String arrival) throws Exception {
         List<Tour> tours = new ArrayList<>();
         try{
             if(!place.equals("default")) place = "'" + place + "'";
@@ -72,28 +68,23 @@ public class DaoTour {
                 tours.add(mapSimple(rs));
             }
             if(0 == tours.size()){
-                System.out.println("Log: GET/tours/filter/ Does not exist any Tour in DataBase with that filter");
+                throw new Exception("/tours/filter/ Does not exist any Tour in DataBase with that filter");
             }
         } catch(Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
         return tours;
     }
 
-    public Integer post(Tour t){
-        try{
-            String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Date, Quota, Reviews, Duration, " +
-            "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %d,'%s','%s')";
-            sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
-                    t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
-            return db.executeUpdate(sql);
-        } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
-        }
-        return 0;
+    public Integer post(Tour t) throws Exception {
+        String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Date, Quota, Reviews, Duration, " +
+        "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %d,'%s','%s')";
+        sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
+                t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
+        return db.executeUpdate(sql);
     }
 
-    public Integer put(Tour t){
+    public Integer put(Tour t) throws Exception {
         try{
             String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', Date='%s', Quota=%d, Reviews=%d, Duration='%s', " +
                     "Price=%f, Rating=%d, Includes='%s', NotIncludes='%s' WHERE Id=%d";
@@ -102,28 +93,26 @@ public class DaoTour {
                     t.getIncludes(), t.getNotIncludes(), t.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Log: PUT/Tour/{" + t.getId() + "} Does not exist in DataBase");
+                throw new Exception("Log: PUT/Tour/{" + t.getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
-    public Integer delete(Integer Id){
+    public Integer delete(Integer Id) throws Exception {
         try{
             String sql="DELETE FROM Tour WHERE Id=%d";
             sql = String.format(sql, Id);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Log: DELETE/Tour/{" + Id + "} Does not exist in DataBase");
+                throw new Exception("Log: DELETE/Tour/{" + Id + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
     private Tour map(ResultSet rs) throws Exception{

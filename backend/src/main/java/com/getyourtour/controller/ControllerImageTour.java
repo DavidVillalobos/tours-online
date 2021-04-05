@@ -7,7 +7,9 @@ package com.getyourtour.controller;
 
 import com.getyourtour.model.ImageTour;
 import com.getyourtour.service.ServiceImageTour;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,37 +20,65 @@ public class ControllerImageTour {
 
     @GetMapping("/image")
     public ImageTour get(@RequestParam Integer id){
-        return service.getImageTour(id);
+        try{
+            return service.getImageTour(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
     }
 
     @GetMapping("/only-image")
     public byte[] getImage(@RequestParam Integer id){
-        return service.getOnlyImageTour(id);
+        try{
+            return service.getOnlyImageTour(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
     }
 
     @GetMapping("/images")
     public List<ImageTour> getAllImages(){
-        return service.getAllImageTours();
+        try{
+            return service.getAllImageTours();
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images not found", e);
+        }
     }
 
     @GetMapping("/images/tour")
     public List<ImageTour> getImagesByTour(@RequestParam Integer id){
-        return service.getImagesByTour(id);
+        try{
+            return service.getImagesByTour(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images not found", e);
+        }
     }
 
     @PostMapping("/image")
     public int addImageTour(@RequestBody ImageTour imageTour){
-        return service.addImageTour(imageTour);
+        try{
+            return service.addImageTour(imageTour);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image cannot be added", e);
+        }
     }
 
     @DeleteMapping("/image")
     public int deleteImageTour(@RequestParam Integer id){
-        return service.deleteImageTour(id);
+        try{
+            return service.deleteImageTour(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
     }
 
     @DeleteMapping("/image/tour")
     public int deleteImageTourByTour(@RequestParam Integer id_tour){
-        return service.deleteImageTourByTour(id_tour);
+        try{
+            return service.deleteImageTourByTour(id_tour);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
     }
 
 }

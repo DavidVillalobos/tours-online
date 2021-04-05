@@ -8,7 +8,9 @@ package com.getyourtour.controller;
 import com.getyourtour.model.*;
 
 import com.getyourtour.service.ServiceCountry;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,27 +21,47 @@ public class ControllerCountry {
 
     @GetMapping("/country")
     public Country get(@RequestParam Integer id){
-        return service.getCountry(id);
+        try{
+            return service.getCountry(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
+        }
     }
 
     @GetMapping("/countries")
     public List<Country> getAllCountries(){
-        return service.getAllCountries();
+        try{
+            return service.getAllCountries();
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Countries not found", e);
+        }
     }
 
     @PostMapping("/country")
     public int addCountry(@RequestBody Country country){
-        return service.addCountry(country);
+        try{
+            return service.addCountry(country);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country cannot be added", e);
+        }
     }
 
     @PutMapping("/country")
     public int updateCountry(@RequestBody Country country){
-        return service.updateCountry(country);
+        try{
+            return service.updateCountry(country);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
+        }
     }
 
     @DeleteMapping("/country")
     public int deleteCountry(@RequestParam Integer id){
-        return service.deleteCountry(id);
+        try{
+            return service.deleteCountry(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
+        }
     }
 
 }

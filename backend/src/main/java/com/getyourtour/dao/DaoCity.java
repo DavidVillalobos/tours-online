@@ -10,51 +10,48 @@ import com.getyourtour.model.City;
 import com.getyourtour.model.Country;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DaoCity{
 
-    private ConnectionDB db;
+    private final ConnectionDB db = ConnectionDB.instance();
 
     public DaoCity(){
-        db = ConnectionDB.instance();
     }
 
-    public City get(Integer id){
+    public City get(Integer id) throws Exception {
         try{
             String sql = "SELECT * FROM City WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
-            if(rs.next()){
+            if(rs.next()) {
                 return map(rs);
-            }else{
-                System.out.println("Log: GET/City/{" + id + "} Does not exist in DataBase");
-                return null;
             }
+            throw new SQLException("/city/?=" + id + " Does not exist in DataBase");
         } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return null;
     }
 
-    public List<City> get(){
+    public List<City> get() throws Exception {
         List<City> cities = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from City");
             while (resultSet.next()) {
                 cities.add(map(resultSet));
             }
-            if(0 == cities.size()){
-                System.out.println("Log: GET/cities Does not exist any City in DataBase");
+            if(cities.size() == 0){
+                throw new SQLException("/cities/ Does not exist any City in DataBase");
             }
-        } catch(Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            return cities;
+        } catch(Exception e){
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return cities;
     }
 
-    public List<City> getCitiesByCountry(Integer id_country){
+    public List<City> getCitiesByCountry(Integer id_country) throws Exception {
         List<City> cities = new ArrayList<>();
         try{
             String sql = "SELECT * from City where Id_Country = %d";
@@ -63,54 +60,47 @@ public class DaoCity{
             while (resultSet.next()) {
                 cities.add(map(resultSet));
             }
-            if(0 == cities.size()){
-                System.out.println("Log: GET/cities/{" + id_country + "} Does not exist any City in DataBase");
+            if(cities.size() == 0){
+                throw new SQLException("/cities/country?id=" + id_country + " Does not exist any City in DataBase");
             }
-        } catch(Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+        } catch(Exception e){
+            throw new Exception("Exception: " + e.getMessage());
         }
         return cities;
     }
 
-    public Integer post(City c){
-        try{
-            String sql = "INSERT INTO City(Id_Country, Name) VALUES(%d, '%s')";
-            sql = String.format(sql, c.getCountry().getId(), c.getName());
-            return db.executeUpdate(sql);
-        } catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
-        }
-        return 0;
+    public Integer post(City c) throws Exception {
+        String sql = "INSERT INTO City(Id_Country, Name) VALUES(%d, '%s')";
+        sql = String.format(sql, c.getCountry().getId(), c.getName());
+        return db.executeUpdate(sql);
     }
 
-    public Integer put(City c){
+    public Integer put(City c) throws Exception {
         try{
             String sql="UPDATE City SET Name='%s' WHERE Id=%d";
             sql=String.format(sql, c.getName(), c.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Log: PUT/City/{" + c.getId() + "} Does not exist in DataBase");
+                throw new Exception("/City/{" + c.getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
-    public Integer delete(Integer Id){
+    public Integer delete(Integer Id) throws Exception {
         try{
             String sql="DELETE FROM City WHERE Id=%d";
             sql = String.format(sql, Id);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                System.out.println("Log: DELETE/City/{" + Id + "} Does not exist in DataBase");
+                throw new Exception("city/{" + Id + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            System.out.println("Exception: " + e.getMessage());
+            throw new Exception("Exception: " + e.getMessage());
         }
-        return 0;
     }
 
     private City map(ResultSet rs) throws Exception{

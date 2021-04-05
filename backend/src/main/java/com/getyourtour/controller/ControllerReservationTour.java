@@ -7,7 +7,9 @@ package com.getyourtour.controller;
 
 import com.getyourtour.model.ReservationTour;
 import com.getyourtour.service.ServiceReservationTour;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,27 +20,47 @@ public class ControllerReservationTour {
 
     @GetMapping("/reservation")
     public ReservationTour get(@RequestParam Integer id){
-        return service.getReservation(id);
+        try{
+            return service.getReservation(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found", e);
+        }
     }
 
     @GetMapping("/reservations")
     public List<ReservationTour> getAllReservationTours() {
-        return service.getAllReservations();
+        try{
+            return service.getAllReservations();
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservations not found", e);
+        }
     }
 
     @PostMapping("/reservation")
     public int addReservationTour(@RequestBody ReservationTour reservationTour){
-        return service.addReservation(reservationTour);
+        try{
+            return service.addReservation(reservationTour);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation cannot be added", e);
+        }
     }
 
     @PutMapping("/reservation")
     public int updateReservationTour(@RequestBody ReservationTour reservationTour){
-        return service.updateReservation(reservationTour);
+        try{
+            return service.updateReservation(reservationTour);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found", e);
+        }
     }
 
     @DeleteMapping("/reservation")
     public int deleteReservationTour(@RequestParam Integer id){
-        return service.deleteReservation(id);
+        try{
+            return service.deleteReservation(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found", e);
+        }
     }
 
 }
