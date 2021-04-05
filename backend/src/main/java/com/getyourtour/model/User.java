@@ -18,7 +18,7 @@ public class User {
     private String lastName;
     private String identification;
     private Date birthday;
-    private Boolean admin;
+    private Integer admin;
 
     public User() {
         this.id= 0 ;
@@ -29,10 +29,10 @@ public class User {
         this.lastName = "";
         this.identification = "";
         this.birthday = null;
-        this.admin = false;
+        this.admin = 0;
     }
 
-    public User(Integer id, Country country, String email, String password, String name, String lastName, String identification, Date birthday, Boolean admin) {
+    public User(Integer id, Country country, String email, String password, String name, String lastName, String identification, Date birthday, Integer admin) {
         this.id = id;
         this.country = country;
         this.email = email;
@@ -113,11 +113,11 @@ public class User {
         return sdf.format(birthday);
     }
 
-    public Boolean getAdmin() {
+    public Integer getAdmin() {
         return admin;
     }
 
-    public void setAdmin(Boolean admin) {
+    public void setAdmin(Integer admin) {
         this.admin = admin;
     }
 
