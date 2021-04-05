@@ -1,5 +1,19 @@
 <template>
   <div>
+    <b-alert
+      class="alert-content" 
+      dismissible
+      :variant="alertvariant"
+      fade
+      :show="showAlert"
+      @dismissed="showAlert=false"
+      @dismiss-count-down="countDownChanged"
+    >
+      {{messageAlert }}
+      <template v-if="messageAlert == 'Por favor espere . . .'">
+        <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
+      </template>
+    </b-alert>
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand>
         <h3>
@@ -9,12 +23,21 @@
       </b-navbar-brand>
       <template v-if="username !== ''">
         <b-navbar-nav class="ml-auto">
+            <b-nav-item disabled>Bienvenido</b-nav-item>
             <b-nav-item-dropdown right>
               <template #button-content>
-                <em>{{ username }}</em>
+                <em>
+                  {{ username }}
+                </em>
               </template>
-              <b-dropdown-item-button href="#">Perfil</b-dropdown-item-button>
-              <b-dropdown-item-button v-on:click="logout">Cerrar Sesion</b-dropdown-item-button>
+              <b-dropdown-item-button href="#">
+                <b-icon icon="person-fill" aria-hidden="true"></b-icon>
+                Perfil
+              </b-dropdown-item-button>
+              <b-dropdown-item-button v-on:click="logout">
+                <b-icon icon="power" aria-hidden="true"></b-icon>
+                Cerrar Sesion
+              </b-dropdown-item-button>
             </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-avatar variant="warning">
@@ -24,11 +47,12 @@
       <template v-else>
       <b-navbar-nav class="ml-auto">
         <b-button variant="dark" v-b-modal.modal-login>
-          <b-icon-person-fill variant="light"></b-icon-person-fill>
+          <b-icon-person-lines-fill variant="light"></b-icon-person-lines-fill>
           Iniciar Sesion
         </b-button>
         <b-button variant="dark" v-b-modal.modal-register>
           Registrarse
+          <b-icon-person-plus-fill variant="light"></b-icon-person-plus-fill>
         </b-button>
       </b-navbar-nav>
       </template>
@@ -37,17 +61,29 @@
       @show="resetModal" @hidden="resetModal" @ok="login"
       cancel-title="Cancelar" ok-title="Iniciar"
     >
-    <div class="d-block text-center">
-      <h3>
-        <b-icon-person-fill variant="dark"></b-icon-person-fill>
-        Iniciar Sesion
+      <h3 class="text-center">
+        <b-icon-person-circle></b-icon-person-circle>
+        Inicio de sesion <br><br>
       </h3>
-    </div>
-    <b-form-group label-cols="4" label-cols-lg="2" label="Email">
-      <b-form-input v-model="email"></b-form-input>
+    <b-form-group>
+      <b-form-input placeholder="Email" v-model="email"></b-form-input><br>
+      <b-form-input placeholder="Contraseña" v-model="password"></b-form-input>
     </b-form-group>
-    <b-form-group label-cols="4" label-cols-lg="2" label="contraseña">
-      <b-form-input v-model="password"></b-form-input>
+    </b-modal>
+     <b-modal id="modal-register" hide-header
+      @show="resetModal" @hidden="resetModal" @ok="register"
+      cancel-title="Cancelar" ok-title="Registrar"
+    >
+      <h3 class="text-center">
+        <b-icon-person-plus-fill></b-icon-person-plus-fill>
+        Registro de usuario <br><br>
+      </h3>
+    <b-form-group>
+      <b-form-input placeholder="Identificacion" v-model="id"></b-form-input><br>
+      <b-form-input placeholder="Nombre" v-model="name"></b-form-input><br>
+      <b-form-input placeholder="Apellido" v-model="lastName"></b-form-input><br>
+      <b-form-input placeholder="Email" v-model="email"></b-form-input><br>
+      <b-form-input placeholder="Password" v-model="password"></b-form-input>
     </b-form-group>
     </b-modal>
   </div>
@@ -61,16 +97,38 @@ export default {
       username: "",
       avatarname: "",
       email: "",
-      password: ""
+      password: "",
+      messageAlert: "",
+      showAlert: 0,
+      alertvariant: "",
+      secShowAlert: 4,
+      name: "",
+      lastName: "",
+      id: "",
     }
   },
   methods: {
     resetModal(){
       this.email = ''
       this.password = ''
+      this.name = ''
+      this.lastName = ''
+      this.id = ''
+    },
+    countDownChanged(dismissCountDown) {
+        this.showAlert = dismissCountDown
     },
     async login(){
         try {
+          if(!this.email || !this.password){
+            this.messageAlert = "Debe ingresar el email y la contraseña";
+            this.alertvariant = "danger";
+            this.showAlert = this.secShowAlert;
+            return;
+          }
+          this.messageAlert = "Por favor espere . . .";
+          this.alertvariant = "info";
+          this.showAlert = this.secShowAlert;
           const response = await fetch('http://localhost:8001/user/authenticate', {
             method: 'POST',
             headers: {
@@ -81,6 +139,12 @@ export default {
               password: this.password
             })
           });
+          if(response.status == 404){
+            this.messageAlert = "Inicio de sesion fallido, compruebe sus credenciales";
+            this.alertvariant = "danger";
+            this.showAlert = this.secShowAlert;
+            return;
+          }
           const user = (await response.json());
           if(!this.$session.exists()){
             this.$session.start()
@@ -88,19 +152,81 @@ export default {
           this.$session.set('user', user);
           this.username = user['name'] + ' ' + user['lastName'];
           this.avatarname = user['name'][0] + user['lastName'][0];
+          this.messageAlert = "Inicio de sesion exitoso";
+          this.alertvariant = "success";
         } catch (err) {
-          alert("Login failed")
+          this.messageAlert = "El servidor no responde";
+          this.alertvariant = "danger";
         }
+        this.showAlert = this.secShowAlert;
     },
     logout(){
       this.$session.remove('user');
+      this.$session.destroy()
       this.username = '';
       this.avatarname = ''
-    }
+      this.resetModal()
+    },
+    async register(){
+      try {
+        if(!this.email || !this.password || !this.name || !this.lastName || !this.id){
+          this.messageAlert = "Debe ingresar el Id, Nombre, Apellido, email y contraseña";
+          this.alertvariant = "danger";
+          this.showAlert = this.secShowAlert;
+          return;
+        }
+        if(this.password.length != 8 || /\d/.test(this.password) || 
+          /[a-z]/.test(this.password) || /[A-Z]/.test(this.password) || 
+          /\W/.test(this.password))
+        {
+          this.messageAlert = "La contraseña debe contener al menos: 8 Caracteres, un Numero, un Caracter Especial, una Mayúscula y una Minúscula";
+          this.alertvariant = "warning";
+          this.showAlert = this.secShowAlert * 2;
+          return;
+        }
+        this.messageAlert = "Por favor espere . . .";
+        this.alertvariant = "info";
+        this.showAlert = this.secShowAlert;
+        const response = await fetch('http://localhost:8001/user', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: this.name,
+            lastName: this.lastName,
+            email: this.email,
+            password: this.password,
+            identification: this.id,
+            country: { id : 1},
+            birthday: new Date(),
+            admin: 0
+          })
+        });
+        if(response.status == 404){
+          this.messageAlert = "Registro fallido";
+          this.alertvariant = "danger";
+          this.showAlert = this.secShowAlert;
+          return;
+        }
+        this.messageAlert = "Registro exitoso, proceda a iniciar sesion";
+        this.alertvariant = "success";
+      } catch (err) {
+        this.messageAlert = "El servidor no responde";
+        this.alertvariant = "danger";
+      }
+      this.showAlert = this.secShowAlert;
+    },
   }
 }
 
 </script>
 
 <style scoped>
+.alert-content{
+  position:absolute; z-index:1;
+  margin-left: 40%;
+  margin-top: 1%;
+}
+
 </style>
