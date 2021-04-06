@@ -17,23 +17,19 @@
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand>
         <h3>
-        <b-icon-map-fill variant="warning" rotate="-10"></b-icon-map-fill> 
         GetYourTour
+        <b-icon-flag-fill variant="warning" rotate="-10"></b-icon-flag-fill> 
         </h3>
       </b-navbar-brand>
       <template v-if="username !== ''">
         <b-navbar-nav class="ml-auto">
-            <b-nav-item disabled>Bienvenido</b-nav-item>
+            <b-nav-item disabled >Bienvenido</b-nav-item>
             <b-nav-item-dropdown right>
               <template #button-content>
                 <em>
                   {{ username }}
                 </em>
               </template>
-              <b-dropdown-item-button href="#">
-                <b-icon icon="person-fill" aria-hidden="true"></b-icon>
-                Perfil
-              </b-dropdown-item-button>
               <b-dropdown-item-button v-on:click="logout">
                 <b-icon icon="power" aria-hidden="true"></b-icon>
                 Cerrar Sesion
@@ -93,9 +89,16 @@
 export default {
   name: 'Navbar',
   data(){
+    let usernamePrev = ''
+    let avatarnamePrev = ''
+    if(this.$session.exists() && this.$session.get('user')){
+      let user = this.$session.get('user')
+      usernamePrev = user['name'] + ' ' + user['lastName'];
+      avatarnamePrev = user['name'][0] + user['lastName'][0];
+    }
     return {
-      username: "",
-      avatarname: "",
+      username: usernamePrev,
+      avatarname: avatarnamePrev,
       email: "",
       password: "",
       messageAlert: "",
