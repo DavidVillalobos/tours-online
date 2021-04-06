@@ -14,11 +14,11 @@
         <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
       </template>
     </b-alert>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
+    <b-navbar type="dark" variant="dark">
       <b-navbar-brand>
         <h3>
-        GetYourTour
-        <b-icon-flag-fill variant="warning" rotate="-10"></b-icon-flag-fill> 
+        <b-icon-flag-fill variant="warning" rotate="-10" ></b-icon-flag-fill> 
+        Get Your Tour
         </h3>
       </b-navbar-brand>
       <template v-if="username !== ''">

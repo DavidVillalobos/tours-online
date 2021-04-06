@@ -3,22 +3,13 @@
     <b-card id="card-search" bg-variant="dark" class="text-center">
       <b-row class="text-light">
         <b-col>
-          <h3> 
-            <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill>
-            Lugar  
-          </h3> 
+          <h3> <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill>Lugar </h3> 
         </b-col>
         <b-col>
-          <h3> 
-            <b-icon-arrow-up-circle variant="success"></b-icon-arrow-up-circle>
-            Salida  
-          </h3> 
+          <h3> <b-icon-arrow-up-circle-fill variant="success"></b-icon-arrow-up-circle-fill> Salida  </h3> 
         </b-col>
         <b-col>
-          <h3> 
-            <b-icon-arrow-down-circle variant="danger"></b-icon-arrow-down-circle>
-            LLegada  
-          </h3> 
+          <h3> <b-icon-arrow-down-circle-fill variant="danger"></b-icon-arrow-down-circle-fill> LLegada </h3> 
         </b-col>
         <b-col cols="2"></b-col>
       </b-row>
@@ -42,13 +33,13 @@
           </b-form-datepicker>
         </b-col>
         <b-col cols="1">
-          <b-button block variant="success" @click="filterTours">
-            <b-icon-search variant="dark"></b-icon-search> 
+          <b-button block variant="info" @click="filterTours">
+            <b-icon-search variant="light"></b-icon-search> 
           </b-button>
         </b-col>
         <b-col cols="1">
-          <b-button block variant="danger" @click="cleanTours">
-            <b-icon-trash variant="dark"></b-icon-trash> 
+          <b-button block variant="info" @click="cleanTours">
+            <b-icon-trash variant="light"></b-icon-trash> 
           </b-button>
         </b-col>
       </b-row>
@@ -72,7 +63,7 @@
         <b-col cols=12 class="text-left">
             <div class=" text-dark">
               <h4>
-                <b-badge variant="warning" v-show="placeTitle !== ''"> Lugar: {{ placeTitle }} </b-badge>
+                <b-badge variant="warning" v-show="placeTitle !== ''"> {{ placeTitle }} </b-badge>
                 <b-badge variant="primary">{{ tours.length }} Actividades encontradas</b-badge> 
               </h4>
             </div>
@@ -157,7 +148,6 @@ export default {
         this.showAlert = dismissCountDown
     },
     async filterTours(){
-      this.searched = true;
       this.placeTitle = '';
       this.departureTitle = '';
       this.arrivalTitle = '';
@@ -184,6 +174,7 @@ export default {
         this.alertvariant = "danger";
         this.showAlert = this.secShowAlert;
       }
+      this.searched = true;
     },
     cleanTours(){
        this.tours = [];
@@ -193,7 +184,11 @@ export default {
        this.searched = false;
     },
     viewTour(tour){
-      alert("Got to tour " + tour.name)
+      if(!this.$session.exists()){
+        this.$session.start()
+      }
+      this.$session.set('tour', tour);
+      window.location.href = 'http://localhost:8002/tour';
     },
     hexToBase64(str) {
       return 'data:image/jpeg;base64,' + str;
