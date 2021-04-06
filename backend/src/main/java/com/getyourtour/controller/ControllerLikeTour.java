@@ -63,7 +63,7 @@ public class ControllerLikeTour {
         }
     }
 
-    @PostMapping("/like")
+    @PostMapping("/like/tour/user")
     public int addLikeTour(@RequestBody LikeTour likeTour){
         try{
             return service.addLikeTour(likeTour);
@@ -82,9 +82,9 @@ public class ControllerLikeTour {
     }
 
     @DeleteMapping("/like/tour/user")
-    public int deleteLikeTourByTourAndUser(@RequestParam Integer id_tour, @RequestParam Integer id_user){
+    public int deleteLikeTourByTourAndUser(@RequestBody LikeTour likeTour){
         try{
-            return service.deleteLikeTour(id_tour, id_user);
+            return service.deleteLikeTour(likeTour);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Like not found", e);
         }

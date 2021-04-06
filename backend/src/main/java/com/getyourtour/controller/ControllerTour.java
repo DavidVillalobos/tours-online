@@ -21,18 +21,18 @@ public class ControllerTour {
     private final ServiceTour service = new ServiceTour();
 
     @GetMapping("/tour")
-    public Tour get(@RequestParam Integer id){
+    public Tour get(@RequestParam Integer id, @RequestParam(defaultValue = "0") Integer id_user){
         try{
-            return service.getTour(id);
+            return service.getTour(id, id_user);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
         }
     }
 
     @GetMapping("/tours")
-    public List<Tour> getAllTours() {
+    public List<Tour> getAllTours(@RequestParam(defaultValue = "0") Integer id_user) {
         try{
-            return service.getAllTours();
+            return service.getAllTours(id_user);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tours not found", e);
         }
@@ -41,9 +41,10 @@ public class ControllerTour {
     @GetMapping("/tours/filter")
     public List<Tour> getFilterTours(@RequestParam(defaultValue = "") String place,
                                      @RequestParam(defaultValue = "") String departure,
-                                     @RequestParam(defaultValue = "") String arrival){
+                                     @RequestParam(defaultValue = "") String arrival,
+                                     @RequestParam(defaultValue = "0") Integer id_user){
         try{
-            return service.getFilterTours(place, departure, arrival);
+            return service.getFilterTours(place, departure, arrival, id_user);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tours not found", e);
         }
