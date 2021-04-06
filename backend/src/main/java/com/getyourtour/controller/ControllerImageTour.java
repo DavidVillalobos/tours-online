@@ -30,7 +30,16 @@ public class ControllerImageTour {
     @GetMapping("/only-image")
     public byte[] getImage(@RequestParam Integer id){
         try{
-            return service.getOnlyImageTour(id);
+            return service.getOnlyImage(id);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
+        }
+    }
+
+    @GetMapping("/only-image/tour")
+    public byte[] getImageByTour(@RequestParam Integer id_tour){
+        try{
+            return service.getOnlyImageTour(id_tour);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image not found", e);
         }

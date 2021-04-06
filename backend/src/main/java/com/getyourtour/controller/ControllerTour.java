@@ -21,9 +21,9 @@ public class ControllerTour {
     private final ServiceTour service = new ServiceTour();
 
     @GetMapping("/tour")
-    public Tour get(@RequestParam Integer id, @RequestParam(defaultValue = "0") Integer id_user){
+    public Tour get(@RequestParam Integer id, @RequestParam(defaultValue = "0") Integer id_user, @RequestParam(defaultValue = "true") Boolean simpleTour){
         try{
-            return service.getTour(id, id_user);
+            return service.getTour(id, id_user, simpleTour);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
         }

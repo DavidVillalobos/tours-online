@@ -20,6 +20,10 @@ public class ServiceImageTour {
         return dao_image_Tour.get(id);
     }
 
+    public byte[] getOnlyImage(Integer id) throws Exception {
+        return dao_image_Tour.getOnlyImage(id);
+    }
+
     public byte[] getOnlyImageTour(Integer id_tour) throws Exception {
         return dao_image_Tour.getOnlyImageByTour(id_tour);
     }

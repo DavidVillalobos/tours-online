@@ -19,8 +19,8 @@ public class ServiceTour {
 
     private final DaoTour dao_tour = new DaoTour();
 
-    public Tour getTour(Integer id, Integer id_user) throws Exception {
-        return dao_tour.get(id, id_user, false);
+    public Tour getTour(Integer id, Integer id_user, Boolean simpleTour) throws Exception {
+        return dao_tour.get(id, id_user, simpleTour);
     }
 
     public List<Tour> getAllTours(Integer id_user) throws Exception {
