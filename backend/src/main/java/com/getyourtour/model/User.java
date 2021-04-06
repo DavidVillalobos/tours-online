@@ -28,7 +28,7 @@ public class User {
         this.name = "";
         this.lastName = "";
         this.identification = "";
-        this.birthday = null;
+        this.birthday = new Date();
         this.admin = 0;
     }
 
