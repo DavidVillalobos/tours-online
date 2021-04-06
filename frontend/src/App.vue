@@ -19,13 +19,16 @@ export default {
 </script>
 
 <style>
-
-#app{
-  background-color: #55567c
+html, #app{
+  background-image: url("../src/assets/background.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 #search{
-  margin: 3% 5% 0% 5%;
+  margin: 3% 3% 0% 3%;
 }
 
 </style>
