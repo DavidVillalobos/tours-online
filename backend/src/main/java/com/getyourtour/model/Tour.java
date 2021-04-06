@@ -28,6 +28,7 @@ public class Tour {
     private Short rating;
     private String includes;
     private String notIncludes;
+    private Boolean liked;
 
     public Tour() {
         this.id = 0;
@@ -43,6 +44,7 @@ public class Tour {
         this.rating = 0;
         this.includes = "";
         this.notIncludes = "";
+        this.liked = false;
         likes = null;
         images = null;
         comments = null;
@@ -65,6 +67,7 @@ public class Tour {
         this.likes = null;
         this.images = null;
         this.comments = null;
+        this.liked = false;
     }
 
     public Integer getId() {
@@ -199,4 +202,13 @@ public class Tour {
     public void setComments(List<CommentTour> comments) {
         this.comments = comments;
     }
+
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
+    }
+
 }
