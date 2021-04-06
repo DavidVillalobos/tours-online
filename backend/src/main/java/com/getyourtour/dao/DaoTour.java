@@ -22,14 +22,14 @@ public class DaoTour {
     public DaoTour(){
     }
 
-    public Tour get(Integer id, boolean simpleTour) throws Exception {
+    public Tour get(Integer id, Integer id_user, boolean simpleTour) throws Exception {
         try{
             String sql = "SELECT * FROM Tour WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
                 if(simpleTour){
-                    return mapSimple(rs);
+                    return mapSimple(rs, id_user);
                 } else {
                     return map(rs);
                 }
@@ -40,12 +40,12 @@ public class DaoTour {
         }
     }
 
-    public List<Tour> get() throws Exception {
+    public List<Tour> get(Integer id_user) throws Exception {
         List<Tour> tours = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Tour");
             while (resultSet.next()) {
-                tours.add(mapSimple(resultSet));
+                tours.add(mapSimple(resultSet, id_user));
             }
             if(0 == tours.size()){
                 throw new Exception("/tours Does not exist any Tour in DataBase");
@@ -56,7 +56,7 @@ public class DaoTour {
         return tours;
     }
 
-    public List<Tour> getFilterTours(String place, String departure, String arrival) throws Exception {
+    public List<Tour> getFilterTours(String place, String departure, String arrival, Integer id_user) throws Exception {
         List<Tour> tours = new ArrayList<>();
         try{
             if(!place.equals("default")) place = "'" + place + "'";
@@ -65,7 +65,7 @@ public class DaoTour {
             sql = String.format(sql, place, departure, arrival);
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
-                tours.add(mapSimple(rs));
+                tours.add(mapSimple(rs, id_user));
             }
             if(0 == tours.size()){
                 throw new Exception("/tours/filter/ Does not exist any Tour in DataBase with that filter");
@@ -149,7 +149,7 @@ public class DaoTour {
         return result;
     }
 
-    private Tour mapSimple(ResultSet rs)  throws Exception{
+    private Tour mapSimple(ResultSet rs, Integer id_user)  throws Exception{
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         Date date = rs.getDate("StartDate");
@@ -159,9 +159,15 @@ public class DaoTour {
         Short rating = rs.getShort("Rating");
 
         Tour result = new Tour(id, name, "", "", date, 0, reviews, duration, price, rating, "", "");
+        if(id_user != 0) {
+            DaoLikeTour dlt = new DaoLikeTour();
+            Boolean liked = dlt.getByTour(id, id_user);
+            result.setLiked(liked);
+        }
 
         DaoCity dc = new DaoCity();
         DaoImageTour di = new DaoImageTour();
+
         City city = dc.get(rs.getInt("Id_City"));
         List<ImageTour> images = new ArrayList<>();
 

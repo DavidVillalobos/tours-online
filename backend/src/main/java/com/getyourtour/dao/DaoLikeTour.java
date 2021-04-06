@@ -9,6 +9,7 @@ package com.getyourtour.dao;
 import com.getyourtour.model.LikeTour;
 import com.getyourtour.model.Tour;
 import com.getyourtour.model.User;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -120,13 +121,13 @@ public class DaoLikeTour {
         }
     }
 
-    public Integer delete(Integer idTour, Integer idUser) throws Exception {
+    public Integer delete(LikeTour likeTour) throws Exception {
         try{
             String sql="DELETE FROM Like_Tour WHERE Id_Tour=%d AND Id_User=%d";
-            sql = String.format(sql, idTour, idUser);
+            sql = String.format(sql, likeTour.getTour().getId(), likeTour.getUser().getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
-                throw new Exception("Log: DELETE/like/tour={" + idTour + "}&user={" + idUser + "} Does not exist in DataBase");
+                throw new Exception("Log: DELETE/like/tour={" + likeTour.getTour().getId() + "}&user={" + likeTour.getUser().getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){

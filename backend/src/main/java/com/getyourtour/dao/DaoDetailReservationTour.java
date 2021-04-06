@@ -106,7 +106,7 @@ public class DaoDetailReservationTour {
         Integer id = rs.getInt("Id");
         Integer tickets = rs.getInt("Tickets");
         DaoTour dc = new DaoTour();
-        Tour tour = dc.get(rs.getInt("Id_Tour"), true);
+        Tour tour = dc.get(rs.getInt("Id_Tour"), 0, true);
         return new DetailReservationTour(id, null,tour, tickets);
     }
 
