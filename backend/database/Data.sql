@@ -34,7 +34,21 @@ VALUES (1, 'Visita Museo Nacional', 'Museo', 'Tour guiado por el museo nacional 
 '04-29-2021', 20, 0, '02:00', 10.5, 4, 'Almuerzo en el Museo', 'Transporte al lugar')
 -- Insert of Images
 INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
-(SELECT * FROM OPENROWSET(BULK N'C:\img\museo.jpg', SINGLE_BLOB) as T1), 1);
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo1.jpg', SINGLE_BLOB) as T1), 1);
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo2.jpg', SINGLE_BLOB) as T1), 0);
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo3.jpg', SINGLE_BLOB) as T1), 0);
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo4.jpg', SINGLE_BLOB) as T1), 0);
+-- Insert of Comments
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 1, 5, 'Buen lugar para visitar');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 2, 5, 'Sitio con cosas historicas');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 3, 3, 'Falta de zonas para comer');
+-- Insert of Likes
+INSERT INTO Like_Tour(Id_Tour, Id_User) VALUES (1, 1);
+-- Insert of Reservation ...
+-- Insert of DetailReservation ... 
 
 -- SELECTS
 -- SELECT * FROM Country;
@@ -42,3 +56,4 @@ INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1,
 -- SELECT * FROM Tour;
 -- SELECT * FROM [User];
 -- SELECT * FROM Image_Tour;
+-- SELECT * FROM Comment_Tour;
