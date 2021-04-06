@@ -19,22 +19,22 @@ public class ServiceTour {
 
     private final DaoTour dao_tour = new DaoTour();
 
-    public Tour getTour(Integer id) throws Exception {
-        return dao_tour.get(id, false);
+    public Tour getTour(Integer id, Integer id_user) throws Exception {
+        return dao_tour.get(id, id_user, false);
     }
 
-    public List<Tour> getAllTours() throws Exception {
-        return dao_tour.get();
+    public List<Tour> getAllTours(Integer id_user) throws Exception {
+        return dao_tour.get(id_user);
     }
 
-    public List<Tour> getFilterTours(String place, String departure, String arrival) throws Exception {
+    public List<Tour> getFilterTours(String place, String departure, String arrival, Integer id_user) throws Exception {
         if(place.isEmpty()) place = "default";
         if(arrival.isEmpty()) arrival = "default";
         if(departure.isEmpty()){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             departure =  sdf.format(new Date());
         }
-        return dao_tour.getFilterTours(place, departure, arrival);
+        return dao_tour.getFilterTours(place, departure, arrival, id_user);
     }
 
     public int addTour(Tour tour) throws Exception {
