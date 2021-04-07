@@ -55,11 +55,11 @@
       </b-navbar-nav>
       </template>
     </b-navbar>
-    <b-modal id="modal-login" hide-header
-      @show="resetModal" @hidden="resetModal" @ok="login"
+    <b-modal id="modal-login" hide-header body-bg-variant="dark" footer-bg-variant="dark"
+      @show="resetModal" @hidden="resetModal" @ok="login" footer-border-variant="dark"
       cancel-title="Cancelar" ok-title="Iniciar"
     >
-      <h3 class="text-center">
+      <h3 class="text-center text-light">
         <b-icon-person-circle></b-icon-person-circle>
         Inicio de sesion <br><br>
       </h3>
@@ -68,11 +68,11 @@
       <b-form-input placeholder="Contraseña" v-model="password"></b-form-input>
     </b-form-group>
     </b-modal>
-     <b-modal id="modal-register" hide-header
-      @show="resetModal" @hidden="resetModal" @ok="register"
-      cancel-title="Cancelar" ok-title="Registrar"
+     <b-modal id="modal-register" hide-header body-bg-variant="dark" footer-bg-variant="dark"
+      @show="resetModal" @hidden="resetModal" @ok="register" footer-border-variant="dark"
+      cancel-title="Cancelar" ok-title="Registrar" 
     >
-      <h3 class="text-center">
+      <h3 class="text-center text-light">
         <b-icon-person-plus-fill></b-icon-person-plus-fill>
         Registro de usuario <br><br>
       </h3>
