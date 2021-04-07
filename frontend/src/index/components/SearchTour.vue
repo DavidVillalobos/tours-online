@@ -125,6 +125,9 @@
 export default {
   name: 'SearchTour',
   data() {
+    if(this.$session.get('tour')){
+      this.$session.remove('tour');
+    }
     const minDate = new Date()
     return {
       tours: [],
@@ -177,11 +180,11 @@ export default {
       this.searched = true;
     },
     cleanTours(){
-       this.tours = [];
-       this.place = '';
-       this.departure = '';
-       this.arrival = '';
-       this.searched = false;
+      this.tours = [];
+      this.place = '';
+      this.departure = '';
+      this.arrival = '';
+      this.searched = false;
     },
     viewTour(tour){
       if(!this.$session.exists()){
@@ -275,4 +278,5 @@ export default {
   margin-left: 40%;
   margin-top: 1%;
 }
+
 </style>
