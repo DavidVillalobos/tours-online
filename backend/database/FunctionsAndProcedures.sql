@@ -20,9 +20,10 @@ RETURNS TABLE
 AS
 RETURN 
 (
-	SELECT t.Id, t.Id_City, t.Name, t.Category, t.Description, t.StartDate, t.Quota, t.Reviews, t.Duration, t.Price, t.Rating 
+	SELECT t.Id, t.Id_City, t.Name, t.Category, t.Description, t.StartDate, t.Quota, t.Reviews, t.Duration, t.Price, t.Rating , t.Includes, t.NotIncludes
 	FROM Tour t inner join City ci ON t.Id_City = ci.Id inner join Country co ON ci.Id_Country = co.Id 
 	WHERE (co.Name LIKE '%%'+@place+'%%' OR ci.Name LIKE '%%'+@place+'%%') AND (t.StartDate BETWEEN @DepartureDate AND @ArrivalDate)
 )
 GO
 
+-- SELECT * FROM F_FilterTours(default, default, default);
