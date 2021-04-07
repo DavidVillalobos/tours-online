@@ -142,8 +142,8 @@ public class DaoCommentTour {
         String description = rs.getString("Description");
         Tour tour = new Tour();
         tour.setId(rs.getInt("Id_Tour"));
-        User user = new User();
-        user.setId(rs.getInt("Id_User"));
+        DaoUser du = new DaoUser();
+        User user = du.get(rs.getInt("Id_User"));
         return new CommentTour(id, tour, user, rating, description);
     }
 
