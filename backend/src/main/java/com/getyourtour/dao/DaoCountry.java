@@ -26,10 +26,11 @@ public class DaoCountry{
             if(rs.next()){
                 return map(rs);
             }
-            throw new Exception("Log: GET/country/{" + id + "} Does not exist in DataBase");
+            System.out.println("Log: GET/country/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<Country> get() throws Exception {
@@ -43,7 +44,7 @@ public class DaoCountry{
                 throw new Exception("/countries Does not exist any country in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return countries;
     }
@@ -64,8 +65,9 @@ public class DaoCountry{
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer Id) throws Exception {
@@ -78,8 +80,9 @@ public class DaoCountry{
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private Country map(ResultSet rs) throws Exception{

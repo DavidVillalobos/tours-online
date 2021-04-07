@@ -9,7 +9,6 @@ package com.getyourtour.dao;
 import com.getyourtour.model.LikeTour;
 import com.getyourtour.model.Tour;
 import com.getyourtour.model.User;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -32,8 +31,9 @@ public class DaoLikeTour {
             }
             throw new Exception("Log: GET/like/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<LikeTour> get() throws Exception {
@@ -47,12 +47,12 @@ public class DaoLikeTour {
                 throw new Exception("/likes Does not exist any Like_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return likes;
     }
 
-    public List<LikeTour> getByTour(Integer id_tour) throws Exception {
+    public List<LikeTour> getByTour(Integer id_tour){
         List<LikeTour> likes = new ArrayList<>();
         try{
             String sql = "SELECT * from Like_Tour where Id_Tour = %d";
@@ -65,12 +65,12 @@ public class DaoLikeTour {
                 throw new Exception("/likes/{" + id_tour + "} Does not exist any Like_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return likes;
     }
 
-    public List<LikeTour> getByUser(Integer id_user) throws Exception {
+    public List<LikeTour> getByUser(Integer id_user){
         List<LikeTour> likes = new ArrayList<>();
         try{
             String sql = "SELECT * from Like_Tour where Id_User = %d";
@@ -83,20 +83,21 @@ public class DaoLikeTour {
                 throw new Exception("/likes/{" + id_user + "} Does not exist any Like_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return likes;
     }
 
-    public Boolean getByTour(Integer id_tour, Integer id_user) throws Exception {
+    public Boolean getByTour(Integer id_tour, Integer id_user) {
         try{
             String sql = "SELECT * FROM Like_Tour WHERE Id_Tour = %d AND Id_User = %d";
             sql = String.format(sql, id_tour, id_user);
             ResultSet rs = db.executeQuery(sql);
             return rs.next();
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer post(LikeTour c) throws Exception {
@@ -117,8 +118,9 @@ public class DaoLikeTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(LikeTour likeTour) throws Exception {
@@ -131,8 +133,9 @@ public class DaoLikeTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private LikeTour map(ResultSet rs) throws Exception{

@@ -30,8 +30,9 @@ public class DaoReservationTour {
             }
             throw new Exception("/reservation/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<ReservationTour> get() throws Exception {
@@ -45,7 +46,7 @@ public class DaoReservationTour {
                 throw new Exception("Log: GET/reservations Does not exist any ReservationTour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return reservationTours;
     }
@@ -67,8 +68,9 @@ public class DaoReservationTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer Id) throws Exception {
@@ -81,8 +83,9 @@ public class DaoReservationTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private ReservationTour map(ResultSet rs) throws Exception{

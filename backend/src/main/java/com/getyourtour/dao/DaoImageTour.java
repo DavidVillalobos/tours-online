@@ -21,7 +21,7 @@ public class DaoImageTour {
     public DaoImageTour(){
     }
 
-    public ImageTour get(Integer id) throws Exception {
+    public ImageTour get(Integer id){
         try{
             String sql = "SELECT * FROM Image_Tour WHERE Id=%d";
             sql = String.format(sql, id);
@@ -31,10 +31,11 @@ public class DaoImageTour {
             }
             throw new Exception("/image/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
-    public byte[] getOnlyImage(Integer id) throws Exception {
+    public byte[] getOnlyImage(Integer id) {
         try{
             String sql = "select Photo from Image_Tour where Id = %d";
             sql = String.format(sql, id);
@@ -44,11 +45,12 @@ public class DaoImageTour {
             }
             throw new Exception("/only-image/{" + id + "} Does not exist in DataBase");
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
-    public byte[] getOnlyImageByTour(Integer id_tour) throws Exception {
+    public byte[] getOnlyImageByTour(Integer id_tour) {
         try{
             String sql = "select Photo from Image_Tour where Id_Tour = %d";
             sql = String.format(sql, id_tour);
@@ -58,8 +60,9 @@ public class DaoImageTour {
             }
             throw new Exception("/only-image/{" + id_tour + "} Does not exist in DataBase");
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<ImageTour> get() throws Exception {
@@ -73,12 +76,12 @@ public class DaoImageTour {
                 throw new Exception("Log: GET/images Does not exist any Image_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return images;
     }
 
-    public List<ImageTour> getByTour(Integer id_tour) throws Exception {
+    public List<ImageTour> getByTour(Integer id_tour) {
         List<ImageTour> images = new ArrayList<>();
         try{
             String sql = "SELECT * from Image_Tour where Id_Tour = %d";
@@ -91,12 +94,12 @@ public class DaoImageTour {
                 throw new Exception("Log: GET/images/{" + id_tour + "} Does not exist any Image_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return images;
     }
 
-    public ImageTour getMainTourImage(Integer id_tour) throws Exception {
+    public ImageTour getMainTourImage(Integer id_tour) {
         try{
             String sql = "SELECT * from Image_Tour where Id_Tour = %d AND MainPhoto = 1";
             sql = String.format(sql, id_tour);
@@ -106,8 +109,9 @@ public class DaoImageTour {
             }
             throw new Exception("Log: GET/image/main/{" + id_tour + "} Does not exist in DataBase");
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer post(ImageTour c) throws Exception {
@@ -116,8 +120,9 @@ public class DaoImageTour {
             sql = String.format(sql, c.getTour().getId(), Arrays.toString(c.getPhoto()), c.getMainPhoto());
             return db.executeUpdate(sql);
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     // There is not sense in creating a put method, the Image only has foreign keys and Photo its best delete
@@ -132,11 +137,12 @@ public class DaoImageTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
-    public Integer deleteByTour(Integer idTour) throws Exception {
+    public Integer deleteByTour(Integer idTour) {
         try{
             String sql="DELETE FROM Image_Tour WHERE Id_Tour=%d";
             sql = String.format(sql, idTour);
@@ -146,8 +152,9 @@ public class DaoImageTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private ImageTour map(ResultSet rs) throws Exception{

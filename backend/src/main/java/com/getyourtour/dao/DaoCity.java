@@ -47,11 +47,12 @@ public class DaoCity{
             }
             return cities;
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
-    public List<City> getCitiesByCountry(Integer id_country) throws Exception {
+    public List<City> getCitiesByCountry(Integer id_country) {
         List<City> cities = new ArrayList<>();
         try{
             String sql = "SELECT * from City where Id_Country = %d";
@@ -64,7 +65,7 @@ public class DaoCity{
                 throw new SQLException("/cities/country?id=" + id_country + " Does not exist any City in DataBase");
             }
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return cities;
     }
@@ -85,8 +86,9 @@ public class DaoCity{
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer Id) throws Exception {
@@ -99,15 +101,16 @@ public class DaoCity{
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private City map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         DaoCountry dc = new DaoCountry();
-        Country country = dc.get(rs.getInt("Id"));
+        Country country = dc.get(rs.getInt("Id_Country"));
         return new City(id, country, name);
     }
 

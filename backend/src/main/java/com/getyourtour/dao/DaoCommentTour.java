@@ -127,12 +127,13 @@ public class DaoCommentTour {
             sql = String.format(sql, idTour, idUser);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                throw new Exception("Log: DELETE/Comment_Tour/tour={" + idTour + "}&user={" + idUser + "} Does not exist in DataBase");
+                System.out.println("Log: DELETE/Comment_Tour/tour={" + idTour + "}&user={" + idUser + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private CommentTour map(ResultSet rs) throws Exception{

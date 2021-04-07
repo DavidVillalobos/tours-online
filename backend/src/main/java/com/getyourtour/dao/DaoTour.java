@@ -31,7 +31,7 @@ public class DaoTour {
                 if(simpleTour){
                     return mapSimple(rs, id_user);
                 } else {
-                    return map(rs);
+                    return map(rs, id_user);
                 }
             }
             throw new Exception("/tour/{" + id + "} Does not exist in DataBase");
@@ -65,7 +65,7 @@ public class DaoTour {
             sql = String.format(sql, place, departure, arrival);
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
-                tours.add(mapSimple(rs, id_user));
+                tours.add(map(rs, id_user));
             }
             if(0 == tours.size()){
                 throw new Exception("/tours/filter/ Does not exist any Tour in DataBase with that filter");
@@ -115,7 +115,7 @@ public class DaoTour {
         }
     }
 
-    private Tour map(ResultSet rs) throws Exception{
+    private Tour map(ResultSet rs, Integer id_user) throws Exception{
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         String category = rs.getString("Category");
@@ -131,10 +131,15 @@ public class DaoTour {
 
         Tour result = new Tour(id, name, category, description, date, quota, reviews, duration, price, rating, includes, notIncludes);
 
+        DaoLikeTour dl = new DaoLikeTour();
+        if(id_user != 0) {
+            Boolean liked = dl.getByTour(id, id_user);
+            result.setLiked(liked);
+        }
+
         DaoCity dc = new DaoCity();
         DaoCommentTour dct = new DaoCommentTour();
         DaoImageTour di = new DaoImageTour();
-        DaoLikeTour dl = new DaoLikeTour();
 
         City city = dc.get(rs.getInt("Id_City"));
         List<LikeTour> likes = dl.getByTour(id);
@@ -145,7 +150,6 @@ public class DaoTour {
         result.setLikes(likes);
         result.setComments(comments);
         result.setImages(images);
-
         return result;
     }
 

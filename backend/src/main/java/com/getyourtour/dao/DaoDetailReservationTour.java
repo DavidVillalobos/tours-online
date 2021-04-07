@@ -29,8 +29,9 @@ public class DaoDetailReservationTour {
             }
             throw new Exception("/detail-reservation/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<DetailReservationTour> get() throws Exception {
@@ -44,12 +45,12 @@ public class DaoDetailReservationTour {
                 throw new Exception("/details-reservations Does not exist any DetailReservationTour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return details;
     }
 
-    public List<DetailReservationTour> getByReservationTour(Integer idReservationTour) throws Exception {
+    public List<DetailReservationTour> getByReservationTour(Integer idReservationTour) {
         List<DetailReservationTour> details = new ArrayList<>();
         try{
             String sql = "SELECT * from Detail_Reservation_Tour where Id_Reservation_Tour = %d";
@@ -62,7 +63,7 @@ public class DaoDetailReservationTour {
                 throw new Exception("/details-reservations/{" + idReservationTour + "} Does not exist any Like_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return details;
     }
@@ -84,8 +85,9 @@ public class DaoDetailReservationTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer Id) throws Exception {
@@ -98,8 +100,9 @@ public class DaoDetailReservationTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private DetailReservationTour map(ResultSet rs) throws Exception{
