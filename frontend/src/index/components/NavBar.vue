@@ -32,7 +32,9 @@
               </template>
               <b-dropdown-item-button v-on:click="logout">
                 <b-icon icon="power" aria-hidden="true"></b-icon>
-                Cerrar Sesion
+                <em>
+                  Cerrar sesion
+                </em>
               </b-dropdown-item-button>
             </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -47,8 +49,8 @@
           Iniciar Sesion
         </b-button>
         <b-button variant="dark" v-b-modal.modal-register>
-          Registrarse
           <b-icon-person-plus-fill variant="light"></b-icon-person-plus-fill>
+          Registrarse
         </b-button>
       </b-navbar-nav>
       </template>
@@ -91,7 +93,10 @@ export default {
   data(){
     let usernamePrev = ''
     let avatarnamePrev = ''
-    if(this.$session.exists() && this.$session.get('user')){
+    if(!this.$session.exists()){
+      this.$session.start()
+    }
+    if(this.$session.get('user')){
       let user = this.$session.get('user')
       usernamePrev = user['name'] + ' ' + user['lastName'];
       avatarnamePrev = user['name'][0] + user['lastName'][0];
@@ -165,7 +170,6 @@ export default {
     },
     logout(){
       this.$session.remove('user');
-      this.$session.destroy()
       this.username = '';
       this.avatarname = ''
       this.resetModal()
