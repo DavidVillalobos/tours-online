@@ -19,19 +19,19 @@
               <b-col cols=10>
                   <b-carousel
                     id="carousel-1"
-                    :interval="5000"
+                    :interval="3000"
                     controls
                     indicators
                     img-width="1024"
                     img-height="480"
                   >
-                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=1">
+                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=5">
                     </b-carousel-slide>
-                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=2">
+                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=6">
                     </b-carousel-slide >
-                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=3">
+                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=7">
                     </b-carousel-slide>
-                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=4">
+                    <b-carousel-slide id="image" img-src="http://localhost:8001/only-image?id=1">
                     </b-carousel-slide>
                   </b-carousel>
               </b-col>
@@ -82,38 +82,17 @@
 export default {
   name: 'Tour',
   data() {
-    if(!this.$session.exists() || !this.$session.get('tour')){
+    if(!this.$session.exists() ||  
+       !this.$session.get('tour')){
       window.location.href = 'http://localhost:8002';
     }
-    let tourSession = this.$session.get('tour')
     return {
-      tour: tourSession,
+      tour: this.$session.get('tour'),
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
-      secShowAlert: 5,
-      slide: 0,
-      sliding: null
+      secShowAlert: 5
     }
-  },
-  mounted: async function(){
-      let tourId = this.tour.id;
-      let userId = 0;
-      if(this.$session.get('user')){
-        userId = this.$session.get('user').id;
-      }
-      try {
-        const response = await fetch(
-          'http://localhost:8001/tour?' +
-          'id=' + tourId + 
-          '&&id_user=' + userId +
-          '&&simpleTour=false'
-        , {method: 'GET'});
-        this.$session.set('tour', (await response.json()));
-        this.tour = this.$session.get('tour')
-      } catch (err) {
-        console.log(err)
-      }
   },
   methods: {
     countDownChanged(dismissCountDown) {
@@ -121,14 +100,6 @@ export default {
     },
     hexToBase64(str) {
       return 'data:image/jpeg;base64,' + str;
-    },
-    onSlideStart(slide) {
-        this.sliding = true
-        console.log(slide)
-    },
-    onSlideEnd(slide) {
-      this.sliding = false
-      console.log(slide)
     }
   }
 }
