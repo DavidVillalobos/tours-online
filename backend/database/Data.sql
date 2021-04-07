@@ -31,20 +31,37 @@ VALUES(1, '3', '3', 'Giancarlo', 'Alvarado', '333333333', '01-01-1998', 0)
 INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
 Reviews, Duration, Price, Rating, Includes, NotIncludes) 
 VALUES (1, 'Visita Museo Nacional', 'Museo', 'Tour guiado por el museo nacional de Costa Rica',
-'04-29-2021', 20, 0, '02:00', 10.5, 4, 'Almuerzo en el Museo', 'Transporte al lugar')
+'04-29-2021', 20, 0, '02:00', 10.5, 4, 'Almuerzo en el Museo', 'Transporte al lugar');
+INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
+Reviews, Duration, Price, Rating, Includes, NotIncludes) 
+VALUES (9, 'Visita al Museo de Louvre', 'Museo', 'Tour guiado con un historiador atraves del museo de louvre en paris',
+'05-14-2021', 18, 0, '03:45', 15.5, 4, 'Transporte al lugar y fotos en la plaza', 'Alimentacion');
+
 -- Insert of Images
+-- Museo nacional
 INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
-(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo1.jpg', SINGLE_BLOB) as T1), 1);
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museonacional\A.jpg', SINGLE_BLOB) as T1), 1);
 INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
-(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo2.jpg', SINGLE_BLOB) as T1), 0);
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museonacional\B.jpg', SINGLE_BLOB) as T1), 0);
 INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
-(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo3.jpg', SINGLE_BLOB) as T1), 0);
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museonacional\C.jpg', SINGLE_BLOB) as T1), 0);
 INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (1, 
-(SELECT * FROM OPENROWSET(BULK N'C:\img\museo\museo4.jpg', SINGLE_BLOB) as T1), 0);
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museonacional\D.jpg', SINGLE_BLOB) as T1), 0);
+-- Museo louvre
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (2, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museolouvre\A.jpg', SINGLE_BLOB) as T1), 1);
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (2, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museolouvre\B.jpg', SINGLE_BLOB) as T1), 0);
+INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (2, 
+(SELECT * FROM OPENROWSET(BULK N'C:\img\museolouvre\C.jpg', SINGLE_BLOB) as T1), 0);
 -- Insert of Comments
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 1, 5, 'Buen lugar para visitar');
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 2, 5, 'Sitio con cosas historicas');
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 3, 3, 'Falta de zonas para comer');
+-- Museo Nacional
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 1, 5, 'Buen lugar para visitar en familia');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 2, 5, 'Sitio con cosas historicas sobre el pais');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 3, 3, 'No hay zonas para comer');
+-- Museo Louvre
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 3, 5, 'Hermosas pinturas historicas');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 2, 3, 'La entrada es algo costosa');
 -- Insert of Likes
 INSERT INTO Like_Tour(Id_Tour, Id_User) VALUES (1, 1);
 -- Insert of Reservation ...
