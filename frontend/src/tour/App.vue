@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Navbar from './components/NavBar'
+import Navbar from '../index/components/NavBar'
 import Tour from './components/Tour'
 
 export default {
