@@ -27,3 +27,26 @@ RETURN
 GO
 
 -- SELECT * FROM F_FilterTours(default, default, default);
+
+-- TRIGGER FOR UPDATE THE RATING AND REVIEWS WHEN COMMENT IS INSERTED
+CREATE OR ALTER TRIGGER T_Tour_Update_Rating_Reviews ON Comment_Tour 
+AFTER INSERT AS 
+DECLARE @last_rating INT
+DECLARE @last_reviews INT
+DECLARE @new_rating INT
+DECLARE @id_tour INT
+BEGIN
+	SELECT @last_rating = t.Rating, @new_rating = i.Rating, @last_reviews = t.Reviews, @id_tour = i.Id_Tour FROM Tour as t JOIN INSERTED AS i ON t.Id = i.Id_Tour;
+	IF(@last_reviews != 0)
+		BEGIN
+			UPDATE Tour SET Rating = (@last_rating + @new_rating) / 2 WHERE Tour.Id = @id_tour;
+		END
+	ELSE
+		BEGIN
+			UPDATE Tour SET Rating = @new_rating WHERE Tour.Id = @id_tour;
+		END
+	UPDATE Tour SET Reviews = @last_reviews + 1 WHERE Tour.Id = @id_tour;
+END
+
+-- select * from Tour;
+-- select * from Comment_Tour;
