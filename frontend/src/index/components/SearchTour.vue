@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card id="card-search" bg-variant="dark" class="text-center">
+    <b-card id="card-search" bg-variant="dark" class="text-center opacity">
       <b-row class="text-light">
         <b-col>
           <h3> <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill>Lugar </h3> 
@@ -44,7 +44,7 @@
         </b-col>
       </b-row>
     </b-card>
-    <b-card id="result-search" bg-variant="dark">
+    <b-card id="result-search" bg-variant="dark" class="opacity">
       <b-alert
         class="alert-content" 
         dismissible
@@ -81,7 +81,10 @@
                     <b-icon-heart-fill @click="removeLike(tour)" class="like-button" variant="danger"></b-icon-heart-fill>
                   </template>
                   <template v-else>
-                    <b-icon-heart-fill @click="addLike(tour)" class="like-button" variant="secondary"></b-icon-heart-fill>
+                    <b-button block variant="info" @click="filterTours">
+                      <b-icon-search variant="light"></b-icon-search> 
+                      <b-icon-heart-fill @click="addLike(tour)" class="like-button" variant="secondary"></b-icon-heart-fill>
+                    </b-button>
                   </template>
                 </template>
               </b-col>
@@ -107,10 +110,13 @@
     <template v-else>
       <b-row>
         <b-col cols=12>
-          <b-card class="tour text-center">
+          <b-card class="text-center">
             <h5>
-            Busqueda de tours por lugar <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill> <br> 
-            Fecha <b-icon-calendar-month variant="dark"></b-icon-calendar-month> de salida y de llegada
+            GetYourTour  <b-icon-flag-fill variant="warning" rotate="-10" ></b-icon-flag-fill> 
+            ofrece tours y actividades en casi todos los países del planeta <br> 
+            Todos los tours son guiados por verdaderos expertos y apasionados de la materia <br>
+            Busca tours segun el lugar <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill> 
+            o fechas <b-icon-calendar-month variant="dark"></b-icon-calendar-month> 
             </h5>
           </b-card>
         </b-col>
@@ -192,9 +198,6 @@ export default {
       }
       this.$session.set('tour', tour);
       window.location.href = 'http://localhost:8002/tour';
-    },
-    hexToBase64(str) {
-      return 'data:image/jpeg;base64,' + str;
     },
     updateLogin(){
       this.isLogin =  (this.$session.exists() && this.$session.get('user'))
@@ -278,5 +281,7 @@ export default {
   margin-left: 40%;
   margin-top: 1%;
 }
-
+.opacity{
+  opacity: 0.9;
+}
 </style>
