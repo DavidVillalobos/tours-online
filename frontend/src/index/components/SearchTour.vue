@@ -141,12 +141,16 @@ export default {
       placeTitle: '',
       departureTitle: '',
       arrivalTitle: '',
-      isLogin: false,
       searched: false,
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 4,
+    }
+  },
+  computed: {
+    isLogin(){
+      return this.$session.exists() && this.$session.get('user');
     }
   },
   methods: {
@@ -158,7 +162,6 @@ export default {
       this.departureTitle = '';
       this.arrivalTitle = '';
       this.tours = [];
-      this.updateLogin();
       var id_user = 0;
       if(this.isLogin){
         id_user = this.$session.get('user').id;
@@ -195,9 +198,6 @@ export default {
       }
       this.$session.set('tour', tour);
       window.location.href = 'http://localhost:8002/tour';
-    },
-    updateLogin(){
-      this.isLogin =  (this.$session.exists() && this.$session.get('user'))
     },
     async addLike(tour){
       if(this.isLogin){
