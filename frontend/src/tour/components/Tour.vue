@@ -85,9 +85,32 @@
                 <b-badge variant="light"> <h5>${{tour.price}}</h5></b-badge>
                 por persona
               </b-row>
-              <b-row>
-                <b-button pill block variant="primary" >Reserva ya</b-button>
+              <b-row v-show="isLogin" class="justify-content-md-center">
+                 <b-col align-self="center" sm="3">
+                  <label> Tickets: </label>
+                </b-col>
+                <b-col sm="4">
+                  <b-form-input v-model.number="tickets" type="number"></b-form-input>
+                </b-col>
               </b-row>
+              <b-row v-show="isLogin" class="justify-content-md-center mt-3">
+                <b-col cols=8>
+                  <b-button pill block variant="primary" @click="goToShop">Agregar al carrito</b-button>
+                </b-col>
+              </b-row>
+               <b-alert
+        class="alert-content" 
+        dismissible
+        :variant="alertvariant"
+        fade
+        :show="showAlert"
+        @dismissed="showAlert=false"
+        @dismiss-count-down="countDownChanged">
+        {{messageAlert }}
+        <template v-if="messageAlert == 'Por favor espere . . .'">
+          <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
+        </template>
+      </b-alert>
             </b-card>
           </b-col>
         </b-row>
@@ -145,12 +168,18 @@ export default {
     }
     return {
       tour: this.$session.get('tour'),
+      tickets: 1,
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 5
     }
 
+  },
+  computed: {
+    isLogin(){
+      return this.$session.exists() && this.$session.get('user');
+    }
   },
   methods: {
     countDownChanged(dismissCountDown) {
@@ -209,6 +238,16 @@ export default {
       }
       window.location.href = 'http://localhost:8002';
     },
+    goToShop(){
+      if(this.$session.exists() && this.$session.get("user")) {
+        this.$session.remove('tour');
+        window.location.href = 'http://localhost:8002/shop';
+      } else {
+        this.messageAlert = "Para reservar debe iniciar sesion";
+        this.alertvariant = "danger";
+        this.showAlert = this.secShowAlert;
+      }
+    },
   }
 }
 
@@ -225,7 +264,6 @@ export default {
 
 .alert-content{
   position:absolute; z-index:1;
-  margin-left: 40%;
   margin-top: 1%;
 }
 
