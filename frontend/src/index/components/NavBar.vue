@@ -31,7 +31,7 @@
                 </em>
               </template>
               <b-dropdown-item-button v-on:click="logout">
-                <b-icon icon="power" aria-hidden="true"></b-icon>
+                <b-icon icon="box-arrow-in-left" aria-hidden="true"></b-icon>
                 <em>
                   Cerrar sesion
                 </em>

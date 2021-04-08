@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card id="card-search" bg-variant="dark" class="text-center opacity">
+    <b-card id="card-search" bg-variant="dark" class="text-center">
       <b-row class="text-light">
         <b-col>
           <h3> <b-icon-geo-alt-fill variant="danger"></b-icon-geo-alt-fill>Lugar </h3> 
@@ -44,7 +44,7 @@
         </b-col>
       </b-row>
     </b-card>
-    <b-card id="result-search" bg-variant="dark" class="opacity">
+    <b-card id="result-search" bg-variant="dark" class="mt-3">
       <b-alert
         class="alert-content" 
         dismissible
@@ -81,10 +81,7 @@
                     <b-icon-heart-fill @click="removeLike(tour)" class="like-button" variant="danger"></b-icon-heart-fill>
                   </template>
                   <template v-else>
-                    <b-button block variant="info" @click="filterTours">
-                      <b-icon-search variant="light"></b-icon-search> 
-                      <b-icon-heart-fill @click="addLike(tour)" class="like-button" variant="secondary"></b-icon-heart-fill>
-                    </b-button>
+                    <b-icon-heart-fill @click="addLike(tour)" class="like-button" variant="secondary"></b-icon-heart-fill>
                   </template>
                 </template>
               </b-col>
@@ -281,7 +278,6 @@ export default {
   margin-left: 40%;
   margin-top: 1%;
 }
-.opacity{
-  opacity: 0.9;
-}
+
+
 </style>
