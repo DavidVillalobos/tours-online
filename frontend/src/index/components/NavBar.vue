@@ -36,11 +36,15 @@
                   Cerrar sesion
                 </em>
               </b-dropdown-item-button>
-            </b-nav-item-dropdown>
+            </b-nav-item-dropdown>            
         </b-navbar-nav>
         <b-avatar variant="warning">
           <strong> {{ avatarname }} </strong>
         </b-avatar>
+        <b-button size="lg" variant="dark">
+          <b-icon-cart scale="2"></b-icon-cart>
+          <h5 class="items-cart"> {{ cartItems }} </h5>
+        </b-button>
       </template>
       <template v-else>
       <b-navbar-nav class="ml-auto">
@@ -115,6 +119,14 @@ export default {
       id: "",
     }
   },
+  computed: {
+    cartItems(){
+      if(this.$session.exists() && this.$session.get("cart")){
+        return this.$session.get("cart").length;
+      }
+      return 0;
+    }
+  },
   methods: {
     resetModal(){
       this.email = ''
@@ -162,6 +174,7 @@ export default {
           this.avatarname = user['name'][0] + user['lastName'][0];
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
+          window.location.href = 'http://localhost:8002';
         } catch (err) {
           this.messageAlert = "El servidor no responde";
           this.alertvariant = "danger";
@@ -173,6 +186,7 @@ export default {
       this.username = '';
       this.avatarname = ''
       this.resetModal()
+      window.location.href = 'http://localhost:8002';
     },
     async register(){
       try {
@@ -218,6 +232,7 @@ export default {
         }
         this.messageAlert = "Registro exitoso, proceda a iniciar sesion";
         this.alertvariant = "success";
+         window.location.href = 'http://localhost:8002';
       } catch (err) {
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
@@ -234,6 +249,13 @@ export default {
   position:absolute; z-index:1;
   margin-left: 40%;
   margin-top: 1%;
+}
+
+.items-cart{
+  position: absolute; 
+  z-index: 1;
+  margin-left: 9px;
+  margin-top: -30px;
 }
 
 </style>
