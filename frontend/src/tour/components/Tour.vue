@@ -3,10 +3,16 @@
     <b-card class="opacity" bg-variant="dark">
       <b-card class="opacity" bg-variant="light">
         <b-row class="justify-content-md-center"> 
-          <b-col cols=11>
+          <b-col cols=10>
             <h2>              
                 {{tour.city.name}}: {{tour.name}}
             </h2>
+          </b-col>
+          <b-col cols=2>     
+            <b-button variant="warning" @click="returnIndex">
+              <b-icon-arrow90deg-left></b-icon-arrow90deg-left> 
+                Volver
+            </b-button>
           </b-col>
         </b-row> 
         <b-row class="justify-content-md-begin"> 
@@ -36,7 +42,7 @@
           </b-col>
         </b-row>
         <b-row class="justify-content-md-center">
-          <b-carousel style="background-color: #4B5964"
+          <b-carousel id="carousel"
               :interval="3000"
               controls
               indicators
@@ -196,7 +202,13 @@ export default {
           this.showAlert = this.secShowAlert;
         }
       }
-    }
+    },
+    returnIndex(){
+      if(this.$session.exists()){
+        this.$session.remove('tour');
+      }
+      window.location.href = 'http://localhost:8002';
+    },
   }
 }
 
@@ -217,5 +229,8 @@ export default {
   margin-top: 1%;
 }
 
+#carousel{
+  background-color: #35383E;
+}
 
 </style>
