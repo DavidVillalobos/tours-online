@@ -59,12 +59,12 @@ INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES (2,
 
 -- Insert of Comments
 -- Museo Nacional
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 1, 5, 'Buen lugar para visitar en familia');
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 2, 5, 'Sitio con cosas historicas sobre el pais');
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 3, 3, 'No hay zonas para comer');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 1, 4.5, 'Buen lugar para visitar en familia');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 2, 4, 'Sitio con cosas historicas sobre el pais');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (1, 3, 3.5, 'No hay zonas para comer');
 -- Museo Louvre
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 3, 5, 'Hermosas pinturas historicas');
-INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 2, 3, 'La entrada es algo costosa');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 3, 4.9, 'Hermosas pinturas historicas');
+INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES (2, 2, 3.5, 'La entrada es algo costosa');
 -- Insert of Likes
 INSERT INTO Like_Tour(Id_Tour, Id_User) VALUES (1, 1);
 

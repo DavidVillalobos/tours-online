@@ -88,14 +88,14 @@ public class DaoCommentTour {
     }
 
     public Integer post(CommentTour c) throws Exception {
-        String sql = "INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES(%d,%d,%d,'%s')";
+        String sql = "INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES(%d,%d,%f,'%s')";
         sql = String.format(sql, c.getTour().getId(), c.getUser().getId(), c.getRating(), c.getDescription());
         return db.executeUpdate(sql);
     }
 
     public Integer put(CommentTour c) throws Exception {
         try{
-            String sql="UPDATE Comment_Tour SET Rating=%d, Description='%s' WHERE Id=%d";
+            String sql="UPDATE Comment_Tour SET Rating=%f, Description='%s' WHERE Id=%d";
             sql=String.format(sql, c.getRating(), c.getDescription(), c.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
@@ -138,7 +138,7 @@ public class DaoCommentTour {
 
     private CommentTour map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
-        Short rating = rs.getShort("Rating");
+        float rating = rs.getFloat("Rating");
         String description = rs.getString("Description");
         Tour tour = new Tour();
         tour.setId(rs.getInt("Id_Tour"));

@@ -11,7 +11,7 @@ public class CommentTour {
     private Integer id;
     private Tour tour;
     private User user;
-    private Short rating;
+    private float rating;
     private String description;
 
     public CommentTour() {
@@ -22,7 +22,7 @@ public class CommentTour {
         this.description = "";
     }
 
-    public CommentTour(Integer id, Tour tour, User user, Short rating, String description) {
+    public CommentTour(Integer id, Tour tour, User user, float rating, String description) {
         this.id = id;
         this.tour = tour;
         this.user = user;
@@ -54,11 +54,11 @@ public class CommentTour {
         this.user = user;
     }
 
-    public Short getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Short rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

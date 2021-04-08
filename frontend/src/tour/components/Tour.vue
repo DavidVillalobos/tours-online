@@ -19,7 +19,7 @@
           <b-col cols=1>
           </b-col>
           <b-col cols=3>
-            <b-form-rating v-model="tour.rating" size="sm" variant="warning" show-value-max readonly show-value no-border></b-form-rating>
+            <b-form-rating v-model="tour.rating" variant="warning" stars="5" precision="1" show-value-max readonly show-value no-border></b-form-rating>
           </b-col>
           <b-col cols=4>
             <b-badge variant="primary">{{ tour.reviews }} Opiniones </b-badge> 

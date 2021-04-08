@@ -31,15 +31,15 @@ GO
 -- TRIGGER FOR UPDATE THE RATING AND REVIEWS WHEN COMMENT IS INSERTED
 CREATE OR ALTER TRIGGER T_Tour_Update_Rating_Reviews ON Comment_Tour 
 AFTER INSERT AS 
-DECLARE @last_rating INT
+DECLARE @last_rating float
+DECLARE @new_rating float
 DECLARE @last_reviews INT
-DECLARE @new_rating INT
 DECLARE @id_tour INT
 BEGIN
 	SELECT @last_rating = t.Rating, @new_rating = i.Rating, @last_reviews = t.Reviews, @id_tour = i.Id_Tour FROM Tour as t JOIN INSERTED AS i ON t.Id = i.Id_Tour;
 	IF(@last_reviews != 0)
 		BEGIN
-			UPDATE Tour SET Rating = (@last_rating + @new_rating) / 2 WHERE Tour.Id = @id_tour;
+			UPDATE Tour SET Rating = (@last_rating + @new_rating) / 2.0 WHERE Tour.Id = @id_tour;
 		END
 	ELSE
 		BEGIN

@@ -92,7 +92,7 @@
               </b-col> 
               <b-col cols=2 @click="viewTour(tour)">
                 <b-row> 
-                  <b-form-rating v-model="tour.rating" size="sm" variant="warning" show-value-max readonly show-value no-border></b-form-rating>
+                  <b-form-rating v-model="tour.rating" size="sm" variant="warning" stars="5" precision="1" show-value-max readonly show-value no-border></b-form-rating>
                 </b-row>
                 <b-row><b-badge variant="primary">{{tour.reviews}} opiniones </b-badge> </b-row>
                 <b-row> Desde </b-row>

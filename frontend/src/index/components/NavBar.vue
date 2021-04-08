@@ -174,7 +174,9 @@ export default {
           this.avatarname = user['name'][0] + user['lastName'][0];
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
-          window.location.href = 'http://localhost:8002';
+          if(!this.$session.get('tour')){
+            window.location.href = 'http://localhost:8002';
+          }
         } catch (err) {
           this.messageAlert = "El servidor no responde";
           this.alertvariant = "danger";

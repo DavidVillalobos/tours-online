@@ -78,7 +78,7 @@ public class DaoTour {
 
     public Integer post(Tour t) throws Exception {
         String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Date, Quota, Reviews, Duration, " +
-        "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %d,'%s','%s')";
+        "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %f,'%s','%s')";
         sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
                 t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
         return db.executeUpdate(sql);
@@ -87,7 +87,7 @@ public class DaoTour {
     public Integer put(Tour t) throws Exception {
         try{
             String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', Date='%s', Quota=%d, Reviews=%d, Duration='%s', " +
-                    "Price=%f, Rating=%d, Includes='%s', NotIncludes='%s' WHERE Id=%d";
+                    "Price=%f, Rating=%f, Includes='%s', NotIncludes='%s' WHERE Id=%d";
             sql=String.format(sql, t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
                     t.getQuota(), t.getReviews(), t.getDuration().toString(), t.getPrice(), t.getRating(),
                     t.getIncludes(), t.getNotIncludes(), t.getId());
@@ -125,7 +125,7 @@ public class DaoTour {
         Integer reviews = rs.getInt("Reviews");
         Time duration = rs.getTime("Duration");
         float price = rs.getFloat("Price");
-        Short rating = rs.getShort("Rating");
+        float rating = rs.getFloat("Rating");
         String includes = rs.getString("Includes");
         String notIncludes = rs.getString("NotIncludes");
 
@@ -160,7 +160,7 @@ public class DaoTour {
         Integer reviews = rs.getInt("Reviews");
         Time duration = rs.getTime("Duration");
         float price = rs.getFloat("Price");
-        Short rating = rs.getShort("Rating");
+        float rating = rs.getFloat("Rating");
 
         Tour result = new Tour(id, name, "", "", date, 0, reviews, duration, price, rating, "", "");
         if(id_user != 0) {

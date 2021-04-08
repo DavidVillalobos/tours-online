@@ -25,7 +25,7 @@ public class Tour {
     private Integer reviews;
     private Time duration;
     private float price;
-    private Short rating;
+    private float rating;
     private String includes;
     private String notIncludes;
     private Boolean liked;
@@ -50,7 +50,7 @@ public class Tour {
         comments = null;
     }
 
-    public Tour(Integer id, String name, String category, String description, Date date, Integer quota, Integer reviews, Time duration, float price, Short rating, String includes, String notIncludes) {
+    public Tour(Integer id, String name, String category, String description, Date date, Integer quota, Integer reviews, Time duration, float price, float rating, String includes, String notIncludes) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -155,11 +155,11 @@ public class Tour {
         this.price = price;
     }
 
-    public Short getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Short rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
