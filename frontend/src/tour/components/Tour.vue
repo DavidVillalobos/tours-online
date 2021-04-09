@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-card class="opacity" bg-variant="dark">
-      <b-card class="opacity" bg-variant="light">
+    <b-card bg-variant="dark">
+      <b-card bg-variant="light">
         <b-row class="justify-content-md-center"> 
           <b-col cols=10>
             <h2>              
@@ -25,7 +25,7 @@
             <b-badge variant="primary">{{ tour.reviews }} Opiniones </b-badge> 
           </b-col>
           <b-col cols=3>
-            <template v-if="this.$session.exists() && this.$session.get('user')">
+            <template v-if="isLogin">
               <template v-if="tour.liked">
                 <b-button block variant="light" @click="removeLike(tour)">
                   <b-icon-heart-fill class="like-button" variant="danger"></b-icon-heart-fill> 
@@ -62,10 +62,10 @@
             <h3><strong>Informacion general</strong></h3>
             Descripcion: {{tour.description}} <br>
             <b-icon-clock-history></b-icon-clock-history>
-            Duración : {{ tour.duration }} 
+            Duración: {{ tour.duration.split(':')[0]}} : {{tour.duration.split(':')[1]}} 
             <br>
             <b-icon-list-check></b-icon-list-check>
-            Categoria : {{ tour.category }} <br>
+            Categoria: {{ tour.category }} <br>
             <b-icon-calendar></b-icon-calendar>
             Fecha: {{ new Date(tour.date).toLocaleString().split(' ')[0]}} 
             <br>
@@ -76,47 +76,49 @@
             <b-icon-x-circle></b-icon-x-circle>
             No incluye: {{ tour.notIncludes }} <br>
           </b-col>
-          <b-col cols=1>
-          </b-col>
           <b-col cols=4 align-self="center">
-            <b-card>
+            <b-card bg-variant="light" border-variant="light">
               <b-row class="justify-content-md-center">
-                Desde                    
-                <b-badge variant="light"> <h5>${{tour.price}}</h5></b-badge>
-                por persona
+                <b-col cols=10>
+                  Desde                    
+                  <b-button squared disabled variant="light"> <h4><strong>${{tour.price}}</strong></h4></b-button>
+                  por persona
+                </b-col>
               </b-row>
               <b-row v-show="isLogin" class="justify-content-md-center">
-                 <b-col align-self="center" sm="3">
-                  <label> Tickets: </label>
+                 <b-col cols=3>
+                  <b-button squared disabled variant="light"> Tiquetes: </b-button>                  
                 </b-col>
-                <b-col sm="4">
-                  <b-form-input v-model.number="tickets" type="number"></b-form-input>
+                <b-col cols=4>
+                  <b-form-input v-model.number="tickets" :min=1 :max=tour.quota type="number"></b-form-input>
                 </b-col>
               </b-row>
-              <b-row v-show="isLogin" class="justify-content-md-center mt-3">
+              <b-row v-if="isLogin" class="justify-content-md-center mt-3">
                 <b-col cols=8>
-                  <b-button pill block variant="primary" @click="goToShop">Agregar al carrito</b-button>
+                  <b-button variant="primary" @click="addCart(tour)">Agregar al carrito</b-button>
                 </b-col>
               </b-row>
-               <b-alert
-        class="alert-content" 
-        dismissible
-        :variant="alertvariant"
-        fade
-        :show="showAlert"
-        @dismissed="showAlert=false"
-        @dismiss-count-down="countDownChanged">
-        {{messageAlert }}
-        <template v-if="messageAlert == 'Por favor espere . . .'">
-          <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
-        </template>
-      </b-alert>
+              <b-row v-else class="justify-content-md-center mt-3">
+                <b-col cols=8>
+                  Inicia sesión para reservar
+                </b-col>
+              </b-row>
             </b-card>
+            <b-alert 
+              class="alert-content"
+              dismissible
+              :variant="alertvariant"
+              fade
+              :show="showAlert"
+              @dismissed="showAlert=false"
+              @dismiss-count-down="countDownChanged">
+              {{ messageAlert }}
+            </b-alert>
           </b-col>
         </b-row>
       </b-card>
     </b-card>
-    <b-card bg-variant="dark" class="opacity mt-4">
+    <b-card bg-variant="dark" class="mt-4">
       <b-row v-if="tour.comments !== 0">
         <b-col cols=12 class="text-left">
             <div class=" text-dark">
@@ -129,7 +131,7 @@
       <b-card class="mt-2" v-for="(comment, idx) in tour.comments" :key="idx">
         <b-row class="justify-content-md-begin">
           <b-col cols=2>
-            <b-form-rating v-model="comment.rating" variant="warning" readonly no-border></b-form-rating>
+            <b-form-rating v-model="comment.rating" precision="1" show-value stars=5 variant="warning" readonly no-border></b-form-rating>
           </b-col>
         </b-row>
         <b-row class="justify-content-md-center">
@@ -238,14 +240,32 @@ export default {
       }
       window.location.href = 'http://localhost:8002';
     },
-    goToShop(){
+    addCart(){
       if(this.$session.exists() && this.$session.get("user")) {
-        this.$session.remove('tour');
-        window.location.href = 'http://localhost:8002/shop';
-      } else {
-        this.messageAlert = "Para reservar debe iniciar sesion";
-        this.alertvariant = "danger";
-        this.showAlert = this.secShowAlert;
+        var cart = this.$session.get("cart");
+        if(!cart){
+          cart = []
+        }
+        var finded = false;
+        for(let item of cart){
+          if(item.id == this.tour.id){
+            item.tickets += this.tickets;
+            finded = true;
+            break; 
+          }
+        }
+        if(!finded){
+          cart.push( { id : this.tour.id, price : this.tour.price, tickets : this.tickets } )
+        }
+        this.tickets = 1;
+        this.$session.set("cart", cart);
+        this.messageAlert = "Se agregaron " + this.tickets + " tiquetes al carro para el tour " + this.$session.get("tour").name;
+        this.messageAlert += " para reservar y pagar dirijase al carrito";
+        this.alertvariant = "success";
+        this.showAlert = this.secShowAlert * 2;
+        setTimeout(()=>{
+          document.location.reload()
+        }, 5000)
       }
     },
   }
@@ -258,13 +278,8 @@ export default {
   margin-top: 5px;
 }
 
-.opacity{
-  opacity: 0.95;
-}
-
 .alert-content{
   position:absolute; z-index:1;
-  margin-top: 1%;
 }
 
 #carousel{

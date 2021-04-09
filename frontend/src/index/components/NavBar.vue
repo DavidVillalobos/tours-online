@@ -41,7 +41,7 @@
         <b-avatar variant="warning">
           <strong> {{ avatarname }} </strong>
         </b-avatar>
-        <b-button size="lg" variant="dark">
+        <b-button size="lg" variant="dark" @click="gotoShop">
           <b-icon-cart scale="2"></b-icon-cart>
           <h5 class="items-cart"> {{ cartItems }} </h5>
         </b-button>
@@ -95,36 +95,39 @@
 export default {
   name: 'Navbar',
   data(){
-    let usernamePrev = ''
-    let avatarnamePrev = ''
-    if(!this.$session.exists()){
-      this.$session.start()
-    }
-    if(this.$session.get('user')){
-      let user = this.$session.get('user')
-      usernamePrev = user['name'] + ' ' + user['lastName'];
-      avatarnamePrev = user['name'][0] + user['lastName'][0];
+    if(!this.$session.exists()){ this.$session.start() }
+    if(!this.$session.get('cart')){
+      this.$session.set('cart', []);
     }
     return {
-      username: usernamePrev,
-      avatarname: avatarnamePrev,
       email: "",
       password: "",
+      name: "",
+      lastName: "",
+      id: "",
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 4,
-      name: "",
-      lastName: "",
-      id: "",
     }
   },
   computed: {
     cartItems(){
-      if(this.$session.exists() && this.$session.get("cart")){
-        return this.$session.get("cart").length;
+      return this.$session.get("cart").length;
+    },
+    username(){
+      if(this.$session.get('user')){
+        let user = this.$session.get('user')
+        return user['name'] + ' ' + user['lastName'];
       }
-      return 0;
+      return '';
+    },
+    avatarname(){
+      if(this.$session.get('user')){
+        let user = this.$session.get('user')
+        return user['name'][0] + user['lastName'][0];
+      }
+      return '';
     }
   },
   methods: {
@@ -170,11 +173,9 @@ export default {
             this.$session.start()
           }
           this.$session.set('user', user);
-          this.username = user['name'] + ' ' + user['lastName'];
-          this.avatarname = user['name'][0] + user['lastName'][0];
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
-          if(!this.$session.get('tour')){
+          if(!this.$session.get('tour') && window.location.href != 'http://localhost:8002'){
             window.location.href = 'http://localhost:8002';
           }
         } catch (err) {
@@ -185,10 +186,8 @@ export default {
     },
     logout(){
       this.$session.remove('user');
-      this.username = '';
-      this.avatarname = ''
       this.resetModal()
-      window.location.href = 'http://localhost:8002';
+      document.location.reload();
     },
     async register(){
       try {
@@ -234,13 +233,22 @@ export default {
         }
         this.messageAlert = "Registro exitoso, proceda a iniciar sesion";
         this.alertvariant = "success";
-         window.location.href = 'http://localhost:8002';
+        document.location.reload();
       } catch (err) {
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
       }
       this.showAlert = this.secShowAlert;
     },
+    gotoShop(){
+      if(this.cartItems == 0){
+        this.messageAlert = "El carrito esta vacio, agregue algun tour primero";
+        this.alertvariant = "warning";
+        this.showAlert = this.secShowAlert;
+        return;
+      }
+      window.location.href = 'http://localhost:8002/shop';
+    }
   }
 }
 
