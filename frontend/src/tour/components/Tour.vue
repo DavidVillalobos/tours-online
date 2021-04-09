@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <b-card bg-variant="dark">
+  <div v-if="fetchData">
+    <b-card id="card-tour" bg-variant="dark">
       <b-card bg-variant="light">
         <b-row class="justify-content-md-center"> 
           <b-col cols=10>
@@ -21,7 +21,7 @@
           <b-col cols=3>
             <b-form-rating v-model="tour.rating" variant="warning" stars="5" precision="1" show-value-max readonly show-value no-border></b-form-rating>
           </b-col>
-          <b-col cols=4>
+          <b-col cols=4 align-self="center">
             <b-badge variant="primary">{{ tour.reviews }} Opiniones </b-badge> 
           </b-col>
           <b-col cols=3>
@@ -76,30 +76,30 @@
             <b-icon-x-circle></b-icon-x-circle>
             No incluye: {{ tour.notIncludes }} <br>
           </b-col>
-          <b-col cols=4 align-self="center">
+          <b-col cols=4>
             <b-card bg-variant="light" border-variant="light">
-              <b-row class="justify-content-md-center">
+              <b-row align-self="center">
                 <b-col cols=10>
                   Desde                    
                   <b-button squared disabled variant="light"> <h4><strong>${{tour.price}}</strong></h4></b-button>
                   por persona
                 </b-col>
               </b-row>
-              <b-row v-show="isLogin" class="justify-content-md-center">
-                 <b-col cols=3>
+              <b-row v-show="isLogin" align-self="center">
+                 <b-col cols=5>
                   <b-button squared disabled variant="light"> Tiquetes: </b-button>                  
                 </b-col>
-                <b-col cols=4>
+                <b-col cols=5>
                   <b-form-input v-model.number="tickets" :min=1 :max=tour.quota type="number"></b-form-input>
                 </b-col>
               </b-row>
-              <b-row v-if="isLogin" class="justify-content-md-center mt-3">
-                <b-col cols=8>
+              <b-row v-if="isLogin" align-self="center" class="mt-3">
+                <b-col cols=10 class="text-center">
                   <b-button variant="primary" @click="addCart(tour)">Agregar al carrito</b-button>
                 </b-col>
               </b-row>
               <b-row v-else class="justify-content-md-center mt-3">
-                <b-col cols=8>
+                <b-col cols=10>
                   Inicia sesión para reservar
                 </b-col>
               </b-row>
@@ -164,31 +164,53 @@
 export default {
   name: 'Tour',
   data() {
-    if(!this.$session.exists() ||  
-       !this.$session.get('tour')){
+    if(!this.$session.has('idTour')){
       window.location.href = 'http://localhost:8002';
     }
     return {
-      tour: this.$session.get('tour'),
+      tour: {},
+      fetchData: false,
       tickets: 1,
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 5
     }
-
+  },
+  created(){
+    this.loadTour();
   },
   computed: {
     isLogin(){
-      return this.$session.exists() && this.$session.get('user');
+      return this.$session.has('user');
     }
   },
   methods: {
+    async loadTour(){
+      try {
+        let id_user = 0;
+        if(this.$session.has('user')){
+          id_user = this.$session.get('user').id
+        }
+        const response = await fetch(
+          'http://localhost:8001/tour?' +
+          'id=' + this.$session.get('idTour') +
+          '&&id_user=' + id_user +
+          '&&simpleTour=false'
+        , {method: 'GET'});
+        this.tour = await response.json();
+        this.fetchData = true;
+      } catch (err) {
+        this.messageAlert = "El servidor no responde";
+        this.alertvariant = "danger";
+        this.showAlert = this.secShowAlert;
+      }
+    },
     countDownChanged(dismissCountDown) {
         this.showAlert = dismissCountDown
     },
     async addLike(tour){
-      if(this.$session.exists() && this.$session.get('user')){
+      if(this.$session.has('user')){
         var Id_User = this.$session.get('user').id;
         try {
           const response = await fetch('http://localhost:8001/like/tour/user', {
@@ -212,7 +234,7 @@ export default {
       }
     },
     async removeLike(tour){
-      if(this.$session.exists() && this.$session.get('user')){
+      if(this.$session.has('user')){
         var Id_User = this.$session.get('user').id;
         try {
           const response = await fetch('http://localhost:8001/like/tour/user', {
@@ -235,13 +257,11 @@ export default {
       }
     },
     returnIndex(){
-      if(this.$session.exists()){
-        this.$session.remove('tour');
-      }
+      this.$session.remove('tour');
       window.location.href = 'http://localhost:8002';
     },
     addCart(){
-      if(this.$session.exists() && this.$session.get("user")) {
+      if(this.$session.has("user")) {
         var cart = this.$session.get("cart");
         if(!cart){
           cart = []
@@ -250,22 +270,30 @@ export default {
         for(let item of cart){
           if(item.id == this.tour.id){
             item.tickets += this.tickets;
+            item.total = item.tickets * item.price;
             finded = true;
             break; 
           }
         }
         if(!finded){
-          cart.push( { id : this.tour.id, price : this.tour.price, tickets : this.tickets } )
+          cart.push( 
+            { id : this.tour.id, 
+              place : this.tour.city.country.name + ' - ' + this.tour.city.name, 
+              date : this.tour.date, 
+              name : this.tour.name, 
+              price : this.tour.price, 
+              tickets : this.tickets,
+              total : this.tickets * this.tour.price
+            }
+          )
         }
-        this.tickets = 1;
         this.$session.set("cart", cart);
-        this.messageAlert = "Se agregaron " + this.tickets + " tiquetes al carro para el tour " + this.$session.get("tour").name;
+        this.$parent.$children[0].cartItems = cart.length;
+        this.messageAlert = "Se agregaron " + this.tickets + " tiquetes al carro para el tour " + this.tour.name;
         this.messageAlert += " para reservar y pagar dirijase al carrito";
         this.alertvariant = "success";
         this.showAlert = this.secShowAlert * 2;
-        setTimeout(()=>{
-          document.location.reload()
-        }, 5000)
+        this.tickets = 1;
       }
     },
   }
@@ -274,8 +302,9 @@ export default {
 </script>
 
 <style scoped>
-#result-search{
-  margin-top: 5px;
+
+#card-tour{
+  min-width: 400px;
 }
 
 .alert-content{
