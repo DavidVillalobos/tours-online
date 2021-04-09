@@ -65,7 +65,7 @@ public class DaoTour {
             sql = String.format(sql, place, departure, arrival);
             ResultSet rs = db.executeQuery(sql);
             while (rs.next()) {
-                tours.add(map(rs, id_user));
+                tours.add(mapSimple(rs, id_user));
             }
             if(0 == tours.size()){
                 throw new Exception("/tours/filter/ Does not exist any Tour in DataBase with that filter");
