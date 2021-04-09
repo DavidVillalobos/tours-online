@@ -272,12 +272,24 @@ export default {
             item.tickets += this.tickets;
             item.total = item.tickets * item.price;
             finded = true;
+            if(item.tickets > this.tour.quota){
+              this.messageAlert = "No hay suficientes ";
+              this.alertvariant = "danger";
+              this.showAlert = this.secShowAlert;
+              return;
+            }
             break; 
           }
         }
         if(!finded){
+          if(this.tickets > this.tour.quota){
+              this.messageAlert = "No hay suficientes cupos para este tour, disponemos de " + this.tour.quota + " cupos";
+              this.alertvariant = "danger";
+              this.showAlert = this.secShowAlert;
+              return;
+          }
           cart.push( 
-            { id : this.tour.id, 
+            { tour:{id : this.tour.id, quota: this.tour.quota}, 
               place : this.tour.city.country.name + ' - ' + this.tour.city.name, 
               date : this.tour.date, 
               name : this.tour.name, 
