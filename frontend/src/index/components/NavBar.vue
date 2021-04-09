@@ -109,12 +109,10 @@ export default {
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 4,
+      cartItems: this.$session.get("cart").length
     }
   },
   computed: {
-    cartItems(){
-      return this.$session.get("cart").length;
-    },
     username(){
       if(this.$session.get('user')){
         let user = this.$session.get('user')
@@ -175,8 +173,8 @@ export default {
           this.$session.set('user', user);
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
-          if(!this.$session.get('tour') && window.location.href != 'http://localhost:8002'){
-            window.location.href = 'http://localhost:8002';
+          if(!this.$session.get('tour') || window.location.href != 'http://localhost:8002'){
+            document.location.reload();
           }
         } catch (err) {
           this.messageAlert = "El servidor no responde";
