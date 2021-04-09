@@ -92,7 +92,7 @@ export default {
         { key: 'place', label: 'Lugar'}, 
         { key: 'date',  label: "Fecha", sortable: true}, 
         { key: 'name', label: 'Tour'}, 
-        { key: 'price', label: 'Precio', sortable: true},
+        { key: 'price', label: 'Precio por tiquete', sortable: true},
         { key: 'tickets', label: 'Tiquetes', sortable: true},
         { key: 'total', label: 'Total por Tour', sortable: true}
       ],
@@ -139,7 +139,32 @@ export default {
       }
     },
     async confirmPurchase(){
-      alert("Comprado")
+      if(this.$session.has('user')){
+        try {
+        const response = await fetch('http://localhost:8001/reservation', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            user: {
+              id: this.$session.get('user').id
+            },
+            subTotal: this.getSubTotal,
+            total: this.getTotal,
+            details: this.items
+          })
+        });
+        console.log(await response.json());
+        this.messageAlert = "Reservacion realizada con exito, correo con el detalle enviado";
+        this.alertvariant = "success";
+        this.showAlert = this.secShowAlert; 
+        } catch (err) {
+          this.messageAlert = "El servidor no responde";
+          this.alertvariant = "danger";
+        }
+        this.showAlert = this.secShowAlert; 
+      }
     },
     cleanCart(){
       this.items = []
