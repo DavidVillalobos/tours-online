@@ -78,3 +78,5 @@ INSERT INTO Like_Tour(Id_Tour, Id_User) VALUES (1, 1);
 -- SELECT * FROM [User];
 -- SELECT * FROM Image_Tour;
 -- SELECT * FROM Comment_Tour;
+-- SELECT * FROM Reservation_Tour;
+-- SELECT * FROM Detail_Reservation_Tour;
