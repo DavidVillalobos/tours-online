@@ -128,7 +128,7 @@
 export default {
   name: 'SearchTour',
   data() {
-    if(this.$session.get('tour')){
+    if(this.$session.has('tour')){
       this.$session.remove('tour');
     }
     const minDate = new Date()
@@ -150,7 +150,7 @@ export default {
   },
   computed: {
     isLogin(){
-      return this.$session.exists() && this.$session.get('user');
+      return this.$session.has('user');
     }
   },
   methods: {
@@ -196,7 +196,7 @@ export default {
       if(!this.$session.exists()){
         this.$session.start()
       }
-      this.$session.set('tour', tour);
+      this.$session.set('idTour', tour.id);
       window.location.href = 'http://localhost:8002/tour';
     },
     async addLike(tour){
