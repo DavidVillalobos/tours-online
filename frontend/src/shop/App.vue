@@ -1,23 +1,27 @@
 <template>
   <div id="app">
     <Navbar/>
+    <CartShopping/>
   </div>
 </template>
 
 <script>
-import Navbar from './components/NavBar'
+import Navbar from '../index/components/NavBar'
+import CartShopping from './components/CartShopping'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    CartShopping
   }
 }
 </script>
 
 <style>
+
 html, #app{
-  background-image: url("./assets/background.png");
+  background-image: url("../assets/background.png");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;

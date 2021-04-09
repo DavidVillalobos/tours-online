@@ -20,7 +20,7 @@ export default {
 
 <style>
 html, #app{
-  background-image: url("./assets/background.png");
+  background-image: url("../assets/background.png");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
