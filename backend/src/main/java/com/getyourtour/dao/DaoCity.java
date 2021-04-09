@@ -73,7 +73,7 @@ public class DaoCity{
     public Integer post(City c) throws Exception {
         String sql = "INSERT INTO City(Id_Country, Name) VALUES(%d, '%s')";
         sql = String.format(sql, c.getCountry().getId(), c.getName());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(City c) throws Exception {

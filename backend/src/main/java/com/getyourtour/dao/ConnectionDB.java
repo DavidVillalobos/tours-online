@@ -5,11 +5,7 @@
  */
 package com.getyourtour.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class ConnectionDB{
     private static final String server = "DESKTOP-UPQBQ3T\\\\SQLEXPRESS";
@@ -51,6 +47,21 @@ public class ConnectionDB{
             Statement stm = connection.createStatement();
             stm.executeUpdate(statement);
             return stm.getUpdateCount();
+        } catch (SQLException e) {
+            throw new Exception("Error SQLException: " + e.getMessage());
+        }
+    }
+
+    public int executeInsert(String query) throws Exception {
+        try {
+            PreparedStatement pstm = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstm.execute();
+            ResultSet rs = pstm.getGeneratedKeys();
+            int generatedKey = 0;
+            if (rs.next()) {
+                generatedKey = rs.getInt(1);
+            }
+            return generatedKey;
         } catch (SQLException e) {
             throw new Exception("Error SQLException: " + e.getMessage());
         }

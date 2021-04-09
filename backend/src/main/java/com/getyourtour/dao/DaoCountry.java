@@ -52,7 +52,7 @@ public class DaoCountry{
     public Integer post(Country c) throws Exception {
         String sql = "INSERT INTO Country(Name) VALUES('%s')";
         sql = String.format(sql, c.getName());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(Country c) throws Exception {

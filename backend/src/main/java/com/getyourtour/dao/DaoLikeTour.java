@@ -103,7 +103,7 @@ public class DaoLikeTour {
     public Integer post(LikeTour c) throws Exception {
         String sql = "INSERT INTO Like_Tour(Id_User, Id_Tour) VALUES(%d,%d)";
         sql = String.format(sql, c.getUser().getId(), c.getTour().getId());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     // There is not sense in creating a put method, the like only has foreign keys

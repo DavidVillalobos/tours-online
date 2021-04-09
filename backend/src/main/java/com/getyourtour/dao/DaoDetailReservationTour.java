@@ -72,7 +72,7 @@ public class DaoDetailReservationTour {
         String sql = "INSERT INTO Detail_Reservation_Tour(Id_Reservation_Tour, Id_Tour, Tickets)"
         + " VALUES(%d, %d, %d)";
         sql = String.format(sql, d.getReservationTour().getId(), d.getTour().getId(), d.getTickets());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(DetailReservationTour d) throws Exception {

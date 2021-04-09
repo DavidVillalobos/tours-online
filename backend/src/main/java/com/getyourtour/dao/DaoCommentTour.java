@@ -90,7 +90,7 @@ public class DaoCommentTour {
     public Integer post(CommentTour c) throws Exception {
         String sql = "INSERT INTO Comment_Tour(Id_Tour, Id_User, Rating, Description) VALUES(%d,%d,%f,'%s')";
         sql = String.format(sql, c.getTour().getId(), c.getUser().getId(), c.getRating(), c.getDescription());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(CommentTour c) throws Exception {

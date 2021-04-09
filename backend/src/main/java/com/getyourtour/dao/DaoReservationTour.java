@@ -52,10 +52,9 @@ public class DaoReservationTour {
     }
 
     public Integer post(ReservationTour r) throws Exception {
-        String sql = "INSERT INTO Reservation_Tour(Id_User, SubTotal, Total)"
-        + " VALUES(%d, %f, %f)";
-        sql = String.format(sql,r.getUser().getId(), r.getSubTotal(), r.getTotal());
-        return db.executeUpdate(sql);
+        String sql = "INSERT INTO Reservation_Tour(Id_User, SubTotal, Total) VALUES (%d, %f, %f)";
+        sql = String.format(sql, r.getUser().getId(), r.getSubTotal(), r.getTotal());
+        return db.executeInsert(sql);
     }
 
     public Integer put(ReservationTour r) throws Exception {

@@ -69,7 +69,7 @@ public class DaoUser {
         + " VALUES(%d,'%s','%s','%s', '%s', '%s','%s', %d)";
         sql = String.format(sql, u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
                 u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(User u) throws Exception {

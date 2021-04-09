@@ -81,7 +81,7 @@ public class DaoTour {
         "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %f,'%s','%s')";
         sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
                 t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
-        return db.executeUpdate(sql);
+        return db.executeInsert(sql);
     }
 
     public Integer put(Tour t) throws Exception {
@@ -94,6 +94,20 @@ public class DaoTour {
             int result = db.executeUpdate(sql);
             if(result == 0){
                 throw new Exception("Log: PUT/Tour/{" + t.getId() + "} Does not exist in DataBase");
+            }
+            return result;
+        }catch(Exception e){
+            throw new Exception("Exception: " + e.getMessage());
+        }
+    }
+
+    public Integer updateQuota(Tour t) throws Exception {
+        try{
+            String sql="UPDATE Tour SET Quota=%d WHERE Id=%d";
+            sql=String.format(sql, t.getQuota(), t.getId());
+            int result = db.executeUpdate(sql);
+            if(result == 0){
+                throw new Exception("Log: PUT/Tour/Quota/{" + t.getId() + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){
@@ -157,12 +171,13 @@ public class DaoTour {
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         Date date = rs.getDate("StartDate");
+        Integer quota = rs.getInt("Quota");
         Integer reviews = rs.getInt("Reviews");
         Time duration = rs.getTime("Duration");
         float price = rs.getFloat("Price");
         float rating = rs.getFloat("Rating");
 
-        Tour result = new Tour(id, name, "", "", date, 0, reviews, duration, price, rating, "", "");
+        Tour result = new Tour(id, name, "", "", date, quota, reviews, duration, price, rating, "", "");
         if(id_user != 0) {
             DaoLikeTour dlt = new DaoLikeTour();
             Boolean liked = dlt.getByTour(id, id_user);

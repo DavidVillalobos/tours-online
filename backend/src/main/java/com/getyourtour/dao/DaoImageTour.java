@@ -118,7 +118,7 @@ public class DaoImageTour {
         try{
             String sql = "INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES(%d,'%s', %b)";
             sql = String.format(sql, c.getTour().getId(), Arrays.toString(c.getPhoto()), c.getMainPhoto());
-            return db.executeUpdate(sql);
+            return db.executeInsert(sql);
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
         }
