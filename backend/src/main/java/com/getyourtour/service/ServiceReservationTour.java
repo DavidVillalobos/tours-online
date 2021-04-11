@@ -48,6 +48,8 @@ public class ServiceReservationTour {
             dao_detail_reservation_tour.post(detail);
             dao_tour.updateQuota(detail.getTour());
         }
+        String to = reservation.getUser().getEmail();
+        EmailService.send(to, "Detalle de reservación #" + id, EmailService.generateBillEmail(reservation));
         return id;
     }
 
