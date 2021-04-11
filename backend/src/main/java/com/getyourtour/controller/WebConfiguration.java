@@ -1,3 +1,10 @@
+/*
+ * File: WebConfiguration.java
+ * author: David Villalobos
+ * Date: 2021/04/11
+ */
+
+
 package com.getyourtour.controller;
 
 import org.springframework.context.annotation.Bean;
@@ -10,7 +17,7 @@ import java.util.Arrays;
 
 
 @Configuration
-public class MyConfiguration {
+public class WebConfiguration {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
