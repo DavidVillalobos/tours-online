@@ -268,7 +268,7 @@ export default {
         }
         var finded = false;
         for(let item of cart){
-          if(item.id == this.tour.id){
+          if(item.tour.id == this.tour.id){
             item.tickets += this.tickets;
             item.total = item.tickets * item.price;
             finded = true;
