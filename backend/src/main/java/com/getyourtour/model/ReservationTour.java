@@ -11,6 +11,7 @@ import java.util.List;
 public class ReservationTour{
     private Integer id;
     private User user;
+    private float commission;
     private float subTotal;
     private float total;
     private List<DetailReservationTour> details;
@@ -18,13 +19,15 @@ public class ReservationTour{
     public ReservationTour() {
         this.id = 0;
         this.user = null;
+        this.commission = 0;
         this.subTotal = 0;
         this.total = 0;
         this.details = null;
     }
 
-    public ReservationTour(Integer id, float subTotal, float total) {
+    public ReservationTour(Integer id, float commission, float subTotal, float total) {
         this.id = id;
+        this.commission = commission;
         this.subTotal = subTotal;
         this.total = total;
         this.user = null;
@@ -37,6 +40,14 @@ public class ReservationTour{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public float getCommission() {
+        return commission;
+    }
+
+    public void setCommission(float commission) {
+        this.commission = commission;
     }
 
     public User getUser() {

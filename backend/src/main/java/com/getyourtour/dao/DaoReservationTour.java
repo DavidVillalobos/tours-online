@@ -52,15 +52,15 @@ public class DaoReservationTour {
     }
 
     public Integer post(ReservationTour r) throws Exception {
-        String sql = "INSERT INTO Reservation_Tour(Id_User, SubTotal, Total) VALUES (%d, %f, %f)";
-        sql = String.format(sql, r.getUser().getId(), r.getSubTotal(), r.getTotal());
+        String sql = "INSERT INTO Reservation_Tour(Id_User, Commission, SubTotal, Total) VALUES (%d, %f, %f, %f)";
+        sql = String.format(sql, r.getUser().getId(), r.getCommission(), r.getSubTotal(), r.getTotal());
         return db.executeInsert(sql);
     }
 
     public Integer put(ReservationTour r) throws Exception {
         try{
-            String sql="UPDATE Reservation_Tour SET SubTotal=%f, Total=%f WHERE Id=%d";
-            sql=String.format(sql, r.getSubTotal(), r.getTotal(), r.getId());
+            String sql="UPDATE Reservation_Tour SET Commission=%f SubTotal=%f, Total=%f WHERE Id=%d";
+            sql=String.format(sql, r.getCommission(), r.getSubTotal(), r.getTotal(), r.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
                 throw new Exception("Log: PUT/reservation/{" + r.getId() + "} Does not exist in DataBase");
@@ -91,7 +91,8 @@ public class DaoReservationTour {
         Integer id = rs.getInt("Id");
         float subtotal = rs.getFloat("SubTotal");
         float total = rs.getFloat("Total");
-        ReservationTour result = new ReservationTour(id, subtotal, total);
+        float commision = rs.getFloat("Commission");
+        ReservationTour result = new ReservationTour(id, commision, subtotal, total);
 
         DaoUser dc = new DaoUser();
         DaoDetailReservationTour dd = new DaoDetailReservationTour();

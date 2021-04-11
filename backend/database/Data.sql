@@ -22,13 +22,15 @@ insert into City(Id_Country, Name) values (5, 'Paris');
 insert into City(Id_Country, Name) values (5, 'Marsella');
 -- Insert of User
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(1, '1', '1', 'David', 'Villalobos', '111111111', '09-07-1999', 1)
+VALUES(1, '1', '1', 'David', 'Villalobos Gonzalez', '111111111', '09-07-1999', 1)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(1, '2', '2', 'Andres', 'Gonzalez', '222222222', '12-28-2004', 0)
+VALUES(2, '2', '2', 'Andres', 'Gonzalez Villalobos', '222222222', '12-28-2004', 0)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(1, '3', '3', 'Giancarlo', 'Alvarado', '333333333', '01-01-1998', 0)
+VALUES(3, '3', '3', 'Giancarlo', 'Alvarado Sanchez', '333333333', '01-01-1998', 0)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(1, '4', '4', 'Maria', 'Arias', '4444444444', '01-01-2000', 0)
+VALUES(3, '4', '4', 'Maria', 'Arias Rodriguez', '4444444444', '01-01-2000', 0)
+INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
+VALUES(4, 'villalobosgonzalezluisdavid@gmail.com', '1', 'Luis David', 'Villalobos González', '117540697', '09-07-1999', 0)
 -- Insert of Tour
 INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
 Reviews, Duration, Price, Rating, Includes, NotIncludes) 

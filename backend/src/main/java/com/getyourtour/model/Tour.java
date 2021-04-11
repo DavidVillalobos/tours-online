@@ -211,4 +211,15 @@ public class Tour {
         this.liked = liked;
     }
 
+    public String getCompletePlace() {
+        String place = "";
+        if(city != null){
+            place = city.getName();
+            if(city.getCountry() != null){
+                place = city.getCountry().getName() + " - " + place;
+            }
+        }
+        return place;
+    }
+
 }

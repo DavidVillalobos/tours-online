@@ -121,4 +121,8 @@ public class User {
         this.admin = admin;
     }
 
+    public String getCompleteName(){
+        return name + " " + lastName;
+    }
+
 }

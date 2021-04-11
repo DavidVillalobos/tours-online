@@ -69,16 +69,16 @@ public class DaoDetailReservationTour {
     }
 
     public Integer post(DetailReservationTour d) throws Exception {
-        String sql = "INSERT INTO Detail_Reservation_Tour(Id_Reservation_Tour, Id_Tour, Tickets)"
-        + " VALUES(%d, %d, %d)";
-        sql = String.format(sql, d.getReservationTour().getId(), d.getTour().getId(), d.getTickets());
+        String sql = "INSERT INTO Detail_Reservation_Tour(Id_Reservation_Tour, Id_Tour, Tickets, Total)"
+        + " VALUES(%d, %d, %d, %f)";
+        sql = String.format(sql, d.getReservationTour().getId(), d.getTour().getId(), d.getTickets(), d.getTotal());
         return db.executeInsert(sql);
     }
 
     public Integer put(DetailReservationTour d) throws Exception {
         try{
-            String sql="UPDATE Detail_Reservation_Tour SET Tickets=%d WHERE Id=%d";
-            sql = String.format(sql, d.getTickets(), d.getId());
+            String sql="UPDATE Detail_Reservation_Tour SET Tickets=%d SET Total=%f WHERE Id=%d";
+            sql = String.format(sql, d.getTickets(), d.getTotal(), d.getId());
             int result = db.executeUpdate(sql);
             if(result == 0){
                 throw new Exception("Log: PUT/detail-reservation/{" + d.getId() + "} Does not exist in DataBase");
@@ -108,9 +108,10 @@ public class DaoDetailReservationTour {
     private DetailReservationTour map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
         Integer tickets = rs.getInt("Tickets");
+        float total = rs.getInt("Total");
         DaoTour dc = new DaoTour();
         Tour tour = dc.get(rs.getInt("Id_Tour"), 0, true);
-        return new DetailReservationTour(id, null,tour, tickets);
+        return new DetailReservationTour(id,null,tour, tickets, total);
     }
 
 }
