@@ -195,9 +195,9 @@ export default {
           this.showAlert = this.secShowAlert;
           return;
         }
-        if(this.password.length != 8 || /\d/.test(this.password) || 
-          /[a-z]/.test(this.password) || /[A-Z]/.test(this.password) || 
-          /\W/.test(this.password))
+        if(this.password.length < 8 || !/\d/.test(this.password) || 
+          !/[a-z]/.test(this.password) || !/[A-Z]/.test(this.password) || 
+          !/\W/.test(this.password))
         {
           this.messageAlert = "La contraseña debe contener al menos: 8 Caracteres, un Numero, un Caracter Especial, una Mayúscula y una Minúscula";
           this.alertvariant = "warning";
@@ -231,7 +231,6 @@ export default {
         }
         this.messageAlert = "Registro exitoso, proceda a iniciar sesion";
         this.alertvariant = "success";
-        document.location.reload();
       } catch (err) {
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
