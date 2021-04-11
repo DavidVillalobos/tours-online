@@ -25,6 +25,13 @@ module.exports = {
       filename: 'shop.html',
       title: 'Get Your Tour/Shop',
       chunks: ['chunk-vendors', 'chunk-common', 'shop']
+    },
+    admin: {
+      entry: 'src/admin/main.js',
+      template: 'public/admin.html',
+      filename: 'admin.html',
+      title: 'Get Your Tour/Admin',
+      chunks: ['chunk-vendors', 'chunk-common', 'admin']
     }
   }
 }

@@ -21,8 +21,26 @@
         Get Your Tour
         </h3>
       </b-navbar-brand>
-      <template v-if="username !== ''">
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="mr-auto">
+          <b-nav-item v-if="isAdmin" variant="dark" @click="gotoAdmin">
+            <b-icon icon="file-earmark-plus-fill"></b-icon>
+            Nuevo tour
+          </b-nav-item>
+          <b-nav-item variant="dark" @click="gotoHome">
+            <b-icon icon="search"></b-icon>
+            Busqueda de tours
+          </b-nav-item>
+           <b-nav-item variant="dark" @click="gotoShop">
+            <b-icon icon="cart"></b-icon>
+            Carro
+          </b-nav-item>
+        </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
+          <template v-if="username !== ''">
             <b-nav-item disabled >Bienvenido</b-nav-item>
             <b-nav-item-dropdown right>
               <template #button-content>
@@ -37,27 +55,24 @@
                 </em>
               </b-dropdown-item-button>
             </b-nav-item-dropdown>            
+            
+            <b-nav-item @click="gotoShop">
+              <b-icon-cart scale="2.5"></b-icon-cart>
+              <h5 class="items-cart"> {{ cartItems }} </h5>
+            </b-nav-item>
+          </template>
+          <template v-else>
+            <b-nav-item v-b-modal.modal-login>
+              <b-icon-person-lines-fill></b-icon-person-lines-fill>
+              Iniciar Sesion
+            </b-nav-item>
+            <b-nav-item v-b-modal.modal-register>
+              <b-icon-person-plus-fill></b-icon-person-plus-fill>
+              Registrarse
+            </b-nav-item>
+          </template>
         </b-navbar-nav>
-        <b-avatar variant="warning">
-          <strong> {{ avatarname }} </strong>
-        </b-avatar>
-        <b-button size="lg" variant="dark" @click="gotoShop">
-          <b-icon-cart scale="2"></b-icon-cart>
-          <h5 class="items-cart"> {{ cartItems }} </h5>
-        </b-button>
-      </template>
-      <template v-else>
-      <b-navbar-nav class="ml-auto">
-        <b-button variant="dark" v-b-modal.modal-login>
-          <b-icon-person-lines-fill variant="light"></b-icon-person-lines-fill>
-          Iniciar Sesion
-        </b-button>
-        <b-button variant="dark" v-b-modal.modal-register>
-          <b-icon-person-plus-fill variant="light"></b-icon-person-plus-fill>
-          Registrarse
-        </b-button>
-      </b-navbar-nav>
-      </template>
+      </b-collapse>
     </b-navbar>
     <b-modal id="modal-login" hide-header body-bg-variant="dark" footer-bg-variant="dark"
       @show="resetModal" @hidden="resetModal" @ok="login" footer-border-variant="dark"
@@ -96,7 +111,7 @@ export default {
   name: 'Navbar',
   data(){
     if(!this.$session.exists()){ this.$session.start() }
-    if(!this.$session.get('cart')){
+    if(!this.$session.has('cart')){
       this.$session.set('cart', []);
     }
     return {
@@ -109,23 +124,30 @@ export default {
       showAlert: 0,
       alertvariant: "",
       secShowAlert: 4,
-      cartItems: this.$session.get("cart").length
+      cartItems: this.$session.get("cart").length,
     }
   },
   computed: {
     username(){
-      if(this.$session.get('user')){
+      if(this.$session.has('user')){
         let user = this.$session.get('user')
         return user['name'] + ' ' + user['lastName'];
       }
       return '';
     },
     avatarname(){
-      if(this.$session.get('user')){
+      if(this.$session.has('user')){
         let user = this.$session.get('user')
         return user['name'][0] + user['lastName'][0];
       }
       return '';
+    },
+    isAdmin(){
+      if(this.$session.has('user')){
+        let user = this.$session.get('user')
+        return user['admin'];
+      }
+      return false;
     }
   },
   methods: {
@@ -173,7 +195,7 @@ export default {
           this.$session.set('user', user);
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
-          if(!this.$session.get('tour') || window.location.href != 'http://localhost:8002'){
+          if(!this.$session.get('tour') || window.location.href != 'http://localhost:8002/'){
             document.location.reload();
           }
         } catch (err) {
@@ -185,7 +207,11 @@ export default {
     logout(){
       this.$session.remove('user');
       this.resetModal()
-      document.location.reload();
+      if(window.location.href == 'http://localhost:8002/admin'){
+        window.location.href = 'http://localhost:8002/'
+      }else{
+        document.location.reload();
+      }
     },
     async register(){
       try {
@@ -245,6 +271,18 @@ export default {
         return;
       }
       window.location.href = 'http://localhost:8002/shop';
+    },
+    gotoHome(){
+      if(this.$session.has('tour')){
+        this.$session.remove('tour')
+      }
+      window.location.href = 'http://localhost:8002/';
+    },
+    gotoAdmin(){
+      if(this.$session.has('tour')){
+        this.$session.remove('tour')
+      }
+      window.location.href = 'http://localhost:8002/admin';
     }
   }
 }
@@ -261,8 +299,8 @@ export default {
 .items-cart{
   position: absolute; 
   z-index: 1;
-  margin-left: 9px;
-  margin-top: -30px;
+  margin-left: 6px;
+  margin-top: -27px;
 }
 
 </style>

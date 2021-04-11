@@ -78,19 +78,19 @@
           </b-col>
           <b-col cols=4>
             <b-card bg-variant="light" border-variant="light">
-              <b-row align-self="center">
-                <b-col cols=10>
+              <b-row>
+                <b-col cols=11 class="text-right">
                   Desde                    
                   <b-button squared disabled variant="light"> <h4><strong>${{tour.price}}</strong></h4></b-button>
                   por persona
                 </b-col>
               </b-row>
-              <b-row v-show="isLogin" align-self="center">
-                 <b-col cols=5>
+              <b-row v-show="isLogin">
+                 <b-col class="text-right">
                   <b-button squared disabled variant="light"> Tiquetes: </b-button>                  
                 </b-col>
-                <b-col cols=5>
-                  <b-form-input v-model.number="tickets" :min=1 :max=tour.quota type="number"></b-form-input>
+                <b-col class="text-left">
+                  <b-form-spinbutton size="lg" v-model.number="tickets" :min=1 :max=tour.quota></b-form-spinbutton>
                 </b-col>
               </b-row>
               <b-row v-if="isLogin" align-self="center" class="mt-3">
