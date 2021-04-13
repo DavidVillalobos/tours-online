@@ -18,13 +18,17 @@ public class DaoCountry{
     public DaoCountry(){
     } 
 
-    public Country get(Integer id) throws Exception {
+    public Country get(Integer id, Boolean complete) throws Exception {
         try{
             String sql = "SELECT * FROM Country WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
-                return map(rs);
+                if (complete) {
+                    return mapComplete(rs);
+                } else {
+                    return map(rs);
+                }
             }
             System.out.println("Log: GET/country/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
@@ -33,12 +37,16 @@ public class DaoCountry{
         return null;
     }
 
-    public List<Country> get() throws Exception {
+    public List<Country> get(Boolean complete) throws Exception {
         List<Country> countries = new ArrayList<>();
         try{
             ResultSet resultSet = db.executeQuery("SELECT * from Country");
             while (resultSet.next()) {
-                countries.add(map(resultSet));
+                if (complete) {
+                    countries.add(mapComplete(resultSet));
+                } else {
+                    countries.add(map(resultSet));
+                }
             }
             if(0 == countries.size()){
                 throw new Exception("/countries Does not exist any country in DataBase");
@@ -89,6 +97,15 @@ public class DaoCountry{
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         return new Country(id, name);
+    }
+
+    private Country mapComplete(ResultSet rs) throws Exception{
+        Integer id = rs.getInt("Id");
+        String name = rs.getString("Name");
+        DaoCity dc = new DaoCity();
+        Country c = new Country(id, name);
+        c.setCities(dc.getCitiesByCountry(id));
+        return c;
     }
 
 }

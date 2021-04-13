@@ -110,7 +110,8 @@ public class DaoCity{
         Integer id = rs.getInt("Id");
         String name = rs.getString("Name");
         DaoCountry dc = new DaoCountry();
-        Country country = dc.get(rs.getInt("Id_Country"));
+        Country country = new Country();
+        country.setId(rs.getInt("Id_Country"));
         return new City(id, country, name);
     }
 

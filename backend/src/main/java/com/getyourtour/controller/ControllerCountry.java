@@ -20,18 +20,18 @@ public class ControllerCountry {
     private final ServiceCountry service = new ServiceCountry();
 
     @GetMapping("/country")
-    public Country get(@RequestParam Integer id){
+    public Country get(@RequestParam Integer id, @RequestParam(defaultValue = "false") Boolean complete){
         try{
-            return service.getCountry(id);
+            return service.getCountry(id, complete);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
         }
     }
 
     @GetMapping("/countries")
-    public List<Country> getAllCountries(){
+    public List<Country> getAllCountries(@RequestParam(defaultValue = "false") Boolean complete){
         try{
-            return service.getAllCountries();
+            return service.getAllCountries(complete);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Countries not found", e);
         }

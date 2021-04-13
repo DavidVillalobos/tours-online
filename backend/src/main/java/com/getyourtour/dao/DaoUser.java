@@ -112,7 +112,7 @@ public class DaoUser {
         Date birthday = rs.getDate("Birthday");
         Integer admin = rs.getInt("Admin");
         DaoCountry dc = new DaoCountry();
-        Country country = dc.get(rs.getInt("Id_Country"));
+        Country country = dc.get(rs.getInt("Id_Country"), false);
         return new User(id, country, email, password, name, lastName, identification, birthday, admin);
     }
 

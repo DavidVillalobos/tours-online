@@ -9,12 +9,12 @@ public class ServiceCountry {
 
     private final DaoCountry dao_country = new DaoCountry();
 
-    public Country getCountry(Integer id) throws Exception {
-        return dao_country.get(id);
+    public Country getCountry(Integer id, Boolean complete) throws Exception {
+        return dao_country.get(id, complete);
     }
 
-    public List<Country> getAllCountries() throws Exception {
-        return dao_country.get();
+    public List<Country> getAllCountries(Boolean complete) throws Exception {
+        return dao_country.get(complete);
     }
 
     public int addCountry(Country country) throws Exception {

@@ -56,8 +56,8 @@ public class CountryTests {
 
 	@Test
 	public void TestGetCountry() throws Exception {
-		assertThat(restTemplate.getForObject("http://localhost:" + port + "/country?id=1",
-				String.class)).contains("{\"id\":1,\"name\":\"Costa Rica\"}");
+		assertThat(restTemplate.getForObject("http://localhost:" + port + "/country?id=1&&complete=false",
+				String.class)).contains("{\"id\":1,\"name\":\"Costa Rica\",\"cities\":null}");
 	}
 
 	/*@Test

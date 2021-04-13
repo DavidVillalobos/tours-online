@@ -77,8 +77,8 @@ public class DaoTour {
     }
 
     public Integer post(Tour t) throws Exception {
-        String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, Date, Quota, Reviews, Duration, " +
-        "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s','%s','%s', %s, %d, %d,'%s',%f, %f,'%s','%s')";
+        String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, StartDate, Quota, Reviews, Duration, " +
+        "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s', '%s', '%s', '%s', %d, %d, '%s', %f, %f, '%s', '%s')";
         sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
                 t.getQuota(), 0, t.getDuration().toString(), t.getPrice(), t.getRating(), t.getIncludes(), t.getNotIncludes());
         return db.executeInsert(sql);
@@ -86,7 +86,7 @@ public class DaoTour {
 
     public Integer put(Tour t) throws Exception {
         try{
-            String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', Date='%s', Quota=%d, Reviews=%d, Duration='%s', " +
+            String sql="UPDATE Tour SET Name='%s', Category='%s', Description='%s', StartDate='%s', Quota=%d, Reviews=%d, Duration='%s', " +
                     "Price=%f, Rating=%f, Includes='%s', NotIncludes='%s' WHERE Id=%d";
             sql=String.format(sql, t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
                     t.getQuota(), t.getReviews(), t.getDuration().toString(), t.getPrice(), t.getRating(),
