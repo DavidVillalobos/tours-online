@@ -21,9 +21,7 @@
         Get Your Tour
         </h3>
       </b-navbar-brand>
-
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-      
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="mr-auto">
           <b-nav-item v-if="isAdmin" variant="dark" @click="gotoAdmin">
@@ -76,8 +74,7 @@
     </b-navbar>
     <b-modal id="modal-login" hide-header body-bg-variant="dark" footer-bg-variant="dark"
       @show="resetModal" @hidden="resetModal" @ok="login" footer-border-variant="dark"
-      cancel-title="Cancelar" ok-title="Iniciar"
-    >
+      cancel-title="Cancelar" ok-title="Iniciar">
       <h3 class="text-center text-light">
         <b-icon-person-circle></b-icon-person-circle>
         Inicio de sesion <br><br>
@@ -89,8 +86,7 @@
     </b-modal>
      <b-modal id="modal-register" hide-header body-bg-variant="dark" footer-bg-variant="dark"
       @show="resetModal" @hidden="resetModal" @ok="register" footer-border-variant="dark"
-      cancel-title="Cancelar" ok-title="Registrar" 
-    >
+      cancel-title="Cancelar" ok-title="Registrar">
       <h3 class="text-center text-light">
         <b-icon-person-plus-fill></b-icon-person-plus-fill>
         Registro de usuario <br><br>

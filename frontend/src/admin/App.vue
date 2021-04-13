@@ -28,7 +28,7 @@ html, #app{
 }
 
 #create-tour{
-  margin: 2% 3% 0% 3%;
+  margin: 3% 3% 0% 3%;
 }
 
 </style>
