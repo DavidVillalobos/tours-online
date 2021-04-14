@@ -31,8 +31,9 @@ public class DaoCommentTour {
             }
             throw new Exception("/Comment_Tour/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<CommentTour> get() throws Exception {
@@ -46,12 +47,12 @@ public class DaoCommentTour {
                 throw new Exception("/comments Does not exist any Comment_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return comments;
     }
 
-    public List<CommentTour> getByTour(Integer id_tour) throws Exception {
+    public List<CommentTour> getByTour(Integer id_tour){
         List<CommentTour> comments = new ArrayList<>();
         try{
             String sql = "SELECT * from Comment_Tour where Id_Tour = %d";
@@ -64,12 +65,12 @@ public class DaoCommentTour {
                 throw new Exception("/comments/{" + id_tour + "} Does not exist any Comment_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return comments;
     }
 
-    public List<CommentTour> getByUser(Integer id_user) throws Exception {
+    public List<CommentTour> getByUser(Integer id_user) {
         List<CommentTour> comments = new ArrayList<>();
         try{
             String sql = "SELECT * from Comment_Tour where Id_User = %d";
@@ -82,7 +83,7 @@ public class DaoCommentTour {
                 throw new Exception("Log: GET/comments/{" + id_user + "} Does not exist any Comment_Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return comments;
     }
@@ -103,8 +104,9 @@ public class DaoCommentTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer Id) throws Exception {
@@ -117,8 +119,9 @@ public class DaoCommentTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public Integer delete(Integer idTour, Integer idUser) throws Exception {
