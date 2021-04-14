@@ -37,7 +37,7 @@ public class ServiceImageTour {
     }
 
     public int addImageTour(ImageTour imageTour) throws Exception {
-        if(Arrays.toString(imageTour.getPhoto()).isEmpty()){
+        if(imageTour.getPhotoBase64().isEmpty()){
             throw new Exception("The Image is required");
         }
         return dao_image_Tour.post(imageTour);

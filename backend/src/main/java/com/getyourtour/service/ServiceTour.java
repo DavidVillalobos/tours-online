@@ -46,7 +46,8 @@ public class ServiceTour {
         }
         int id = dao_tour.post(tour);
         for(ImageTour image : tour.getImages()){
-            image.setId(id);
+            if(image.getTour() == null){  image.setTour(new Tour()); }
+            image.getTour().setId(id);
             dao_image.post(image);
         }
         return id;
