@@ -5,7 +5,7 @@
         <b-row class="justify-content-md-center"> 
           <b-col cols=10>
             <h2>              
-                {{tour.city.name}}: {{tour.name}}
+                {{tour.city.country.name}} - {{tour.city.name}}: {{tour.name}}
             </h2>
           </b-col>
           <b-col cols=2>     
@@ -18,8 +18,8 @@
         <b-row class="justify-content-md-begin"> 
           <b-col cols=1>
           </b-col>
-          <b-col cols=3>
-            <b-form-rating v-model="tour.rating" variant="warning" stars="5" precision="1" show-value-max readonly show-value no-border></b-form-rating>
+          <b-col cols=3 v-show="tour.reviews > 0">
+            <b-form-rating v-model="tour.rating" variant="warning" stars="5" precision="2" show-value-max readonly show-value no-border></b-form-rating>
           </b-col>
           <b-col cols=4 align-self="center">
             <b-badge variant="primary">{{ tour.reviews }} Opiniones </b-badge> 
@@ -43,7 +43,7 @@
         </b-row>
         <b-row class="justify-content-md-center">
           <b-carousel id="carousel"
-              :interval="3000"
+              :interval="4000"
               controls
               indicators
               img-width="1800"
@@ -273,7 +273,7 @@ export default {
             item.total = item.tickets * item.price;
             finded = true;
             if(item.tickets > this.tour.quota){
-              this.messageAlert = "No hay suficientes ";
+              this.messageAlert = "Lo sentimos, ya no hay suficientes cupos";
               this.alertvariant = "danger";
               this.showAlert = this.secShowAlert;
               return;

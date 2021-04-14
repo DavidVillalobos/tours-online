@@ -75,7 +75,7 @@
           <b-card class="tour">
              <b-row>
               <b-col cols=3 class="text-right">
-                <b-img @click="viewTour(tour)" rounded :src="'data:image/jpeg;base64,'+tour.images[0].photo"  fluid alt="Main image Tour"></b-img>
+                <b-img v-if="tour.images && tour.images[0]" @click="viewTour(tour)" rounded :src="'data:image/jpeg;base64,'+tour.images[0].photo"  fluid alt="Main image Tour"></b-img>
                 <template v-if="isLogin">
                   <template v-if="tour.liked">
                     <b-icon-heart-fill @click="removeLike(tour)" class="like-button" variant="danger"></b-icon-heart-fill>
@@ -91,8 +91,8 @@
                 Duración : {{ tour.duration }} <br>
               </b-col> 
               <b-col cols=2 @click="viewTour(tour)">
-                <b-row> 
-                  <b-form-rating v-model="tour.rating" size="sm" variant="warning" stars="5" precision="1" show-value-max readonly show-value no-border></b-form-rating>
+                <b-row v-show="tour.reviews > 0"> 
+                  <b-form-rating v-model="tour.rating" size="sm" variant="warning" stars="5" precision="2" show-value-max readonly show-value no-border></b-form-rating>
                 </b-row>
                 <b-row><b-badge variant="primary">{{tour.reviews}} opiniones </b-badge> </b-row>
                 <b-row> Desde </b-row>
