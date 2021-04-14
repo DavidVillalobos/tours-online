@@ -80,8 +80,8 @@
         Inicio de sesion <br><br>
       </h3>
     <b-form-group>
-      <b-form-input placeholder="Email" v-model="email"></b-form-input><br>
-      <b-form-input placeholder="Contraseña" v-model="password"></b-form-input>
+      <b-form-input placeholder="Email" :state="user.email != ''" v-model="user.email"></b-form-input><br>
+      <b-form-input type="password" :state="user.password != ''" placeholder="Contraseña" v-model="user.password"></b-form-input>
     </b-form-group>
     </b-modal>
      <b-modal id="modal-register" hide-header body-bg-variant="dark" footer-bg-variant="dark"
@@ -92,11 +92,11 @@
         Registro de usuario <br><br>
       </h3>
     <b-form-group>
-      <b-form-input placeholder="Identificacion" v-model="id"></b-form-input><br>
-      <b-form-input placeholder="Nombre" v-model="name"></b-form-input><br>
-      <b-form-input placeholder="Apellido" v-model="lastName"></b-form-input><br>
-      <b-form-input placeholder="Email" v-model="email"></b-form-input><br>
-      <b-form-input placeholder="Password" v-model="password"></b-form-input>
+      <b-form-input placeholder="Identificacion" v-model="user.identification" :state="user.identification != ''"></b-form-input><br>
+      <b-form-input placeholder="Nombre" v-model="user.name" :state="user.name != ''"></b-form-input><br>
+      <b-form-input placeholder="Apellido" v-model="user.lastName" :state="user.lastName != ''"></b-form-input><br>
+      <b-form-input placeholder="Email" v-model="user.email" :state="user.email != ''"></b-form-input><br>
+      <b-form-input type="password" placeholder="Password" v-model="user.password" :state="user.password != ''"></b-form-input>
     </b-form-group>
     </b-modal>
   </div>
@@ -111,11 +111,16 @@ export default {
       this.$session.set('cart', []);
     }
     return {
-      email: "",
-      password: "",
-      name: "",
-      lastName: "",
-      id: "",
+      user: {
+        email: "",
+        password: "",
+        name: "",
+        lastName: "",
+        identification: "",
+        country: { id : 1},
+        birthday: new Date(),
+        admin: 0
+      },
       messageAlert: "",
       showAlert: 0,
       alertvariant: "",
@@ -148,18 +153,21 @@ export default {
   },
   methods: {
     resetModal(){
-      this.email = ''
-      this.password = ''
-      this.name = ''
-      this.lastName = ''
-      this.id = ''
+      this.user.email = '';
+      this.user.password = '';
+      this.user.name = '';
+      this.user.lastName = '';
+      this.user.identification = '';
+      this.country = { id : 1};
+      this.birthday = new Date();
+      this.admin = 0;
     },
     countDownChanged(dismissCountDown) {
         this.showAlert = dismissCountDown
     },
     async login(){
         try {
-          if(!this.email || !this.password){
+          if(!this.user.email || !this.user.password){
             this.messageAlert = "Debe ingresar el email y la contraseña";
             this.alertvariant = "danger";
             this.showAlert = this.secShowAlert;
@@ -170,13 +178,8 @@ export default {
           this.showAlert = this.secShowAlert;
           const response = await fetch('http://localhost:8001/user/authenticate', {
             method: 'POST',
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              email: this.email,
-              password: this.password
-            })
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(this.user)
           });
           if(response.status == 404){
             this.messageAlert = "Inicio de sesion fallido, compruebe sus credenciales";
@@ -205,21 +208,21 @@ export default {
       this.resetModal()
       if(window.location.href == 'http://localhost:8002/admin'){
         window.location.href = 'http://localhost:8002/'
-      }else{
+      }else {
         document.location.reload();
       }
     },
     async register(){
       try {
-        if(!this.email || !this.password || !this.name || !this.lastName || !this.id){
+        if(!this.user.email || !this.user.password || !this.user.name || !this.user.lastName || !this.user.identification){
           this.messageAlert = "Debe ingresar el Id, Nombre, Apellido, email y contraseña";
           this.alertvariant = "danger";
           this.showAlert = this.secShowAlert;
           return;
         }
-        if(this.password.length < 8 || !/\d/.test(this.password) || 
-          !/[a-z]/.test(this.password) || !/[A-Z]/.test(this.password) || 
-          !/\W/.test(this.password))
+        if(this.user.password.length < 8 || !/\d/.test(this.user.password) || 
+          !/[a-z]/.test(this.user.password) || !/[A-Z]/.test(this.user.password) || 
+          !/\W/.test(this.user.password))
         {
           this.messageAlert = "La contraseña debe contener al menos: 8 Caracteres, un Numero, un Caracter Especial, una Mayúscula y una Minúscula";
           this.alertvariant = "warning";
@@ -231,19 +234,8 @@ export default {
         this.showAlert = this.secShowAlert;
         const response = await fetch('http://localhost:8001/user', {
           method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            name: this.name,
-            lastName: this.lastName,
-            email: this.email,
-            password: this.password,
-            identification: this.id,
-            country: { id : 1},
-            birthday: new Date(),
-            admin: 0
-          })
+          headers: { "Content-Type": "application/json"},
+          body: JSON.stringify(this.user)
         });
         if(response.status == 404){
           this.messageAlert = "Registro fallido";
