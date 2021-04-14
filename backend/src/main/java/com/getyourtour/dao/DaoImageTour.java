@@ -9,9 +9,12 @@ package com.getyourtour.dao;
 import com.getyourtour.model.ImageTour;
 import com.getyourtour.model.Tour;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 public class DaoImageTour {
@@ -116,8 +119,10 @@ public class DaoImageTour {
 
     public Integer post(ImageTour c) throws Exception {
         try{
-            String sql = "INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES(%d,'%s', %b)";
-            sql = String.format(sql, c.getTour().getId(), Arrays.toString(c.getPhoto()), c.getMainPhoto());
+            byte[] decoded = Base64.getDecoder().decode(c.getPhotoBase64());
+            String result = "0X" + String.format("%040x", new BigInteger(1, decoded));
+            String sql = "INSERT INTO Image_Tour(Id_Tour, Photo, MainPhoto) VALUES(%d, %s, %d)";
+            sql = String.format(sql, c.getTour().getId(), result, c.getMainPhoto());
             return db.executeInsert(sql);
         } catch(Exception e){
             System.out.println("Exception: " + e.getMessage());
@@ -160,7 +165,7 @@ public class DaoImageTour {
     private ImageTour map(ResultSet rs) throws Exception{
         Integer id = rs.getInt("Id");
         byte[] photo = rs.getBytes("Photo");
-        Boolean mainPhoto = rs.getBoolean("MainPhoto");
+        Integer mainPhoto = rs.getInt("MainPhoto");
         Tour tour = new Tour();
         tour.setId(rs.getInt("Id_Tour"));
         return new ImageTour(id, tour, photo, mainPhoto);

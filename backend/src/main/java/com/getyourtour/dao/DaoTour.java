@@ -10,7 +10,6 @@ import com.getyourtour.model.*;
 
 import java.sql.ResultSet;
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +35,9 @@ public class DaoTour {
             }
             throw new Exception("/tour/{" + id + "} Does not exist in DataBase");
         } catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     public List<Tour> get(Integer id_user) throws Exception {
@@ -51,12 +51,12 @@ public class DaoTour {
                 throw new Exception("/tours Does not exist any Tour in DataBase");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return tours;
     }
 
-    public List<Tour> getFilterTours(String place, String departure, String arrival, Integer id_user) throws Exception {
+    public List<Tour> getFilterTours(String place, String departure, String arrival, Integer id_user) {
         List<Tour> tours = new ArrayList<>();
         try{
             if(!place.equals("default")) place = "'" + place + "'";
@@ -71,7 +71,7 @@ public class DaoTour {
                 throw new Exception("/tours/filter/ Does not exist any Tour in DataBase with that filter");
             }
         } catch(Exception e) {
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
         return tours;
     }
@@ -97,11 +97,12 @@ public class DaoTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
-    public Integer updateQuota(Tour t) throws Exception {
+    public void updateQuota(Tour t) {
         try{
             String sql="UPDATE Tour SET Quota=%d WHERE Id=%d";
             sql=String.format(sql, t.getQuota(), t.getId());
@@ -109,9 +110,8 @@ public class DaoTour {
             if(result == 0){
                 throw new Exception("Log: PUT/Tour/Quota/{" + t.getId() + "} Does not exist in DataBase");
             }
-            return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
     }
 
@@ -125,8 +125,9 @@ public class DaoTour {
             }
             return result;
         }catch(Exception e){
-            throw new Exception("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
         }
+        return null;
     }
 
     private Tour map(ResultSet rs, Integer id_user) throws Exception{
