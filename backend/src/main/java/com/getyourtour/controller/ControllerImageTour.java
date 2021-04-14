@@ -6,12 +6,15 @@
 package com.getyourtour.controller;
 
 import com.getyourtour.model.ImageTour;
+import com.getyourtour.model.Tour;
 import com.getyourtour.service.ServiceImageTour;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ControllerImageTour {
