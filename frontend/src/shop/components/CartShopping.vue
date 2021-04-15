@@ -1,13 +1,16 @@
 <template>
   <div>
-    <b-alert 
+ <b-alert
       dismissible
       :variant="alertvariant"
       fade
       :show="showAlert"
       @dismissed="showAlert=false"
       @dismiss-count-down="countDownChanged">
-      {{ messageAlert }}
+      <h5>
+        <b-icon icon="exclamation-circle-fill" variant=alertvariant> </b-icon>
+        {{ messageAlert }}
+      </h5>
     </b-alert>
     <b-overlay :show="showOverlay">
       <b-card id="cart-shopping" bg-variant="dark">
@@ -132,12 +135,14 @@ export default {
   methods: {
     async viewTour(rowTour){
       try {
+         this.$emit("updateOverlay", true);
         const response = await fetch(
           'http://localhost:8001/tour' +
           '?id=' + rowTour.id + 
           '&&id_user=' + this.$session.get('user').id +
           '&&simpleTour=false'
         , {method: 'GET'});
+         this.$emit("updateOverlay", false);
         let tour = (await response.json());
         this.$session.set('tour', tour);
         window.location.href = 'http://localhost:8002/tour';
@@ -149,8 +154,8 @@ export default {
     },
     async confirmPurchase(){
       if(this.$session.has('user')){
-        this.showOverlay = true;
         try {
+        this.$emit("updateOverlay", true);
         const response = await fetch('http://localhost:8001/reservation', {
           method: 'POST',
           headers: {
@@ -164,16 +169,18 @@ export default {
             details: this.items
           })
         });
+         this.$emit("updateOverlay", false);
         console.log(await response.json());
         this.messageAlert = "Reservacion realizada con exito, correo con el detalle enviado, vaciando carrito...";
         this.alertvariant = "success";
         this.showAlert = this.secShowAlert; 
         setTimeout(()=> { this.cleanCart() }, 4500);
         } catch (err) {
-          this.messageAlert = "El servidor no responde";
+          this.$emit("updateOverlay", false);
+          console.log(err);
+          this.messageAlert = "Reservacion cancelada, el servidor no responde";
           this.alertvariant = "danger";
         }
-        this.showOverlay = false;
         this.showAlert = this.secShowAlert; 
       }
     },
