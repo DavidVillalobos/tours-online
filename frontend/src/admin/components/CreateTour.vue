@@ -1,153 +1,148 @@
 <template>
   <div>
-    <b-alert 
+    <b-alert
       dismissible
       :variant="alertvariant"
       fade
       :show="showAlert"
       @dismissed="showAlert=false"
       @dismiss-count-down="countDownChanged">
-      {{ messageAlert }}
+      <h5>
+        <b-icon icon="exclamation-circle-fill" variant=alertvariant> </b-icon>
+        {{ messageAlert }}
+      </h5>
     </b-alert>
-    <b-overlay :show="showOverlay">
-      <b-modal id="modal-country" hide-header body-bg-variant="dark" footer-bg-variant="dark"
-        @show="resetModal" @hidden="resetModal" @ok="createNewCountry" footer-border-variant="dark"
-        cancel-title="Cancelar" ok-title="Agregar">
-        <h3 class="text-center text-light">
-          <b-icon-map-fill></b-icon-map-fill>
-          Agregar nuevo pais <br><br>
-        </h3>
-      <b-form-group>
-        <b-form-input placeholder="Pais" v-model="newCountry" :state="newCountry != ''"></b-form-input><br>
-      </b-form-group>
-      </b-modal>
-      <b-modal id="modal-city" hide-header body-bg-variant="dark" footer-bg-variant="dark"
-        @show="resetModal" @hidden="resetModal" @ok="createNewCity" footer-border-variant="dark"
-        cancel-title="Cancelar" ok-title="Agregar">
-        <h3 class="text-center text-light">
-          <b-icon-map-fill></b-icon-map-fill>
-          Agregar nueva ciudad <br><br>
-        </h3>
-      <b-form-group class="text-light">
+    <b-modal id="modal-country" hide-header body-bg-variant="dark" footer-bg-variant="dark"
+      @show="resetModal" @hidden="resetModal" @ok="createNewCountry" footer-border-variant="dark"
+      cancel-title="Cancelar" ok-title="Agregar">
+      <h3 class="text-center text-light">
+        <b-icon-map-fill></b-icon-map-fill>
+        Agregar nuevo pais <br><br>
+      </h3>
+    <b-form-group>
+      <b-form-input placeholder="Pais" v-model="newCountry" :state="newCountry != ''"></b-form-input><br>
+    </b-form-group>
+    </b-modal>
+    <b-modal id="modal-city" hide-header body-bg-variant="dark" footer-bg-variant="dark"
+      @show="resetModal" @hidden="resetModal" @ok="createNewCity" footer-border-variant="dark"
+      cancel-title="Cancelar" ok-title="Agregar">
+      <h3 class="text-center text-light">
+        <b-icon-map-fill></b-icon-map-fill>
+        Agregar nueva ciudad <br><br>
+      </h3>
+    <b-form-group class="text-light">
+      <b-row>
+        Pais
+        <b-form-select v-model="countrySelected" :options="countries" @change="loadCities"></b-form-select>
+      </b-row>
+      <b-row class="mt-3">
+        <b-form-input placeholder="Ciudad" :state="newCity != ''" v-model="newCity"></b-form-input><br>
+      </b-row>
+    </b-form-group>
+    </b-modal>
+    <b-card id="card-admin" bg-variant="dark">
+      <b-card bg-variant="light">
+        <h2 class="text-center">
+          <b-icon icon="map-fill"></b-icon>
+          Registro de Tour
+        </h2>
         <b-row>
-          Pais
-          <b-form-select v-model="countrySelected" :options="countries" @change="loadCities"></b-form-select>
-        </b-row>
-        <b-row class="mt-3">
-          <b-form-input placeholder="Ciudad" :state="newCity != ''" v-model="newCity"></b-form-input><br>
-        </b-row>
-      </b-form-group>
-      </b-modal>
-      <b-card id="card-admin" bg-variant="dark">
-        <b-card bg-variant="light">
-          <h2 class="text-center">
-            <b-icon icon="map-fill"></b-icon>
-            Registro de Tour
-          </h2>
-          <b-row>
-            <b-col>
-              <b-row>
-                <b-col>
-                Pais
-                <b-form-select v-model="countrySelected" :state="countrySelected!=null" :options="countries" @change="loadCities"></b-form-select>
-                </b-col>
-                <b-col class="mt-4">
-                  <b-button block variant="secondary" v-b-modal.modal-country>
-                    Agregar país
-                  </b-button>
-                </b-col>
-              </b-row>
-              <b-row>
+          <b-col>
+            <b-row>
               <b-col>
-                Ciudad
-                <b-form-select v-model="citySelected" :state="citySelected!=null" :options="cities" @change="includeCity"></b-form-select>
+              Pais
+              <b-form-select v-model="countrySelected" :state="countrySelected!=null" :options="countries" @change="loadCities"></b-form-select>
               </b-col>
               <b-col class="mt-4">
-                <b-button block variant="secondary" v-b-modal.modal-city>
-                Agregar ciudad
+                <b-button block variant="secondary" v-b-modal.modal-country>
+                  Agregar país
                 </b-button>
               </b-col>
-              </b-row>
-              Nombre
-              <b-form-input v-model="tour.name" :state="tour.name!=''"></b-form-input>
-              Categoria
-              <b-form-input v-model="tour.category" :state="tour.category!=''"></b-form-input>
-            </b-col>
+            </b-row>
+            <b-row>
             <b-col>
-              Descripcion
-              <b-form-textarea no-resize rows=4 v-model="tour.description" :state="tour.description!=''"></b-form-textarea>
-              <b-row>
-                <b-col>
-                  Fecha
-                  <b-form-datepicker dark label-help="" :state="tour.date!=''" 
-                  placeholder=" " hide-header 
-                  v-model="tour.date" :min="min"  
-                  :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                  locale="es"></b-form-datepicker>
-                </b-col>
-                <b-col>
-                  Duración
-                  <b-form-timepicker placeholder=" " label-close-button="Cerrar" :state="tour.duration!=''" v-model="tour.duration" hide-header></b-form-timepicker>
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col>
-                  Cupo
-                  <b-form-spinbutton v-model="tour.quota" min:1 value=1 ></b-form-spinbutton>
-                </b-col>
-                <b-col>
-                  Precio en Dolares
-                  <b-form-input v-model="tour.price" min:1 type="number"></b-form-input>
-                </b-col>
-              </b-row>
+              Ciudad
+              <b-form-select v-model="citySelected" :state="citySelected!=null" :options="cities" @change="includeCity"></b-form-select>
             </b-col>
-            <b-col>
-              <b-row>
-                  Incluye
-                <b-form-input v-model="tour.includes" :state="tour.includes!=''"></b-form-input>
-                  No incluye
-                <b-form-input v-model="tour.notIncludes" :state="tour.notIncludes!=''"></b-form-input>
-                  Imagenes
-                  <b-form-file id="images" v-model="imagesForm" multiple accept="image/*" 
-                  placeholder='Seleccione multiples imagenes' browse-text='' @change="loadFiles"></b-form-file>
-              </b-row>
-              <b-row class="mt-4">
-                <b-col>
-                  Imagen Principal
-                </b-col>
-                <b-col>
-                  <b-form-select v-model="mainImageSelected" :options="imageNames" @change="updateMainImage"></b-form-select>
-                </b-col>
-              </b-row>
-            </b-col>
-          </b-row>
-          <b-row class="mt-3 text-center">
-            <b-col>
-              <b-button variant="secondary" @click="resetForm">
-                Limpiar
+            <b-col class="mt-4">
+              <b-button block variant="secondary" v-b-modal.modal-city>
+              Agregar ciudad
               </b-button>
             </b-col>
-            <b-col>
-              <b-button variant="primary" @click="createNewTour">
-                Registrar
-              </b-button>
-            </b-col>
-            <b-col>
-              <b-button variant="danger" @click="resetImages()">
-                <b-icon-trash variant="light"></b-icon-trash>
-                Eliminar Imagenes 
-              </b-button>
-            </b-col>
-          </b-row>
-        </b-card>
+            </b-row>
+            Nombre
+            <b-form-input v-model="tour.name" :state="tour.name!=''"></b-form-input>
+            Categoria
+            <b-form-input v-model="tour.category" :state="tour.category!=''"></b-form-input>
+          </b-col>
+          <b-col>
+            Descripcion
+            <b-form-textarea no-resize rows=4 v-model="tour.description" :state="tour.description!=''"></b-form-textarea>
+            <b-row>
+              <b-col>
+                Fecha
+                <b-form-datepicker dark label-help="" :state="tour.date!=''" 
+                placeholder=" " hide-header 
+                v-model="tour.date" :min="min"  
+                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                locale="es"></b-form-datepicker>
+              </b-col>
+              <b-col>
+                Duración
+                <b-form-timepicker placeholder=" " label-close-button="Cerrar" :state="tour.duration!=''" v-model="tour.duration" hide-header></b-form-timepicker>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                Cupo
+                <b-form-spinbutton v-model="tour.quota" min:1 value=1 ></b-form-spinbutton>
+              </b-col>
+              <b-col>
+                Precio en Dolares
+                <b-form-input v-model="tour.price" min:1 type="number"></b-form-input>
+              </b-col>
+            </b-row>
+          </b-col>
+          <b-col>
+            <b-row>
+                Incluye
+              <b-form-input v-model="tour.includes" :state="tour.includes!=''"></b-form-input>
+                No incluye
+              <b-form-input v-model="tour.notIncludes" :state="tour.notIncludes!=''"></b-form-input>
+                Imagenes
+                <b-form-file id="images" v-model="imagesForm" multiple accept="image/*" 
+                placeholder='Seleccione multiples imagenes' browse-text='' @change="loadFiles"></b-form-file>
+            </b-row>
+            <b-row class="mt-4">
+              <b-col>
+                Imagen Principal
+              </b-col>
+              <b-col>
+                <b-form-select v-model="mainImageSelected" :options="imageNames" @change="updateMainImage"></b-form-select>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+        <b-row class="mt-3 text-center">
+          <b-col>
+            <b-button variant="secondary" @click="resetForm">
+              Limpiar
+            </b-button>
+          </b-col>
+          <b-col>
+            <b-button variant="primary" @click="createNewTour">
+              Registrar
+            </b-button>
+          </b-col>
+          <b-col>
+            <b-button variant="danger" @click="resetImages()">
+              <b-icon-trash variant="light"></b-icon-trash>
+              Eliminar Imagenes 
+            </b-button>
+          </b-col>
+        </b-row>
       </b-card>
-      <template #overlay>
-        <div class="text-center">
-          <b-icon icon="stopwatch" font-scale="5" animation="cylon"></b-icon>
-          <p id="cancel-label">Por favor espere...</p>
-        </div>
-      </template>
-    </b-overlay>
+    </b-card>
   </div>
 </template>
 
@@ -254,7 +249,7 @@ export default {
       this.newCountry = '';
       this.newCity = '';
     },
-    async resetImages(){
+    resetImages(){
       this.tour.images = [];
       this.mainImageSelected = -1;
       this.imagesForm = [];
@@ -267,7 +262,7 @@ export default {
           return;
       }
       try {
-        this.showOverlay = true;
+        this.$emit("updateOverlay", true);
         const response = await fetch('http://localhost:8001/country', {
           method: 'POST',
           headers: {
@@ -277,7 +272,7 @@ export default {
             name: this.newCountry
           })
         });
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         if(response.status == 404){
           this.messageAlert = "Registro fallido, ya existe este pais";
           this.alertvariant = "danger";
@@ -288,21 +283,21 @@ export default {
         this.alertvariant = "success";
         this.updateCountryCities()
       } catch (err) {
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
       }
       this.showAlert = this.secShowAlert;
     },
     async createNewCity(){
-      if(this.newCountry == '' || this.countrySelected == null){
+      if(this.newCity == '' || this.countrySelected == null){
         this.messageAlert = "Debes ingresar el nombre de la ciudad y elegir un pais";
         this.alertvariant = "warning";
         this.showAlert = this.secShowAlert;
         return;
       }
       try {
-        this.showOverlay = true;
+        this.$emit("updateOverlay", true);
         const response = await fetch('http://localhost:8001/city', {
           method: 'POST',
           headers: {
@@ -313,7 +308,7 @@ export default {
             country: {id: this.countrySelected.id }
           })
         });
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         if(response.status == 404){
           this.messageAlert = "Registro fallido, ya existe esta ciudad en ese pais";
           this.alertvariant = "danger";
@@ -324,7 +319,7 @@ export default {
         this.alertvariant = "success";
         this.updateCountryCities()
       } catch (err) {
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
       }
@@ -375,13 +370,13 @@ export default {
         return;
       }
       try {
-        this.showOverlay = true;
+        this.$emit("updateOverlay", true);
         const response = await fetch('http://localhost:8001/tour', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(this.tour)
         });
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         if(response.status == 404){
           this.messageAlert = "Registro fallido";
           this.alertvariant = "danger";
@@ -392,7 +387,7 @@ export default {
         this.alertvariant = "success";
         //this.resetForm();
       } catch (err) {
-        this.showOverlay = false;
+        this.$emit("updateOverlay", false);
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
       }
@@ -400,10 +395,5 @@ export default {
     }
   }
 }
-
 </script>
-<style scoped>
-.alert-content{
-  position:absolute; z-index:1;
-}
-</style>
+
