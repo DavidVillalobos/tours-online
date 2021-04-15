@@ -65,19 +65,17 @@ public class DaoUser {
     }
 
     public Integer post(User u) throws Exception {
-        String sql = "INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin)"
-        + " VALUES(%d,'%s','%s','%s', '%s', '%s','%s', %d)";
+        String sql = "updateInsertUser 0, %d,'%s','%s','%s', '%s', '%s','%s', %d, 'Insert'";
         sql = String.format(sql, u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
-                u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
+                    u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
         return db.executeInsert(sql);
     }
 
     public Integer put(User u) throws Exception {
         try{
-            String sql="UPDATE [User] SET Email='%s', Password='%s', Name='%s', LastName='%s', Identification='%s', " +
-                    "Birthday='%s', Admin=%d WHERE Id=%d";
-            sql=String.format(sql, u.getEmail(), u.getPassword(), u.getName(), u.getLastName(), u.getIdentification(),
-                    u.getStringDate(), u.getId(), u.getAdmin());
+            String sql = "updateInsertUser %d %d,'%s','%s','%s', '%s', '%s','%s', %d, 'Update'";
+            sql=String.format(sql, u.getId(), u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
+                    u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
             int result = db.executeUpdate(sql);
             if(result == 0){
                 throw new Exception("/user/{" + u.getId() + "} Does not exist in DataBase");
