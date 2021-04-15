@@ -1,19 +1,5 @@
 <template>
   <div>
-    <b-alert
-      class="alert-content" 
-      dismissible
-      :variant="alertvariant"
-      fade
-      :show="showAlert"
-      @dismissed="showAlert=false"
-      @dismiss-count-down="countDownChanged"
-    >
-      {{messageAlert }}
-      <template v-if="messageAlert == 'Por favor espere . . .'">
-        <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
-      </template>
-    </b-alert>
     <b-navbar type="dark" variant="dark">
       <b-navbar-brand>
         <h3>
@@ -32,7 +18,7 @@
             <b-icon icon="search"></b-icon>
             Busqueda de tours
           </b-nav-item>
-           <b-nav-item variant="dark" @click="gotoShop">
+           <b-nav-item v-show="username !== ''" variant="dark" @click="gotoShop">
             <b-icon icon="cart"></b-icon>
             Carro
           </b-nav-item>
@@ -72,6 +58,18 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <b-alert
+      dismissible
+      :variant="alertvariant"
+      fade
+      :show="showAlert"
+      @dismissed="showAlert=false"
+      @dismiss-count-down="countDownChanged">
+      <h5>
+        <b-icon icon="exclamation-circle-fill" variant=alertvariant> </b-icon>
+        {{ messageAlert }}
+      </h5>
+    </b-alert>
     <b-modal id="modal-login" hide-header body-bg-variant="dark" footer-bg-variant="dark"
       @show="resetModal" @hidden="resetModal" @ok="login" footer-border-variant="dark"
       cancel-title="Cancelar" ok-title="Iniciar">
@@ -91,13 +89,44 @@
         <b-icon-person-plus-fill></b-icon-person-plus-fill>
         Registro de usuario <br><br>
       </h3>
-    <b-form-group>
-      <b-form-input placeholder="Identificacion" v-model="user.identification" :state="user.identification != ''"></b-form-input><br>
-      <b-form-input placeholder="Nombre" v-model="user.name" :state="user.name != ''"></b-form-input><br>
-      <b-form-input placeholder="Apellido" v-model="user.lastName" :state="user.lastName != ''"></b-form-input><br>
-      <b-form-input placeholder="Email" v-model="user.email" :state="user.email != ''"></b-form-input><br>
-      <b-form-input type="password" placeholder="Password" v-model="user.password" :state="user.password != ''"></b-form-input>
-    </b-form-group>
+      <b-form-group>
+        <b-form-input placeholder="Identificacion" v-model="user.identification" :state="user.identification != ''"></b-form-input><br>
+        <b-form-input placeholder="Nombre" v-model="user.name" :state="user.name != ''"></b-form-input><br>
+        <b-form-input placeholder="Apellido" v-model="user.lastName" :state="user.lastName != ''"></b-form-input><br>
+        <b-form-input placeholder="Email" v-model="user.email" :state="user.email != ''"></b-form-input><br>
+        <b-form-input type="password" placeholder="Password" v-model="user.password" :state="user.password != ''"></b-form-input>
+        <b-form-datepicker dark label-help="" :state="user.birthday!=''" 
+                    placeholder="Fecha Nacimiento" hide-header 
+                    v-model="user.birthday" :max="max"  
+                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                    locale="es" class="mt-3"></b-form-datepicker>
+        <b-row class="mt-1">
+          <b-col class="text-light text-center">
+            <h4>Pais</h4>
+          </b-col>
+        </b-row>
+        <b-row class="mt-1">
+          <b-col>
+          <b-form-select v-model="user.country" :state="user.country!=null" :options="countries"></b-form-select>
+          </b-col>
+          <b-col>
+            <b-button block variant="warning" v-b-modal.modal-countryUser>
+              Agregar país
+            </b-button>
+          </b-col>
+        </b-row>
+      </b-form-group>
+    </b-modal>
+    <b-modal id="modal-countryUser" hide-header body-bg-variant="dark" footer-bg-variant="dark"
+        @show="resetModal" @hidden="resetModal" @ok="createNewCountry" footer-border-variant="dark"
+        cancel-title="Cancelar" ok-title="Agregar">
+        <h3 class="text-center text-light">
+          <b-icon-map-fill></b-icon-map-fill>
+          Agregar nuevo pais <br><br>
+        </h3>
+      <b-form-group>
+        <b-form-input placeholder="Pais" v-model="newCountry" :state="newCountry != ''"></b-form-input><br>
+      </b-form-group>
     </b-modal>
   </div>
 </template>
@@ -106,20 +135,22 @@
 export default {
   name: 'Navbar',
   data(){
+    const maxDate = new Date()
     if(!this.$session.exists()){ this.$session.start() }
-    if(!this.$session.has('cart')){
-      this.$session.set('cart', []);
-    }
+    if(!this.$session.has('cart')){ this.$session.set('cart', []);}
     return {
+      countries: [],
+      max: maxDate,
+      newCountry: '',
       user: {
         email: "",
         password: "",
         name: "",
         lastName: "",
         identification: "",
-        country: { id : 1},
+        country: null,
         birthday: new Date(),
-        admin: 0
+        admin: 0 // Admin permissions
       },
       messageAlert: "",
       showAlert: 0,
@@ -127,6 +158,13 @@ export default {
       secShowAlert: 4,
       cartItems: this.$session.get("cart").length,
     }
+  },
+  async created(){
+    const response = await fetch('http://localhost:8001/countries', {method: 'GET'});
+    let countriesFetch = (await response.json());
+    countriesFetch.forEach(country => {
+      this.countries.push({text:country.name, value:country})
+    });
   },
   computed: {
     username(){
@@ -158,9 +196,9 @@ export default {
       this.user.name = '';
       this.user.lastName = '';
       this.user.identification = '';
-      this.country = { id : 1};
-      this.birthday = new Date();
-      this.admin = 0;
+      this.user.country = null;
+      this.user.birthday = new Date();
+      this.newCountry = '';
     },
     countDownChanged(dismissCountDown) {
         this.showAlert = dismissCountDown
@@ -173,14 +211,13 @@ export default {
             this.showAlert = this.secShowAlert;
             return;
           }
-          this.messageAlert = "Por favor espere . . .";
-          this.alertvariant = "info";
-          this.showAlert = this.secShowAlert;
+          this.$emit("updateOverlay", true);
           const response = await fetch('http://localhost:8001/user/authenticate', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify(this.user)
           });
+          this.$emit("updateOverlay", false);
           if(response.status == 404){
             this.messageAlert = "Inicio de sesion fallido, compruebe sus credenciales";
             this.alertvariant = "danger";
@@ -198,6 +235,7 @@ export default {
             document.location.reload();
           }
         } catch (err) {
+          this.$emit("updateOverlay", false);
           this.messageAlert = "El servidor no responde";
           this.alertvariant = "danger";
         }
@@ -214,8 +252,11 @@ export default {
     },
     async register(){
       try {
-        if(!this.user.email || !this.user.password || !this.user.name || !this.user.lastName || !this.user.identification){
-          this.messageAlert = "Debe ingresar el Id, Nombre, Apellido, email y contraseña";
+        if( !this.user.email || !this.user.password || 
+            !this.user.name || !this.user.lastName || 
+            !this.user.identification || !this.user.country || 
+            !this.user.birthday){
+          this.messageAlert = "Debe ingresar el Id, Nombre, Apellido, email, contraseña, fecha de nacimiento y pais";
           this.alertvariant = "danger";
           this.showAlert = this.secShowAlert;
           return;
@@ -238,7 +279,7 @@ export default {
           body: JSON.stringify(this.user)
         });
         if(response.status == 404){
-          this.messageAlert = "Registro fallido";
+          this.messageAlert = "Registro fallido, ya existe un usuario con esa identificación o email";
           this.alertvariant = "danger";
           this.showAlert = this.secShowAlert;
           return;
@@ -251,9 +292,53 @@ export default {
       }
       this.showAlert = this.secShowAlert;
     },
+    async createNewCountry(){
+      if(this.newCountry == ''){
+          this.messageAlert = "Debes ingresar el nombre del pais";
+          this.alertvariant = "warning";
+          this.showAlert = this.secShowAlert;
+          return;
+      }
+      try {
+        this.$emit("updateOverlay", true);
+        const response = await fetch('http://localhost:8001/country', {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name: this.newCountry
+          })
+        });
+        this.$emit("updateOverlay", false);
+        if(response.status == 404){
+          this.messageAlert = "Registro fallido, ya existe este pais";
+          this.alertvariant = "danger";
+          this.showAlert = this.secShowAlert;
+          return;
+        }
+        this.messageAlert = "Registro de pais exitoso";
+        this.alertvariant = "success";
+        this.updateCountryCities()
+      } catch (err) {
+        console.log(err)
+        this.$emit("updateOverlay", false);
+        this.messageAlert = "El servidor no responde";
+        this.alertvariant = "danger";
+      }
+      this.showAlert = this.secShowAlert;
+    },
+    async updateCountryCities(){
+      this.countries = [];
+      const response = await fetch('http://localhost:8001/countries', {method: 'GET'});
+      let countriesFetch = (await response.json());
+      countriesFetch.forEach(country => {
+        this.countries.push({text:country.name, value:country})
+      });
+    },
     gotoShop(){
       if(this.cartItems == 0){
-        this.messageAlert = "El carrito esta vacio, agregue algun tour primero";
+        this.messageAlert = "El carro esta vacio, agregue algun tour primero";
         this.alertvariant = "warning";
         this.showAlert = this.secShowAlert;
         return;
@@ -278,11 +363,6 @@ export default {
 </script>
 
 <style scoped>
-.alert-content{
-  position:absolute; z-index:1;
-  margin-left: 40%;
-  margin-top: 1%;
-}
 
 .items-cart{
   position: absolute; 
