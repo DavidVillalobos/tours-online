@@ -1,5 +1,17 @@
 <template>
   <div>
+    <b-alert
+      dismissible
+      :variant="alertvariant"
+      fade
+      :show="showAlert"
+      @dismissed="showAlert=false"
+      @dismiss-count-down="countDownChanged">
+      <h5>
+        <b-icon icon="exclamation-circle-fill" variant=alertvariant> </b-icon>
+        {{ messageAlert }}
+      </h5>
+    </b-alert>
     <b-card id="card-search" bg-variant="dark" class="text-center">
       <b-row class="text-light">
         <b-col>
@@ -45,20 +57,6 @@
       </b-row>
     </b-card>
     <b-card id="result-search" bg-variant="dark" class="mt-3">
-      <b-alert
-        class="alert-content" 
-        dismissible
-        :variant="alertvariant"
-        fade
-        :show="showAlert"
-        @dismissed="showAlert=false"
-        @dismiss-count-down="countDownChanged"
-      >
-        {{messageAlert }}
-        <template v-if="messageAlert == 'Por favor espere . . .'">
-          <b-icon icon="clock" font-scale="2" animation="spin"></b-icon>
-        </template>
-      </b-alert>
       <b-row v-if="searched" id="header-result-search">
         <b-col cols=12 class="text-left">
             <div class=" text-dark">
@@ -72,7 +70,7 @@
       <template v-if="tours != 0">
       <b-row v-for="(tour, idx) in tours" :key="idx">
         <b-col cols=12>
-          <b-card class="tour">
+          <b-card class="mt-3 tour">
              <b-row>
               <b-col cols=3 class="text-right">
                 <b-img v-if="tour.images && tour.images[0]" @click="viewTour(tour)" rounded :src="'data:image/jpeg;base64,'+tour.images[0].photo"  fluid alt="Main image Tour"></b-img>
@@ -167,6 +165,7 @@ export default {
         id_user = this.$session.get('user').id;
       }
       try {
+        this.$emit("updateOverlay", true);
         const response = await fetch(
           'http://localhost:8001/tours/filter' +
           '?place=' + this.place + 
@@ -174,11 +173,13 @@ export default {
           '&&arrival=' + this.arrival +
           '&&id_user=' + id_user
         , {method: 'GET'});
+        this.$emit("updateOverlay", false);
         this.tours = (await response.json());
         this.placeTitle = this.place;
         this.departureTitle = this.departure;
         this.arrivalTitle = this.arrival;
       } catch (err) {
+        this.$emit("updateOverlay", false);
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
         this.showAlert = this.secShowAlert;
@@ -252,13 +253,6 @@ export default {
 </script>
 
 <style scoped>
-#result-search{
-  margin-top: 5px;
-}
-
-.tour{
-  margin-top: 8px;
-}
 
 .tour:hover{
   background-color: rgba(255, 255, 255, 0.926)
@@ -272,12 +266,5 @@ export default {
   margin-top: 1%;
   margin-left: -16%;
 }
-
-.alert-content{
-  position:absolute; z-index:1;
-  margin-left: 40%;
-  margin-top: 1%;
-}
-
 
 </style>
