@@ -47,6 +47,77 @@ BEGIN
 		END
 	UPDATE Tour SET Reviews = @last_reviews + 1 WHERE Tour.Id = @id_tour;
 END
-
+GO
 -- select * from Tour;
 -- select * from Comment_Tour;
+
+
+
+-- PROCEDURE FOR INSERT OR UPDATE THE USER
+CREATE OR ALTER PROCEDURE updateInsertUser(
+	@id int, 
+	@id_country int,  
+	@email VARCHAR(50) = '',  
+	@password varchar(20) = '',  
+	@name VARCHAR(30) = '',  
+	@last_name VARCHAR(30) = '',
+	@identification VARCHAR(20) = '',
+	@birthday date = '',
+	@admin Bit = '',
+	@statement_type NVARCHAR(20))  
+AS  
+	BEGIN  
+		IF @statement_type = 'Insert'  
+		BEGIN  
+			INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin)
+			VALUES(@id_country, @email, @password, @name, @last_name, @identification, @birthday, @admin)
+		END  
+		ELSE IF @statement_type = 'Update'  
+			BEGIN  
+				UPDATE [User] 
+				SET Id_Country = @id_country, Email = @email, Password = @password, 
+				Name = @name, LastName = @last_name, Identification = @identification, 
+				Birthday = @birthday, Admin = @admin WHERE id = @id  
+			END  
+	END   
+GO
+-- select * from [User];
+
+
+
+-- PROCEDURE FOR INSERT OR UPDATE THE TOUR
+CREATE OR ALTER PROCEDURE updateInsertTour(
+	@id int,
+	@id_city int,
+	@name varchar(50) = '',
+	@category varchar(50) = '',
+	@description varchar(300) = '',
+	@start_date date,
+	@quota int = 0,
+	@reviews int = 0,
+	@duration time(0),
+	@price float = 0,
+	@rating float = 0,
+	@includes varchar = '',
+	@not_includes varchar(50) = '',
+	@statement_type NVARCHAR(20))  
+AS  
+	BEGIN  
+		IF @statement_type = 'Insert'  
+		BEGIN  
+			INSERT INTO Tour(Id_City, Name, Category, Description, StartDate, Quota, Reviews, 
+			Duration, Price, Rating, Includes, NotIncludes) 
+			VALUES(@id_city,@name, @category, @description, @start_date, @quota, @reviews, 
+			@duration, @price, @rating, @includes, @not_includes)
+		END  
+		ELSE IF @statement_type = 'Update'  
+			BEGIN  
+				UPDATE Tour 
+				SET Name=@name, Category=@category, Description=@description, StartDate=@start_date, 
+				Quota=@quota, Reviews=@reviews, Duration=@duration, Price=@price, Rating=@rating, 
+				Includes=@includes, NotIncludes=@not_includes
+				WHERE Id= @id;
+			END  
+	END   
+GO
+-- select * from [Tour];
