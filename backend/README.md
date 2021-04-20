@@ -42,13 +42,16 @@ De ser asi el backend esta funcionando perfectamente, puede hacer otras solicitu
 
 *	Lista de paises: `http://localhost:8001/countries `  
 *	Lista de usuarios: `http://localhost:8001/users `  
-*	Obtener el Tour con el id 1: `http://localhost:8001/tours?id=1 `    
-*	Obtener la reservacion con el id 1: `http://localhost:8001/reservation?id=1 `
-*	Obtener los detalles de la reservacion con el id 2: `http://localhost:8001/details-reservation/reservation?id=2`    
-*	Obtener las imagenes del tour con el id 2: `http://localhost:8001/images/tour?id=2`
+*	Tour con el id 1: `http://localhost:8001/tours?id=1 `    
+*	Reservacion con el id 1: `http://localhost:8001/reservation?id=1 `
+*	Detalles de la reservacion con el id 2: `http://localhost:8001/details-reservation/reservation?id=2`    
+*	Imagenes del tour con el id 2: `http://localhost:8001/images/tour?id=2`  
+*	Imagen con el id 5: `http://localhost:8001/only-image?id=2`
+*	Solo la imagen con el id 5: `http://localhost:8001/only-image?id=2`  
+*	Likes del usuario 3: `http://localhost:8001/likes/user?id=3`  
+*	Comentarios del tour 4: `http://localhost:8001/comments/tour?id=4`  
+*	
 Cabe recalcar que la informacion que se muestra es la que esta registrada en la base de datos.  
-
-Y listo ya podra utilizar la aplicacion
 
 ## Autor
 *   [DavidVillalobos](https://github.com/DavidVillalobos)
