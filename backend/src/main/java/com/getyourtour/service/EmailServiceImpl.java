@@ -20,10 +20,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 class EmailService {
+	
+	private static String email = "myEmail@gmail.com";
+	private static String TOKEN = "TOKEN";
 
     public static void send(String to, String subject, String content) {
         String host = "smtp.gmail.com";
-        String from = "GetYourTourOnline@gmail.com";
+        String from = email;
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", "465");
@@ -31,7 +34,7 @@ class EmailService {
         properties.put("mail.smtp.auth", "true");
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("getyourtouronline@gmail.com", "bvffbwgfmbduythi");
+                return new PasswordAuthentication(email, TOKEN);
             }
         });
         session.setDebug(true);
