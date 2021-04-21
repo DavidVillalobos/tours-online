@@ -13,7 +13,7 @@ La aplicación se realizo con java y spring boot en el backend y la interfaz fue
 *	[Boostrap-Vue](https://bootstrap-vue.org/docs)
 
 ## Notas
-Para ejecutar la aplicación debe iniciar ambos servidores, ambos el backend y el frontend. También debe implementar la base de datos.
+Para ejecutar la aplicación debe iniciar ambos servidores, backend y el frontend. También debe implementar la base de datos.
 
 ## Base de datos (SQL Server)
 
