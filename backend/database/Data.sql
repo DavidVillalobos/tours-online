@@ -27,8 +27,6 @@ VALUES(1, 'admin@hotmail.com', 'admin1234!', 'Juan', 'Perez',  '111111111', '09-
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
 VALUES(2, '2', 'Andres1234!', 'Andres', 'Gonzalez Villalobos', '222222222', '12-28-2004', 0)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(3, '3', 'Giancarlo1234!', 'Giancarlo', 'Alvarado Sanchez', '333333333', '01-01-1998', 0)
-INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
 VALUES(3, '4', 'Maria1234!', 'Maria', 'Arias Rodriguez', '4444444444', '01-01-2000', 0)
 -- Insert of Tour
 INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
