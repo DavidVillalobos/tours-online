@@ -34,11 +34,11 @@ La base de datos esta lista!
 ## Backend
 Primeramente debe cambiar las credenciales de acceso a la base de datos, desde el archivo:  
 `tours-online/backend/src/main/java/com/getyourtour/dao/ConnectionDB.java`  
-Cambie el servidor, el usuario y la contraseña.   
-Segundo debe cambiar las credenciales del servicio de correo electronico desde el archivo:
-`tours_online\backend\src\main\java\com\getyourtour\service\EmailServiceImpl.java`
-Cambie el email y el TOKEN, debera crear uno desde el correo de gmail.
-Ahora procesa a construir el proyecto, ejecutando el archivo:  
+Cambie el servidor, el usuario y la contraseña.     
+Segundo debe cambiar las credenciales del servicio de correo electronico desde el archivo:  
+`tours_online\backend\src\main\java\com\getyourtour\service\EmailServiceImpl.java`  
+Cambie el email y el TOKEN, deberá crear uno desde el correo de gmail.  
+Ahora procesa a construir el proyecto, ejecutando el archivo:   
 ` tours_online\backend\build.bat`  
 Ademas de generar el .jar realizar un test de conexion para verificar que la base de datos funciona correctamente.
 Una vez que la construccion es exitosa finalmente ya puede iniciar el backend.
