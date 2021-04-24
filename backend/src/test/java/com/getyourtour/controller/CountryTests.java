@@ -28,7 +28,7 @@ public class CountryTests {
 	private int port;
 	@Autowired
 	private TestRestTemplate restTemplate;
-
+	/*
 	@Test
 	public void TestInsertCountries() throws Exception {
 		if(restTemplate.getForObject("http://localhost:" + port + "/countries", String.class).contains("[]")) {
@@ -60,7 +60,7 @@ public class CountryTests {
 				String.class)).contains("{\"id\":1,\"name\":\"Costa Rica\",\"cities\":null}");
 	}
 
-	/*@Test
+	@Test
 	public void TestGetAllCountries() throws Exception {
 		assertThat(restTemplate.getForObject("http://localhost:" + port + "/countries",
 				String.class)).contains("[{\"id\":1,\"name\":\"Costa Rica\"},{\"id\":2,\"name\":\"Mexico\"},{\"id\":3,\"name\":\"Colombia\"}]");
