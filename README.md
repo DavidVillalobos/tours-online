@@ -1,7 +1,9 @@
 # Tours Online  
  
-Aplicación de gestión de reservas de excursiones
-La aplicación se realizo con java y spring boot en el backend y la interfaz fue hecha con vue y vue-bootstrap, el gestor de base de datos es SQL Server. 
+Aplicación de gestión de reservas de excursiones.    
+Esta construida con java y spring boot para en el backend y   
+la interfaz (Frontend) fue realizada con vue2 y vue-bootstrap,   
+el gestor de base de datos utilizado fue SQL Server.   
 
 <img src="demo/Index.png" width="900">  
 

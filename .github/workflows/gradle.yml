@@ -28,4 +28,7 @@ jobs:
         gradle wrapper
         cd ..
     - name: Build Backend with Gradle
-      run: backend/gradlew build
+      run: |
+        cd backend
+        gradle build
+        cd ..
