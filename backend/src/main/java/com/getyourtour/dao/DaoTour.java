@@ -10,7 +10,9 @@ import com.getyourtour.model.*;
 
 import java.sql.ResultSet;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +79,11 @@ public class DaoTour {
     }
 
     public Integer post(Tour t) throws Exception {
+        Date dt = t.getDate();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        t.setDate(c.getTime());
         String sql = "INSERT INTO Tour(Id_City, Name, Category, Description, StartDate, Quota, Reviews, Duration, " +
         "Price, Rating, Includes, NotIncludes) VALUES(%d,'%s', '%s', '%s', '%s', %d, %d, '%s', %f, %f, '%s', '%s')";
         sql = String.format(sql, t.getCity().getId(), t.getName(), t.getCategory(), t.getDescription(), t.getStringDate(),
@@ -136,6 +143,10 @@ public class DaoTour {
         String category = rs.getString("Category");
         String description = rs.getString("Description");
         Date date = rs.getDate("StartDate");
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 0);
+        date = c.getTime();
         Integer quota = rs.getInt("Quota");
         Integer reviews = rs.getInt("Reviews");
         Time duration = rs.getTime("Duration");

@@ -118,7 +118,7 @@
                 Imagen Principal
               </b-col>
               <b-col>
-                <b-form-select v-model="mainImageSelected" :options="imageNames" @change="updateMainImage"></b-form-select>
+                <b-form-select v-model="mainImageSelected" :options="imageNames"></b-form-select>
               </b-col>
             </b-row>
           </b-col>
@@ -175,7 +175,7 @@ export default {
         name: '',
         category: '',
         description: '',
-        date: '',
+        date: minDate,
         quota: 1,
         duration: '',
         price: 1,
@@ -235,7 +235,7 @@ export default {
       this.cities = [];
       this.tour.name = '';
       this.tour.category = '';
-      this.tour.date = '';
+      this.tour.date = new Date();
       this.tour.description = '';
       this.tour.duration = '';
       this.tour.quota = 1;
@@ -377,7 +377,7 @@ export default {
           body: JSON.stringify(this.tour)
         });
         this.$emit("updateOverlay", false);
-        if(response.status == 404){
+        if(response.status != 200){
           this.messageAlert = "Registro fallido";
           this.alertvariant = "danger";
           this.showAlert = this.secShowAlert;
@@ -385,7 +385,7 @@ export default {
         }
         this.messageAlert = "El Tour se ha agregado con exito";
         this.alertvariant = "success";
-        //this.resetForm();
+        this.resetForm();
       } catch (err) {
         this.$emit("updateOverlay", false);
         this.messageAlert = "El servidor no responde";

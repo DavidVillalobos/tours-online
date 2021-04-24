@@ -327,7 +327,7 @@ export default {
           cart.push( 
             { tour:{id : this.tour.id, quota: this.tour.quota}, 
               place : this.tour.city.country.name + ' - ' + this.tour.city.name, 
-              date : this.tour.date, 
+              date : new Date(this.tour.date).toLocaleString().split(' ')[0], 
               name : this.tour.name, 
               price : this.tour.price, 
               tickets : this.tickets,
