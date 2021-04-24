@@ -25,10 +25,10 @@ jobs:
     - name: Wrap Backend
       run: |
         cd backend
-        gradlew wrapper
+        gradle wrapper
         cd ..
     - name: Build Backend with Gradle
       run: |
         cd backend
-        gradlew build
+        gradle build
         cd ..
