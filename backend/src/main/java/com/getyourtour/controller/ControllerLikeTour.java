@@ -1,7 +1,7 @@
 /*
  * File: ControllerLikeTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/likes")
 public class ControllerLikeTour {
 
     private final ServiceLikeTour service = new ServiceLikeTour();
 
-    @GetMapping("/like")
-    public LikeTour get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public LikeTour get(@PathVariable("id") Integer id){
         try{
             return service.getLikeTour(id);
         }catch(Exception e) {
@@ -27,17 +28,16 @@ public class ControllerLikeTour {
         }
     }
 
-    @GetMapping("/likes")
     public List<LikeTour> getAllLikes(){
         try{
             return service.getAllLikeTours();
         }catch(Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Like not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Likes not found", e);
         }
     }
 
-    @GetMapping("/likes/tour")
-    public List<LikeTour> getLikeByTour(@RequestParam Integer id){
+    @GetMapping("/tours/{id}")
+    public List<LikeTour> getLikeByTour(@PathVariable("id") Integer id){
         try{
             return service.getLikeToursByTour(id);
         }catch(Exception e) {
@@ -45,7 +45,7 @@ public class ControllerLikeTour {
         }
     }
 
-    @GetMapping("/likes/user")
+    @GetMapping("/users/{id}")
     public List<LikeTour> getLikeByUser(@RequestParam Integer id){
         try{
             return service.getLikeToursByUser(id);
@@ -54,8 +54,8 @@ public class ControllerLikeTour {
         }
     }
 
-    @GetMapping("/like/tour/user")
-    public Boolean getLikeTourByTourAndUser(@RequestParam Integer id_tour, @RequestParam Integer id_user){
+    @GetMapping("/tours/{id_tour}/users/{id_user}")
+    public Boolean getLikeTourByTourAndUser(@PathVariable("id_tour") Integer id_tour, @PathVariable("id_user") Integer id_user){
         try{
             return service.getLikeTour(id_tour, id_user);
         }catch(Exception e) {
@@ -63,7 +63,6 @@ public class ControllerLikeTour {
         }
     }
 
-    @PostMapping("/like/tour/user")
     public int addLikeTour(@RequestBody LikeTour likeTour){
         try{
             return service.addLikeTour(likeTour);
@@ -72,7 +71,6 @@ public class ControllerLikeTour {
         }
     }
 
-    @DeleteMapping("/like")
     public int deleteLikeTour(@RequestParam Integer id){
         try{
             return service.deleteLikeTour(id);
@@ -81,10 +79,10 @@ public class ControllerLikeTour {
         }
     }
 
-    @DeleteMapping("/like/tour/user")
-    public int deleteLikeTourByTourAndUser(@RequestBody LikeTour likeTour){
+    @DeleteMapping("/tours/{id_tour}/users/{id_user}")
+    public int deleteLikeByTourAndUser(@PathVariable("id_tour") Integer id_tour, @PathVariable("id_user") Integer id_user){
         try{
-            return service.deleteLikeTour(likeTour);
+            return service.deleteLikeTour(id_tour, id_user);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Like not found", e);
         }

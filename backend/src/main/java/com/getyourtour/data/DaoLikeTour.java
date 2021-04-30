@@ -4,7 +4,7 @@
  * Date: 2021/04/03
  */
 
-package com.getyourtour.dao;
+package com.getyourtour.data;
 
 import com.getyourtour.model.LikeTour;
 import com.getyourtour.model.Tour;
@@ -123,13 +123,13 @@ public class DaoLikeTour {
         return null;
     }
 
-    public Integer delete(LikeTour likeTour) throws Exception {
+    public Integer delete(Integer id_tour, Integer id_user) throws Exception {
         try{
             String sql="DELETE FROM Like_Tour WHERE Id_Tour=%d AND Id_User=%d";
-            sql = String.format(sql, likeTour.getTour().getId(), likeTour.getUser().getId());
+            sql = String.format(sql, id_tour, id_user);
             int result = db.executeUpdate(sql);
             if(result == 0){
-                throw new Exception("Log: DELETE/like/tour={" + likeTour.getTour().getId() + "}&user={" + likeTour.getUser().getId() + "} Does not exist in DataBase");
+                throw new Exception("Log: DELETE/likes/tours/{" + id_tour + "}/users/{" + id_user + "} Does not exist in DataBase");
             }
             return result;
         }catch(Exception e){

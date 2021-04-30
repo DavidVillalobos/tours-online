@@ -1,7 +1,7 @@
 /*
  * File: ControllerReservationTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/reservations")
 public class ControllerReservationTour {
 
     private final ServiceReservationTour service = new ServiceReservationTour();
 
-    @GetMapping("/reservation")
-    public ReservationTour get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public ReservationTour get(@PathVariable("id") Integer id){
         try{
             return service.getReservation(id);
         }catch(Exception e) {
@@ -27,7 +28,6 @@ public class ControllerReservationTour {
         }
     }
 
-    @GetMapping("/reservations")
     public List<ReservationTour> getAllReservationTours() {
         try{
             return service.getAllReservations();
@@ -36,7 +36,6 @@ public class ControllerReservationTour {
         }
     }
 
-    @PostMapping("/reservation")
     public int addReservationTour(@RequestBody ReservationTour reservationTour){
         try{
             return service.addReservation(reservationTour);
@@ -45,7 +44,6 @@ public class ControllerReservationTour {
         }
     }
 
-    @PutMapping("/reservation")
     public int updateReservationTour(@RequestBody ReservationTour reservationTour){
         try{
             return service.updateReservation(reservationTour);
@@ -54,8 +52,8 @@ public class ControllerReservationTour {
         }
     }
 
-    @DeleteMapping("/reservation")
-    public int deleteReservationTour(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteReservationTour(@PathVariable("id") Integer id){
         try{
             return service.deleteReservation(id);
         }catch(Exception e) {

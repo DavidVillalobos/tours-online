@@ -4,7 +4,7 @@
  * Date: 2021/04/03
  */
 
-package com.getyourtour.dao;
+package com.getyourtour.data;
 
 import com.getyourtour.model.Country;
 import com.getyourtour.model.User;

@@ -6,7 +6,7 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoCity;
+import com.getyourtour.data.DaoCity;
 import com.getyourtour.model.City;
 
 import java.util.List;

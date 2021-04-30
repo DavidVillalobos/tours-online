@@ -6,9 +6,8 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoDetailReservationTour;
+import com.getyourtour.data.DaoDetailReservationTour;
 import com.getyourtour.model.DetailReservationTour;
-import com.getyourtour.model.Tour;
 
 import java.util.List;
 

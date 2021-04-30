@@ -1,7 +1,7 @@
 /*
  * File: Controller.java
  * author: David Villalobos
- * Date: 2021/04/01
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -15,29 +15,46 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/countries")
 public class ControllerCountry {
 
     private final ServiceCountry service = new ServiceCountry();
 
-    @GetMapping("/country")
-    public Country get(@RequestParam Integer id, @RequestParam(defaultValue = "false") Boolean complete){
+    @GetMapping("/{id}")
+    public Country get(@PathVariable("id") Integer id){
         try{
-            return service.getCountry(id, complete);
+            return service.getCountry(id, false);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
         }
     }
 
-    @GetMapping("/countries")
-    public List<Country> getAllCountries(@RequestParam(defaultValue = "false") Boolean complete){
+    @GetMapping("/with-cities/{id}")
+    public Country getWithCities(@PathVariable("id") Integer id){
         try{
-            return service.getAllCountries(complete);
+            return service.getCountry(id, true);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found", e);
+        }
+    }
+
+    public List<Country> getAllCountries(){
+        try{
+            return service.getAllCountries(false);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Countries not found", e);
         }
     }
 
-    @PostMapping("/country")
+    @GetMapping("/with-cities")
+    public List<Country> getAllCountriesComplete(){
+        try{
+            return service.getAllCountries(true);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Countries not found", e);
+        }
+    }
+
     public int addCountry(@RequestBody Country country){
         try{
             return service.addCountry(country);
@@ -46,7 +63,6 @@ public class ControllerCountry {
         }
     }
 
-    @PutMapping("/country")
     public int updateCountry(@RequestBody Country country){
         try{
             return service.updateCountry(country);
@@ -55,8 +71,8 @@ public class ControllerCountry {
         }
     }
 
-    @DeleteMapping("/country")
-    public int deleteCountry(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteCountry(@PathVariable("id") Integer id){
         try{
             return service.deleteCountry(id);
         }catch(Exception e) {

@@ -6,7 +6,7 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoUser;
+import com.getyourtour.data.DaoUser;
 import com.getyourtour.model.User;
 
 import java.util.List;

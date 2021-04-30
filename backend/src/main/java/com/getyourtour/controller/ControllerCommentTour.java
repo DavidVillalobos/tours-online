@@ -1,7 +1,7 @@
 /*
  * File: ControllerCommentTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/comments")
 public class ControllerCommentTour {
 
     private final ServiceCommentTour service = new ServiceCommentTour();
 
-    @GetMapping("/comment")
-    public CommentTour get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public CommentTour get(@PathVariable("id") Integer id){
         try{
             return service.getCommentTour(id);
         }catch(Exception e) {
@@ -27,7 +28,6 @@ public class ControllerCommentTour {
         }
     }
 
-    @GetMapping("/comments")
     public List<CommentTour> getAllComments(){
         try{
             return service.getAllCommentTours();
@@ -36,8 +36,8 @@ public class ControllerCommentTour {
         }
     }
 
-    @GetMapping("/comments/tour")
-    public List<CommentTour> getCommentByTour(@RequestParam Integer id){
+    @GetMapping("/tours/{id}")
+    public List<CommentTour> getCommentByTour(@PathVariable("id") Integer id){
         try{
             return service.getCommentToursByTour(id);
         }catch(Exception e) {
@@ -45,8 +45,8 @@ public class ControllerCommentTour {
         }
     }
 
-    @GetMapping("/comments/user")
-    public List<CommentTour> getCommentByUser(@RequestParam Integer id){
+    @GetMapping("/users/{id}")
+    public List<CommentTour> getCommentByUser(@PathVariable("id") Integer id){
         try{
             return service.getCommentToursByUser(id);
         }catch(Exception e) {
@@ -54,7 +54,6 @@ public class ControllerCommentTour {
         }
     }
 
-    @PostMapping("/comment")
     public int addCommentTour(@RequestBody CommentTour commentTour){
         try{
             return service.addCommentTour(commentTour);
@@ -63,7 +62,6 @@ public class ControllerCommentTour {
         }
     }
 
-    @PutMapping("/comment")
     public int updateCommentTour(CommentTour commentTour){
         try{
             return service.updateCommentTour(commentTour);
@@ -72,8 +70,8 @@ public class ControllerCommentTour {
         }
     }
 
-    @DeleteMapping("/comment")
-    public int deleteCommentTour(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteCommentTour(@PathVariable("id") Integer id){
         try{
             return service.deleteCommentTour(id);
         }catch(Exception e) {
@@ -81,8 +79,8 @@ public class ControllerCommentTour {
         }
     }
 
-    @DeleteMapping("/comment/user")
-    public int deleteCommentTourByUser(@RequestParam Integer id_tour, @RequestParam Integer id_user){
+    @DeleteMapping("tours/{id_tour}/users/{id_tour}")
+    public int deleteCommentTourByUser(@PathVariable("id_tour") Integer id_tour, @PathVariable("id_user") Integer id_user){
         try{
             return service.deleteCommentTourByUser(id_tour, id_user);
         }catch(Exception e) {

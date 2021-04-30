@@ -4,16 +4,14 @@
  * Date: 2021/04/03
  */
 
-package com.getyourtour.dao;
+package com.getyourtour.data;
 
 import com.getyourtour.model.ImageTour;
 import com.getyourtour.model.Tour;
 
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 

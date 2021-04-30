@@ -1,7 +1,7 @@
 /*
  * File: ControllerImageTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -17,12 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/images")
 public class ControllerImageTour {
 
     private final ServiceImageTour service = new ServiceImageTour();
 
-    @GetMapping("/image")
-    public ImageTour get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public ImageTour get(@PathVariable("id") Integer id){
         try{
             return service.getImageTour(id);
         }catch(Exception e) {
@@ -30,8 +31,8 @@ public class ControllerImageTour {
         }
     }
 
-    @GetMapping("/only-image")
-    public byte[] getImage(@RequestParam Integer id){
+    @GetMapping("/only-image/{id}")
+    public byte[] getImage(@PathVariable("id") Integer id){
         try{
             return service.getOnlyImage(id);
         }catch(Exception e) {
@@ -39,8 +40,8 @@ public class ControllerImageTour {
         }
     }
 
-    @GetMapping("/only-image/tour")
-    public byte[] getImageByTour(@RequestParam Integer id_tour){
+    @GetMapping("main-image/only-image/tour/{id_tour}")
+    public byte[] getImageByTour(@PathVariable("id_tour") Integer id_tour){
         try{
             return service.getOnlyImageTour(id_tour);
         }catch(Exception e) {
@@ -48,7 +49,6 @@ public class ControllerImageTour {
         }
     }
 
-    @GetMapping("/images")
     public List<ImageTour> getAllImages(){
         try{
             return service.getAllImageTours();
@@ -57,16 +57,15 @@ public class ControllerImageTour {
         }
     }
 
-    @GetMapping("/images/tour")
-    public List<ImageTour> getImagesByTour(@RequestParam Integer id){
+    @GetMapping("/tours/{id_tour}")
+    public List<ImageTour> getImagesByTour(@PathVariable("id_tour") Integer id_tour){
         try{
-            return service.getImagesByTour(id);
+            return service.getImagesByTour(id_tour);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Images not found", e);
         }
     }
 
-    @PostMapping("/image")
     public int addImageTour(@RequestBody ImageTour imageTour){
         try{
             return service.addImageTour(imageTour);
@@ -75,8 +74,8 @@ public class ControllerImageTour {
         }
     }
 
-    @DeleteMapping("/image")
-    public int deleteImageTour(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteImageTour(@PathVariable("id") Integer id){
         try{
             return service.deleteImageTour(id);
         }catch(Exception e) {
@@ -84,8 +83,8 @@ public class ControllerImageTour {
         }
     }
 
-    @DeleteMapping("/image/tour")
-    public int deleteImageTourByTour(@RequestParam Integer id_tour){
+    @DeleteMapping("/tours/{id_tour}")
+    public int deleteImagesOfTour(@PathVariable("id_tour") Integer id_tour){
         try{
             return service.deleteImageTourByTour(id_tour);
         }catch(Exception e) {

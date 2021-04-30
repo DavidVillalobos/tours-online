@@ -6,7 +6,7 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoCommentTour;
+import com.getyourtour.data.DaoCommentTour;
 import com.getyourtour.model.CommentTour;
 
 import java.util.List;

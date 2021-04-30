@@ -3,7 +3,7 @@
  * author David Villalobos
  * Date 2021/04/03
  */
-package com.getyourtour.dao;
+package com.getyourtour.data;
 
 import java.sql.*;
 

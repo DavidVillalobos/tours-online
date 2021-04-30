@@ -6,13 +6,11 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoImageTour;
-import com.getyourtour.dao.DaoTour;
+import com.getyourtour.data.DaoImageTour;
+import com.getyourtour.data.DaoTour;
 import com.getyourtour.model.ImageTour;
 import com.getyourtour.model.Tour;
 
-import java.awt.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +20,8 @@ public class ServiceTour {
     private final DaoTour dao_tour = new DaoTour();
     private final DaoImageTour dao_image = new DaoImageTour();
 
-    public Tour getTour(Integer id, Integer id_user, Boolean simpleTour) throws Exception {
-        return dao_tour.get(id, id_user, simpleTour);
+    public Tour getTour(Integer id, Integer id_user, Boolean complete) throws Exception {
+        return dao_tour.get(id, id_user, complete);
     }
 
     public List<Tour> getAllTours(Integer id_user) throws Exception {

@@ -1,7 +1,7 @@
 /*
  * File: ControllerDetailReservationTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/detail-reservations")
 public class ControllerDetailReservationTour {
 
     private final ServiceDetailReservationTour service = new ServiceDetailReservationTour();
 
-    @GetMapping("/details-reservation")
-    public DetailReservationTour get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public DetailReservationTour get(@PathVariable("id") Integer id){
         try{
             return service.getDetail(id);
         }catch(Exception e) {
@@ -27,7 +28,6 @@ public class ControllerDetailReservationTour {
         }
     }
 
-    @GetMapping("/details-reservations")
     public List<DetailReservationTour> getAllDetailsReservation(){
         try{
             return service.getAllDetail();
@@ -36,8 +36,8 @@ public class ControllerDetailReservationTour {
         }
     }
 
-    @GetMapping("/details-reservation/reservation")
-    public List<DetailReservationTour> getDetailsByReservation(@RequestParam Integer id){
+    @GetMapping("/reservations/{id}")
+    public List<DetailReservationTour> getDetailsByReservation(@PathVariable("id") Integer id){
         try{
             return service.getAllDetailByReservation(id);
         }catch(Exception e) {
@@ -45,7 +45,6 @@ public class ControllerDetailReservationTour {
         }
     }
 
-    @PostMapping("/details-reservation")
     public int addDetailReservationTour(@RequestBody DetailReservationTour detail){
         try{
             return service.addDetail(detail);
@@ -54,7 +53,6 @@ public class ControllerDetailReservationTour {
         }
     }
 
-    @PutMapping("/details-reservation")
     public int updateDetailReservationTour(@RequestBody DetailReservationTour detail){
         try{
             return service.updateDetail(detail);
@@ -63,8 +61,8 @@ public class ControllerDetailReservationTour {
         }
     }
 
-    @DeleteMapping("/details-reservation")
-    public int deleteDetailReservationTour(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteDetailReservationTour(@PathVariable("id") Integer id){
         try{
             return service.deleteDetail(id);
         }catch(Exception e) {

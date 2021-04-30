@@ -4,13 +4,12 @@
  * Date: 2021/04/02
  */
 
-package com.getyourtour.dao;
+package com.getyourtour.data;
 
 import com.getyourtour.model.*;
 
 import java.sql.ResultSet;
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,13 +22,13 @@ public class DaoTour {
     public DaoTour(){
     }
 
-    public Tour get(Integer id, Integer id_user, boolean simpleTour) throws Exception {
+    public Tour get(Integer id, Integer id_user, boolean complete) throws Exception {
         try{
             String sql = "SELECT * FROM Tour WHERE Id=%d";
             sql = String.format(sql, id);
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
-                if(simpleTour){
+                if(complete){
                     return mapSimple(rs, id_user);
                 } else {
                     return map(rs, id_user);

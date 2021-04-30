@@ -1,7 +1,7 @@
 /*
  * File: ControllerUser.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class ControllerUser {
 
     private final ServiceUser service = new ServiceUser();
 
-    @GetMapping("/user")
-    public User get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public User get(@PathVariable("id") Integer id){
         try{
             return service.getUser(id);
         }catch(Exception e) {
@@ -27,7 +28,6 @@ public class ControllerUser {
         }
     }
 
-    @GetMapping("/users")
     public List<User> getAllUsers() {
         try{
             return service.getAllUsers();
@@ -36,7 +36,7 @@ public class ControllerUser {
         }
     }
 
-    @PostMapping("/user/authenticate")
+    @PostMapping("/authenticate")
     public User get(@RequestBody User user){
         try{
             return service.authenticate(user);
@@ -45,7 +45,6 @@ public class ControllerUser {
         }
     }
 
-    @PostMapping("/user")
     public int addUser(@RequestBody User user){
         try{
             return service.addUser(user);
@@ -54,7 +53,6 @@ public class ControllerUser {
         }
     }
 
-    @PutMapping("/user")
     public int updateUser(@RequestBody User user){
         try{
             return service.updateUser(user);
@@ -63,8 +61,8 @@ public class ControllerUser {
         }
     }
 
-    @DeleteMapping("/user")
-    public int deleteUser(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteUser(@PathVariable("id") Integer id){
         try{
             return service.deleteUser(id);
         }catch(Exception e) {

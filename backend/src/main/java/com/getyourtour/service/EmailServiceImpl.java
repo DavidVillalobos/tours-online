@@ -21,8 +21,8 @@ import javax.mail.internet.MimeMessage;
 
 class EmailService {
 	
-	private static String email = "myEmail@gmail.com";
-	private static String TOKEN = "TOKEN";
+	private static String email = "getyourtouronline@gmail.com";
+	private static String TOKEN = "bvffbwgfmbduythi";
 
     public static void send(String to, String subject, String content) {
         String host = "smtp.gmail.com";

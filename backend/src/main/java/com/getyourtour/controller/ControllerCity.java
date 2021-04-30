@@ -1,7 +1,7 @@
 /*
  * File: ControllerCity.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -14,12 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/cities")
 public class ControllerCity {
 
     private final ServiceCity service = new ServiceCity();
 
-    @GetMapping("/city")
-    public City get(@RequestParam Integer id){
+    @GetMapping("/{id}")
+    public City get(@PathVariable("id") Integer id){
         try{
             return service.getCity(id);
         }catch(Exception e) {
@@ -27,25 +28,23 @@ public class ControllerCity {
         }
     }
 
-    @GetMapping("/cities")
     public List<City> getAllCities(){
         try{
             return service.getAllCities();
         }catch(Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Citys not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cities not found", e);
         }
     }
 
-    @GetMapping("/cities/country")
-    public List<City> getCitiesByCountry(@RequestParam Integer id){
+    @GetMapping("/country/{id}")
+    public List<City> getCitiesByCountry(@PathVariable("id") Integer id){
         try{
             return service.getCitiesByCountry(id);
         }catch(Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Citys not found", e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cities not found", e);
         }
     }
 
-    @PostMapping("/city")
     public int addCity(@RequestBody City city){
         try{
             return service.addCity(city);
@@ -54,7 +53,6 @@ public class ControllerCity {
         }
     }
 
-    @PutMapping("/city")
     public int updateCity(@RequestBody City city){
         try{
             return service.updateCity(city);
@@ -63,8 +61,8 @@ public class ControllerCity {
         }
     }
 
-    @DeleteMapping("/city")
-    public int deleteCity(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteCity(@PathVariable("id") Integer id){
         try{
             return service.deleteCity(id);
         }catch(Exception e) {

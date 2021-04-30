@@ -6,10 +6,9 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoImageTour;
+import com.getyourtour.data.DaoImageTour;
 import com.getyourtour.model.ImageTour;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ServiceImageTour {

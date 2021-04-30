@@ -6,9 +6,8 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoLikeTour;
+import com.getyourtour.data.DaoLikeTour;
 import com.getyourtour.model.LikeTour;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -47,11 +46,11 @@ public class ServiceLikeTour {
         return dao_likeTour.delete(id);
     }
 
-    public int deleteLikeTour(LikeTour likeTour) throws Exception {
-        if(likeTour.getTour().getId() == null || likeTour.getUser().getId() == null){
+    public int deleteLikeTour(Integer id_tour, Integer id_user) throws Exception {
+        if(id_tour == null || id_user == null){
             throw new Exception("The Id of tour and user is required");
         }
-        return dao_likeTour.delete(likeTour);
+        return dao_likeTour.delete(id_tour, id_user);
     }
 
 }

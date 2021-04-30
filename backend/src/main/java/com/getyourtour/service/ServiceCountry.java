@@ -1,6 +1,6 @@
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoCountry;
+import com.getyourtour.data.DaoCountry;
 import com.getyourtour.model.Country;
 
 import java.util.List;

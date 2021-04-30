@@ -1,7 +1,7 @@
 /*
  * File: ControllerTour.java
  * author: David Villalobos
- * Date: 2021/04/02
+ * Date: 2021/04/29
  */
 package com.getyourtour.controller;
 
@@ -16,21 +16,32 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tours")
 public class ControllerTour {
 
     private final ServiceTour service = new ServiceTour();
 
-    @GetMapping("/tour")
-    public Tour get(@RequestParam Integer id, @RequestParam(defaultValue = "0") Integer id_user, @RequestParam(defaultValue = "true") Boolean simpleTour){
+    @GetMapping("/{id_tour}/users/{id_user}")
+    public Tour get(@PathVariable("id_tour") Integer id_tour, @PathVariable(value = "id_user", required = false) Integer id_user){
         try{
-            return service.getTour(id, id_user, simpleTour);
+            return service.getTour(id_tour, id_user, false);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
         }
     }
 
-    @GetMapping("/tours")
-    public List<Tour> getAllTours(@RequestParam(defaultValue = "0") Integer id_user) {
+    @GetMapping("/{id_tour}/complete/users/{id_user}")
+    public Tour getComplete(@PathVariable("id_tour") Integer id_tour, @PathVariable(value = "id_user", required = false) Integer id_user){
+        try{
+            return service.getTour(id_tour, id_user, true);
+        }catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
+        }
+    }
+
+
+    @GetMapping("/{id_user}")
+    public List<Tour> getAllTours(@PathVariable(value = "id_user", required = false) Integer id_user) {
         try{
             return service.getAllTours(id_user);
         }catch(Exception e) {
@@ -38,11 +49,11 @@ public class ControllerTour {
         }
     }
 
-    @GetMapping("/tours/filter")
-    public List<Tour> getFilterTours(@RequestParam(defaultValue = "") String place,
-                                     @RequestParam(defaultValue = "") String departure,
-                                     @RequestParam(defaultValue = "") String arrival,
-                                     @RequestParam(defaultValue = "0") Integer id_user){
+    @GetMapping("/filter/places/{place}/departures/{departure}/arrivals/{arrival}/users/{id_user}")
+    public List<Tour> getFilterTours(@PathVariable(name = "place", required = false) String place,
+                                     @PathVariable(name = "departure", required = false) String departure,
+                                     @PathVariable(name = "arrival", required = false) String arrival,
+                                     @PathVariable(name = "id_user", required = false) Integer id_user){
         try{
             return service.getFilterTours(place, departure, arrival, id_user);
         }catch(Exception e) {
@@ -50,7 +61,6 @@ public class ControllerTour {
         }
     }
 
-    @PostMapping("/tour")
     public int addTour(@RequestBody Tour tour){
         try{
             return service.addTour(tour);
@@ -59,7 +69,6 @@ public class ControllerTour {
         }
     }
 
-    @PutMapping("/tour")
     public int updateTour(@RequestBody Tour tour){
         try{
             return service.updateTour(tour);
@@ -68,8 +77,8 @@ public class ControllerTour {
         }
     }
 
-    @DeleteMapping("/tour")
-    public int deleteTour(@RequestParam Integer id){
+    @DeleteMapping("/{id}")
+    public int deleteTour(@PathVariable("id") Integer id){
         try{
             return service.deleteTour(id);
         }catch(Exception e) {

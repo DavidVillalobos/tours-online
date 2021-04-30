@@ -6,9 +6,9 @@
 
 package com.getyourtour.service;
 
-import com.getyourtour.dao.DaoDetailReservationTour;
-import com.getyourtour.dao.DaoReservationTour;
-import com.getyourtour.dao.DaoTour;
+import com.getyourtour.data.DaoDetailReservationTour;
+import com.getyourtour.data.DaoReservationTour;
+import com.getyourtour.data.DaoTour;
 import com.getyourtour.model.ReservationTour;
 import com.getyourtour.model.Tour;
 
