@@ -49,6 +49,7 @@ public class ControllerImageTour {
         }
     }
 
+    @GetMapping("")
     public List<ImageTour> getAllImages(){
         try{
             return service.getAllImageTours();
@@ -66,6 +67,7 @@ public class ControllerImageTour {
         }
     }
 
+    @PostMapping("")
     public int addImageTour(@RequestBody ImageTour imageTour){
         try{
             return service.addImageTour(imageTour);

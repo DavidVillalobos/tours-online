@@ -38,6 +38,7 @@ public class ControllerCountry {
         }
     }
 
+    @GetMapping("")
     public List<Country> getAllCountries(){
         try{
             return service.getAllCountries(true);
@@ -55,6 +56,7 @@ public class ControllerCountry {
         }
     }
 
+    @PostMapping("")
     public int addCountry(@RequestBody Country country){
         try{
             return service.addCountry(country);
@@ -63,6 +65,7 @@ public class ControllerCountry {
         }
     }
 
+    @PutMapping("")
     public int updateCountry(@RequestBody Country country){
         try{
             return service.updateCountry(country);

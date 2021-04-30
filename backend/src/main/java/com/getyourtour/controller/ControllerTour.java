@@ -39,7 +39,6 @@ public class ControllerTour {
         }
     }
 
-
     @GetMapping("/{id_user}")
     public List<Tour> getAllTours(@PathVariable(value = "id_user", required = false) Integer id_user) {
         try{
@@ -49,11 +48,11 @@ public class ControllerTour {
         }
     }
 
-    @GetMapping("/filter/places/{place}/departures/{departure}/arrivals/{arrival}/users/{id_user}")
-    public List<Tour> getFilterTours(@PathVariable(name = "place", required = false) String place,
-                                     @PathVariable(name = "departure", required = false) String departure,
-                                     @PathVariable(name = "arrival", required = false) String arrival,
-                                     @PathVariable(name = "id_user", required = false) Integer id_user){
+    @GetMapping("/filter")
+    public List<Tour> getFilterTours(@RequestParam(name = "place", required = false) String place,
+                                     @RequestParam(name = "departure", required = false) String departure,
+                                     @RequestParam(name = "arrival", required = false) String arrival,
+                                     @RequestParam(name = "id_user", required = false) Integer id_user){
         try{
             return service.getFilterTours(place, departure, arrival, id_user);
         }catch(Exception e) {
@@ -61,6 +60,7 @@ public class ControllerTour {
         }
     }
 
+    @PostMapping("")
     public int addTour(@RequestBody Tour tour){
         try{
             return service.addTour(tour);
@@ -69,6 +69,7 @@ public class ControllerTour {
         }
     }
 
+    @PutMapping("")
     public int updateTour(@RequestBody Tour tour){
         try{
             return service.updateTour(tour);

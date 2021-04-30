@@ -28,6 +28,7 @@ public class ControllerReservationTour {
         }
     }
 
+    @GetMapping("")
     public List<ReservationTour> getAllReservationTours() {
         try{
             return service.getAllReservations();
@@ -36,6 +37,7 @@ public class ControllerReservationTour {
         }
     }
 
+    @PostMapping("")
     public int addReservationTour(@RequestBody ReservationTour reservationTour){
         try{
             return service.addReservation(reservationTour);
@@ -44,6 +46,7 @@ public class ControllerReservationTour {
         }
     }
 
+    @PutMapping("")
     public int updateReservationTour(@RequestBody ReservationTour reservationTour){
         try{
             return service.updateReservation(reservationTour);

@@ -1,7 +1,7 @@
 /*
  * File: ControllerCity.java
  * author: David Villalobos
- * Date: 2021/04/29
+ * Date: 2021/04/30
  */
 package com.getyourtour.controller;
 
@@ -10,7 +10,6 @@ import com.getyourtour.service.ServiceCity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RestController
@@ -21,13 +20,14 @@ public class ControllerCity {
 
     @GetMapping("/{id}")
     public City get(@PathVariable("id") Integer id){
-        try{
+        try {
             return service.getCity(id);
-        }catch(Exception e) {
+        } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found", e);
         }
     }
 
+    @GetMapping("")
     public List<City> getAllCities(){
         try{
             return service.getAllCities();
@@ -45,6 +45,7 @@ public class ControllerCity {
         }
     }
 
+    @PostMapping("")
     public int addCity(@RequestBody City city){
         try{
             return service.addCity(city);
@@ -53,6 +54,7 @@ public class ControllerCity {
         }
     }
 
+    @PutMapping("")
     public int updateCity(@RequestBody City city){
         try{
             return service.updateCity(city);

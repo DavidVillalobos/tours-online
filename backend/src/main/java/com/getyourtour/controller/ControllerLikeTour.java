@@ -28,6 +28,7 @@ public class ControllerLikeTour {
         }
     }
 
+    @GetMapping("")
     public List<LikeTour> getAllLikes(){
         try{
             return service.getAllLikeTours();
@@ -46,7 +47,7 @@ public class ControllerLikeTour {
     }
 
     @GetMapping("/users/{id}")
-    public List<LikeTour> getLikeByUser(@RequestParam Integer id){
+    public List<LikeTour> getLikeByUser(@PathVariable("id") Integer id){
         try{
             return service.getLikeToursByUser(id);
         }catch(Exception e) {
@@ -63,6 +64,7 @@ public class ControllerLikeTour {
         }
     }
 
+    @PostMapping("")
     public int addLikeTour(@RequestBody LikeTour likeTour){
         try{
             return service.addLikeTour(likeTour);
@@ -71,6 +73,7 @@ public class ControllerLikeTour {
         }
     }
 
+    @DeleteMapping("")
     public int deleteLikeTour(@RequestParam Integer id){
         try{
             return service.deleteLikeTour(id);

@@ -28,6 +28,7 @@ public class ControllerUser {
         }
     }
 
+    @GetMapping("")
     public List<User> getAllUsers() {
         try{
             return service.getAllUsers();
@@ -45,6 +46,7 @@ public class ControllerUser {
         }
     }
 
+    @PostMapping("")
     public int addUser(@RequestBody User user){
         try{
             return service.addUser(user);
@@ -53,6 +55,7 @@ public class ControllerUser {
         }
     }
 
+    @PutMapping("")
     public int updateUser(@RequestBody User user){
         try{
             return service.updateUser(user);

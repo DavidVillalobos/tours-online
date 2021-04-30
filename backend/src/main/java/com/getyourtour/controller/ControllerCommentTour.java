@@ -28,6 +28,7 @@ public class ControllerCommentTour {
         }
     }
 
+    @GetMapping("")
     public List<CommentTour> getAllComments(){
         try{
             return service.getAllCommentTours();
@@ -54,6 +55,7 @@ public class ControllerCommentTour {
         }
     }
 
+    @PostMapping("")
     public int addCommentTour(@RequestBody CommentTour commentTour){
         try{
             return service.addCommentTour(commentTour);
@@ -62,6 +64,7 @@ public class ControllerCommentTour {
         }
     }
 
+    @PutMapping("")
     public int updateCommentTour(CommentTour commentTour){
         try{
             return service.updateCommentTour(commentTour);

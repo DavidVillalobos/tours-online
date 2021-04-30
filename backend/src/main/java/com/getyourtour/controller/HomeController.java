@@ -1,8 +1,9 @@
 /*
  * File: Controller.java
  * author: David Villalobos
- * Date: 2021/03/31
+ * Date: 2021/04/30
  */
+
 package com.getyourtour.controller;
 
 import org.springframework.http.MediaType;
@@ -26,8 +27,7 @@ public class HomeController {
 
     @RequestMapping(value = "/author",
                     method = RequestMethod.GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE
-    )
+                    produces = MediaType.APPLICATION_JSON_VALUE)
     public String author() {
         return "{\"author\":\"Luis David Villalobos Gonzalez\",\"github\":\"https://github.com/DavidVillalobos\"}";
     }
