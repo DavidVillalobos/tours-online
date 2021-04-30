@@ -52,7 +52,7 @@ De ser asi el backend esta funcionando perfectamente, puede hacer otras solicitu
 
 *	Lista de paises: `http://localhost:8001/countries `  
 *	Lista de usuarios: `http://localhost:8001/users `  
-*	Tour con el id 1: `http://localhost:8001/tours?id=1 `    
+*	Tour con el id 1: `http://localhost:8001/tours/1 `    
 Cabe recalcar que la informacion que se muestra es la que esta registrada en la base de datos.  
 
 ## Frontend
