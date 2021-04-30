@@ -29,9 +29,9 @@ public class DaoTour {
             ResultSet rs = db.executeQuery(sql);
             if(rs.next()){
                 if(complete){
-                    return mapSimple(rs, id_user);
-                } else {
                     return map(rs, id_user);
+                } else {
+                    return mapSimple(rs, id_user);
                 }
             }
             throw new Exception("/tour/{" + id + "} Does not exist in DataBase");

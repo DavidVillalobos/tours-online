@@ -199,7 +199,7 @@ export default {
         const response = await fetch(
           'http://localhost:8001/tours/' +
           this.$session.get('idTour') +
-          '/users/' + id_user
+          '?id_user=' + id_user
         , {method: 'GET'});
         this.$emit("updateOverlay", false);
         this.tour = await response.json();

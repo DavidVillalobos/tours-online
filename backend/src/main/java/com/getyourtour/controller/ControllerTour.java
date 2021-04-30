@@ -21,26 +21,19 @@ public class ControllerTour {
 
     private final ServiceTour service = new ServiceTour();
 
-    @GetMapping("/{id_tour}/users/{id_user}")
-    public Tour get(@PathVariable("id_tour") Integer id_tour, @PathVariable(value = "id_user", required = false) Integer id_user){
+    @GetMapping("/{id_tour}")
+    public Tour get(@PathVariable("id_tour") Integer id_tour,
+                    @RequestParam(name = "id_user", required = false, defaultValue = "0") Integer id_user,
+                    @RequestParam(name = "complete", required = false, defaultValue = "true") Boolean complete){
         try{
-            return service.getTour(id_tour, id_user, false);
+            return service.getTour(id_tour, id_user, complete);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
         }
     }
 
-    @GetMapping("/{id_tour}/complete/users/{id_user}")
-    public Tour getComplete(@PathVariable("id_tour") Integer id_tour, @PathVariable(value = "id_user", required = false) Integer id_user){
-        try{
-            return service.getTour(id_tour, id_user, true);
-        }catch(Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tour not found", e);
-        }
-    }
-
-    @GetMapping("/{id_user}")
-    public List<Tour> getAllTours(@PathVariable(value = "id_user", required = false) Integer id_user) {
+    @GetMapping("")
+    public List<Tour> getAllTours(@RequestParam(name = "id_user", required = false, defaultValue = "0") Integer id_user) {
         try{
             return service.getAllTours(id_user);
         }catch(Exception e) {
