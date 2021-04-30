@@ -42,14 +42,14 @@ De ser asi el backend esta funcionando perfectamente, puede hacer otras solicitu
 
 *	Lista de paises: `http://localhost:8001/countries `  
 *	Lista de usuarios: `http://localhost:8001/users `  
-*	Tour con el id 1: `http://localhost:8001/tours?id=1 `    
-*	Reservacion con el id 1: `http://localhost:8001/reservation?id=1 `
-*	Detalles de la reservacion con el id 2: `http://localhost:8001/details-reservation/reservation?id=2`    
-*	Imagenes del tour con el id 2: `http://localhost:8001/images/tour?id=2`  
-*	Imagen con el id 5: `http://localhost:8001/only-image?id=2`
-*	Solo la imagen con el id 5: `http://localhost:8001/only-image?id=2`  
-*	Likes del usuario 3: `http://localhost:8001/likes/user?id=3`  
-*	Comentarios del tour 4: `http://localhost:8001/comments/tour?id=4`  
+*	Tour con el id 1: `http://localhost:8001/tours/1 `    
+*	Reservacion con el id 1: `http://localhost:8001/reservations/1 `
+*	Lista de Detalles de la reservacion con el id 2: `http://localhost:8001/detail-reservations/reservations/2`    
+*	Imagenes del tour con el id 2: `http://localhost:8001/images/tours/2`  
+*	Imagen con el id 5: `http://localhost:8001/images/only-image/2`
+*	Solo la imagen con el id 5: `http://localhost:8001/images/only-image/2`  
+*	Likes del usuario 3: `http://localhost:8001/likes/users/3`  
+*	Comentarios del tour 4: `http://localhost:8001/comments/tours/4`  
 *	
 Cabe recalcar que la informacion que se muestra es la que esta registrada en la base de datos.  
 
