@@ -40,7 +40,7 @@ public class ControllerCountry {
 
     public List<Country> getAllCountries(){
         try{
-            return service.getAllCountries(false);
+            return service.getAllCountries(true);
         }catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Countries not found", e);
         }

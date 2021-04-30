@@ -186,7 +186,7 @@ export default {
     }
   },
   async created(){
-    const response = await fetch('http://localhost:8001/countries?complete=true', {method: 'GET'});
+    const response = await fetch('http://localhost:8001/countries/', {method: 'GET'});
     let countriesFetch = (await response.json());
     countriesFetch.forEach(country => {
       this.countries.push({text:country.name, value:country})
@@ -263,7 +263,7 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/country', {
+        const response = await fetch('http://localhost:8001/countries', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -298,7 +298,7 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/city', {
+        const response = await fetch('http://localhost:8001/cities', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -336,7 +336,7 @@ export default {
     },
     async updateCountryCities(){
       this.countries = [];
-      const response = await fetch('http://localhost:8001/countries?complete=true', {method: 'GET'});
+      const response = await fetch('http://localhost:8001/countries', {method: 'GET'});
       let countriesFetch = (await response.json());
       countriesFetch.forEach(country => {
         this.countries.push({text:country.name, value:country})
@@ -371,7 +371,7 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/tour', {
+        const response = await fetch('http://localhost:8001/tours', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(this.tour)

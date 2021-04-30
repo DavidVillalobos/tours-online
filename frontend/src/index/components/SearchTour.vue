@@ -167,11 +167,11 @@ export default {
       try {
         this.$emit("updateOverlay", true);
         const response = await fetch(
-          'http://localhost:8001/tours/filter' +
-          '?place=' + this.place + 
-          '&&departure=' + this.departure +
-          '&&arrival=' + this.arrival +
-          '&&id_user=' + id_user
+          'http://localhost:8001/tours/filter/' +
+          'place/' + this.place + 
+          'departure/' + this.departure +
+          'arrival/' + this.arrival +
+          'users/' + id_user
         , {method: 'GET'});
         this.$emit("updateOverlay", false);
         this.tours = (await response.json());
@@ -204,7 +204,7 @@ export default {
       if(this.isLogin){
         var Id_User = this.$session.get('user').id;
         try {
-          const response = await fetch('http://localhost:8001/like/tour/user', {
+          const response = await fetch('http://localhost:8001/likes', {
             method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -228,15 +228,13 @@ export default {
       if(this.isLogin){
         var Id_User = this.$session.get('user').id;
         try {
-          const response = await fetch('http://localhost:8001/like/tour/user', {
+          const response = await fetch('http://localhost:8001/likes'+
+          '/tours' + tour.id +
+          '/users' + Id_User, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            tour: { id : tour.id },
-            user: { id : Id_User }
-          })
+          }
         });
         console.log(await response.json());
         tour.liked = false;

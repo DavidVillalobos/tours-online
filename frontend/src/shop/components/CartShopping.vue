@@ -137,10 +137,8 @@ export default {
       try {
          this.$emit("updateOverlay", true);
         const response = await fetch(
-          'http://localhost:8001/tour' +
-          '?id=' + rowTour.id + 
-          '&&id_user=' + this.$session.get('user').id +
-          '&&simpleTour=false'
+          'http://localhost:8001/tours/'+ rowTour.id + 
+          '/users/' + this.$session.get('user').id
         , {method: 'GET'});
          this.$emit("updateOverlay", false);
         let tour = (await response.json());
@@ -156,7 +154,7 @@ export default {
       if(this.$session.has('user')){
         try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/reservation', {
+        const response = await fetch('http://localhost:8001/reservations', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"

@@ -197,10 +197,9 @@ export default {
           id_user = this.$session.get('user').id
         }
         const response = await fetch(
-          'http://localhost:8001/tour?' +
-          'id=' + this.$session.get('idTour') +
-          '&&id_user=' + id_user +
-          '&&simpleTour=false'
+          'http://localhost:8001/tours/' +
+          this.$session.get('idTour') +
+          'users/' + id_user
         , {method: 'GET'});
         this.$emit("updateOverlay", false);
         this.tour = await response.json();
@@ -223,7 +222,7 @@ export default {
         var Id_User = this.$session.get('user').id;
         try {
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/like/tour/user', {
+          const response = await fetch('http://localhost:8001/likes', {
             method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -250,15 +249,12 @@ export default {
         var Id_User = this.$session.get('user').id;
         try {
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/like/tour/user', {
+          const response = await fetch('http://localhost:8001/likes/tours' + tour.id +
+          '/users/' + Id_User, {
           method: 'DELETE',
           headers: {
             "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            tour: { id : tour.id },
-            user: { id : Id_User }
-          })
+          }
         });
         this.$emit("updateOverlay", false);
         console.log(await response.json());

@@ -212,7 +212,7 @@ export default {
             return;
           }
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/user/authenticate', {
+          const response = await fetch('http://localhost:8001/users/authenticate', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify(this.user)
@@ -273,7 +273,7 @@ export default {
         this.messageAlert = "Por favor espere . . .";
         this.alertvariant = "info";
         this.showAlert = this.secShowAlert;
-        const response = await fetch('http://localhost:8001/user', {
+        const response = await fetch('http://localhost:8001/users', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(this.user)
@@ -301,7 +301,7 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/country', {
+        const response = await fetch('http://localhost:8001/countries', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"
