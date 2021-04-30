@@ -166,12 +166,12 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch(
-          'http://localhost:8001/tours/filter/' +
-          'place/' + this.place + 
-          'departure/' + this.departure +
-          'arrival/' + this.arrival +
-          'users/' + id_user
+         const response = await fetch(
+          'http://localhost:8001/tours/filter' +
+          '?place=' + this.place + 
+          '&&departure=' + this.departure +
+          '&&arrival=' + this.arrival +
+          '&&id_user=' + id_user
         , {method: 'GET'});
         this.$emit("updateOverlay", false);
         this.tours = (await response.json());

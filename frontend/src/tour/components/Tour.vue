@@ -199,7 +199,7 @@ export default {
         const response = await fetch(
           'http://localhost:8001/tours/' +
           this.$session.get('idTour') +
-          'users/' + id_user
+          '/users/' + id_user
         , {method: 'GET'});
         this.$emit("updateOverlay", false);
         this.tour = await response.json();
@@ -249,7 +249,7 @@ export default {
         var Id_User = this.$session.get('user').id;
         try {
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/likes/tours' + tour.id +
+          const response = await fetch('http://localhost:8001/likes/tours/' + tour.id +
           '/users/' + Id_User, {
           method: 'DELETE',
           headers: {
