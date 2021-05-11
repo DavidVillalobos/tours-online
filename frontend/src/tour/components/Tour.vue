@@ -197,7 +197,7 @@ export default {
           id_user = this.$session.get('user').id
         }
         const response = await fetch(
-          'http://localhost:8001/tours/' +
+          'http://localhost:8080/api/v1/tours/' +
           this.$session.get('idTour') +
           '?id_user=' + id_user
         , {method: 'GET'});
@@ -210,7 +210,7 @@ export default {
         this.alertvariant = "danger";
         this.showAlert = this.secShowAlert;
         setTimeout( () => { 
-          window.location.href = 'http://localhost:8002/';
+          window.location.href = 'http://localhost:8081/';
         },this.secShowAlert); 
       }
     },
@@ -222,7 +222,7 @@ export default {
         var Id_User = this.$session.get('user').id;
         try {
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/likes', {
+          const response = await fetch('http://localhost:8080/api/v1/likes', {
             method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -249,7 +249,7 @@ export default {
         var Id_User = this.$session.get('user').id;
         try {
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/likes/tours/' + tour.id +
+          const response = await fetch('http://localhost:8080/api/v1/likes/tours/' + tour.id +
           '/users/' + Id_User, {
           method: 'DELETE',
           headers: {

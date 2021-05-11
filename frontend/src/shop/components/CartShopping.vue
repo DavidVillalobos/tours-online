@@ -137,13 +137,13 @@ export default {
       try {
          this.$emit("updateOverlay", true);
         const response = await fetch(
-          'http://localhost:8001/tours/'+ rowTour.id + 
+          'http://localhost:8080/api/v1/tours/'+ rowTour.id + 
           '?id_user=' + this.$session.get('user').id
         , {method: 'GET'});
          this.$emit("updateOverlay", false);
         let tour = (await response.json());
         this.$session.set('tour', tour);
-        window.location.href = 'http://localhost:8002/tour';
+        window.location.href = 'http://localhost:8081/tour';
       } catch (err) {
         this.messageAlert = "El servidor no responde";
         this.alertvariant = "danger";
@@ -154,7 +154,7 @@ export default {
       if(this.$session.has('user')){
         try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/reservations', {
+        const response = await fetch('http://localhost:8080/api/v1/reservations', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"

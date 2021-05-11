@@ -160,7 +160,7 @@ export default {
     }
   },
   async created(){
-    const response = await fetch('http://localhost:8001/countries', {method: 'GET'});
+    const response = await fetch('http://localhost:8080/api/v1/countries', {method: 'GET'});
     let countriesFetch = (await response.json());
     countriesFetch.forEach(country => {
       this.countries.push({text:country.name, value:country})
@@ -212,7 +212,7 @@ export default {
             return;
           }
           this.$emit("updateOverlay", true);
-          const response = await fetch('http://localhost:8001/users/authenticate', {
+          const response = await fetch('http://localhost:8080/api/v1/users/authenticate', {
             method: 'POST',
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify(this.user)
@@ -231,7 +231,7 @@ export default {
           this.$session.set('user', user);
           this.messageAlert = "Inicio de sesion exitoso";
           this.alertvariant = "success";
-          if(!this.$session.get('tour') || window.location.href != 'http://localhost:8002/'){
+          if(!this.$session.get('tour') || window.location.href != 'http://localhost:8081/'){
             document.location.reload();
           }
         } catch (err) {
@@ -244,8 +244,8 @@ export default {
     logout(){
       this.$session.remove('user');
       this.resetModal()
-      if(window.location.href == 'http://localhost:8002/admin'){
-        window.location.href = 'http://localhost:8002/'
+      if(window.location.href == 'http://localhost:8081/admin'){
+        window.location.href = 'http://localhost:8081/'
       }else {
         document.location.reload();
       }
@@ -273,7 +273,7 @@ export default {
         this.messageAlert = "Por favor espere . . .";
         this.alertvariant = "info";
         this.showAlert = this.secShowAlert;
-        const response = await fetch('http://localhost:8001/users', {
+        const response = await fetch('http://localhost:8080/api/v1/users', {
           method: 'POST',
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(this.user)
@@ -301,7 +301,7 @@ export default {
       }
       try {
         this.$emit("updateOverlay", true);
-        const response = await fetch('http://localhost:8001/countries', {
+        const response = await fetch('http://localhost:8080/api/v1/countries', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -330,7 +330,7 @@ export default {
     },
     async updateCountryCities(){
       this.countries = [];
-      const response = await fetch('http://localhost:8001/countries', {method: 'GET'});
+      const response = await fetch('http://localhost:8080/api/v1/countries', {method: 'GET'});
       let countriesFetch = (await response.json());
       countriesFetch.forEach(country => {
         this.countries.push({text:country.name, value:country})
@@ -343,19 +343,19 @@ export default {
         this.showAlert = this.secShowAlert;
         return;
       }
-      window.location.href = 'http://localhost:8002/shop';
+      window.location.href = 'http://localhost:8081/shop';
     },
     gotoHome(){
       if(this.$session.has('tour')){
         this.$session.remove('tour')
       }
-      window.location.href = 'http://localhost:8002/';
+      window.location.href = 'http://localhost:8081/';
     },
     gotoAdmin(){
       if(this.$session.has('tour')){
         this.$session.remove('tour')
       }
-      window.location.href = 'http://localhost:8002/admin';
+      window.location.href = 'http://localhost:8081/admin';
     }
   }
 }

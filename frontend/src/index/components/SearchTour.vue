@@ -167,7 +167,7 @@ export default {
       try {
         this.$emit("updateOverlay", true);
          const response = await fetch(
-          'http://localhost:8001/tours/filter' +
+          'http://localhost:8080/api/v1/tours/filter' +
           '?place=' + this.place + 
           '&&departure=' + this.departure +
           '&&arrival=' + this.arrival +
@@ -198,13 +198,13 @@ export default {
         this.$session.start()
       }
       this.$session.set('idTour', tour.id);
-      window.location.href = 'http://localhost:8002/tour';
+      window.location.href = 'http://localhost:8081/tour';
     },
     async addLike(tour){
       if(this.isLogin){
         var Id_User = this.$session.get('user').id;
         try {
-          const response = await fetch('http://localhost:8001/likes', {
+          const response = await fetch('http://localhost:8080/api/v1/likes', {
             method: 'POST',
           headers: {
             "Content-Type": "application/json"
@@ -228,7 +228,7 @@ export default {
       if(this.isLogin){
         var Id_User = this.$session.get('user').id;
         try {
-          const response = await fetch('http://localhost:8001/likes'+
+          const response = await fetch('http://localhost:8080/api/v1/likes'+
           '/tours' + tour.id +
           '/users' + Id_User, {
           method: 'DELETE',
