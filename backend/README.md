@@ -35,21 +35,21 @@ Ahora procesa a construir el proyecto, ejecutando el archivo:
 Ademas de generar el .jar realizar un test de conexion para verificar que la base de datos funciona correctamente.
 Una vez que la construccion es exitosa finalmente ya puede iniciar el backend.
 Para ello debe ejecutar el archivo:  ` tours_online\backend\run.bat`    
-Abra una pestaña del navegador en la direccion: `http://localhost:8001 `    
+Abra una pestaña del navegador en la direccion: `http://localhost:8080/api/v1/`    
 Debera visualizar un mensaje como el siguiente: ` RestFul Api of App GetYourTours `    
 
 De ser asi el backend esta funcionando perfectamente, puede hacer otras solicitudes como:  
 
-*	Lista de paises: `http://localhost:8001/countries `  
-*	Lista de usuarios: `http://localhost:8001/users `  
-*	Tour con el id 1: `http://localhost:8001/tours/1 `    
-*	Reservacion con el id 1: `http://localhost:8001/reservations/1 `
-*	Lista de Detalles de la reservacion con el id 2: `http://localhost:8001/detail-reservations/reservations/2`    
-*	Imagenes del tour con el id 2: `http://localhost:8001/images/tours/2`  
-*	Imagen con el id 5: `http://localhost:8001/images/only-image/2`
-*	Solo la imagen con el id 5: `http://localhost:8001/images/only-image/2`  
-*	Likes del usuario 3: `http://localhost:8001/likes/users/3`  
-*	Comentarios del tour 4: `http://localhost:8001/comments/tours/4`  
+*	Lista de paises: `http://localhost:8080/api/v1/countries `  
+*	Lista de usuarios: `http://localhost:8080/api/v1/users `  
+*	Tour con el id 1: `http://localhost:8080/api/v1/tours/1 `    
+*	Reservacion con el id 1: `http://localhost:8080/api/v1/reservations/1 `
+*	Lista de Detalles de la reservacion con el id 2: `http://localhost:8080/api/v1/detail-reservations/reservations/2`    
+*	Imagenes del tour con el id 2: `http://localhost:8080/api/v1/images/tours/2`  
+*	Imagen con el id 5: `http://localhost:8080/api/v1/images/only-image/2`
+*	Solo la imagen con el id 5: `http://localhost:8080/api/v1/images/only-image/2`  
+*	Likes del usuario 3: `http://localhost:8080/api/v1/likes/users/3`  
+*	Comentarios del tour 4: `http://localhost:8080/api/v1/comments/tours/4`  
 *	
 Cabe recalcar que la informacion que se muestra es la que esta registrada en la base de datos.  
 
