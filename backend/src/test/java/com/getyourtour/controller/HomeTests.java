@@ -24,21 +24,23 @@ public class HomeTests {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	private static final String prefix = "/api/v1";
+
 	@Test
 	public void TestIndex() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/",
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + prefix,
 				String.class)).contains("RestFul Api of App GetYourTours");
 	}
 
 	@Test
 	public void TestAbout() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/about",
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + prefix + "/about",
 				String.class)).contains("Get Your Tours :D \n Backend Build with Java, Spring boot and Gradle");
 	}
 
 	@Test
 	public void TestAuthor() throws Exception {
-		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/author",
+		assertThat(this.restTemplate.getForObject("http://localhost:" + port + prefix + "/author",
 				String.class)).contains("\"author\":\"Luis David Villalobos Gonzalez\",\"github\":\"https://github.com/DavidVillalobos\"");
 	}
 
