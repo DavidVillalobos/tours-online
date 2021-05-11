@@ -45,14 +45,14 @@ Ahora procesa a construir el proyecto, ejecutando el archivo:
 Ademas de generar el .jar realizar un test de conexion para verificar que la base de datos funciona correctamente.
 Una vez que la construccion es exitosa finalmente ya puede iniciar el backend.
 Para ello debe ejecutar el archivo:  ` tours_online\backend\run.bat`    
-Abra una pestaña del navegador en la direccion: `http://localhost:8001 `    
+Abra una pestaña del navegador en la direccion: `http://localhost:8080 `    
 Debera visualizar un mensaje como el siguiente: ` RestFul Api of App GetYourTours `    
 
 De ser asi el backend esta funcionando perfectamente, puede hacer otras solicitudes como:  
 
-*	Lista de paises: `http://localhost:8001/countries `  
-*	Lista de usuarios: `http://localhost:8001/users `  
-*	Tour con el id 1: `http://localhost:8001/tours/1 `    
+*	Lista de paises: `http://localhost:8080/api/v1/countries `  
+*	Lista de usuarios: `http://localhost:8080/api/v1/users `  
+*	Tour con el id 1: `http://localhost:8080/api/v1/tours/1 `    
 Cabe recalcar que la informacion que se muestra es la que esta registrada en la base de datos.  
 
 ## Frontend
@@ -61,7 +61,7 @@ Primeramente deberá instalar las dependencias del proyecto desde la carpeta   `
 Seguido debe construir el proyecto ejecutando el archivo: ` tours_online\frontend\build.bat `  
 
 Una vez que la construccion es exitosa finalmente ya puede iniciar el backend, ejecutando el archivo: ` tours_online\frontend\run.bat`  
-Abra una pestaña del navegador en la direccion: `http://localhost:8002 ` 
+Abra una pestaña del navegador en la direccion: `http://localhost:8081 ` 
 
 Y listo ya podra utilizar la aplicacion
 
