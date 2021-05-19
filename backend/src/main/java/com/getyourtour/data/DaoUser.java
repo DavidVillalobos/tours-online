@@ -11,6 +11,7 @@ import com.getyourtour.model.User;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DaoUser {
@@ -65,6 +66,11 @@ public class DaoUser {
     }
 
     public Integer post(User u) throws Exception {
+        java.util.Date dt = u.getBirthday();
+        Calendar c = Calendar.getInstance();
+        c.setTime(dt);
+        c.add(Calendar.DATE, 1);
+        u.setBirthday(c.getTime());
         String sql = "updateInsertUser 0, %d,'%s','%s','%s', '%s', '%s','%s', %d, 'Insert'";
         sql = String.format(sql, u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
                     u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
