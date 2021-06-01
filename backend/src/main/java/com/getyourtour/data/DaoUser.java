@@ -74,7 +74,9 @@ public class DaoUser {
         String sql = "updateInsertUser 0, %d,'%s','%s','%s', '%s', '%s','%s', %d, 'Insert'";
         sql = String.format(sql, u.getCountry().getId(), u.getEmail(), u.getPassword(), u.getName(),
                     u.getLastName(), u.getIdentification(), u.getStringDate(), u.getAdmin());
-        return db.executeInsert(sql);
+        db.executeInsert(sql);
+        u = getByEmail(u.getEmail());
+        return u.getId();
     }
 
     public Integer put(User u) throws Exception {
