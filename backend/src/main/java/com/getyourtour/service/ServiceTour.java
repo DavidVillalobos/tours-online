@@ -29,9 +29,9 @@ public class ServiceTour {
     }
 
     public List<Tour> getFilterTours(String place, String departure, String arrival, Integer id_user) throws Exception {
-        if(place.isEmpty()) place = "default";
-        if(arrival.isEmpty()) arrival = "default";
-        if(departure.isEmpty()){
+        if(place == null || place.isEmpty()) place = "default";
+        if(arrival == null || arrival.isEmpty()) arrival = "default";
+        if(departure == null || departure.isEmpty()){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             departure =  sdf.format(new Date());
         }

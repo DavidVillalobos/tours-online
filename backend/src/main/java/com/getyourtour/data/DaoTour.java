@@ -157,7 +157,7 @@ public class DaoTour {
         Tour result = new Tour(id, name, category, description, date, quota, reviews, duration, price, rating, includes, notIncludes);
 
         DaoLikeTour dl = new DaoLikeTour();
-        if(id_user != 0) {
+        if(id_user == null || id_user != 0) {
             Boolean liked = dl.getByTour(id, id_user);
             result.setLiked(liked);
         }
@@ -189,7 +189,7 @@ public class DaoTour {
         float rating = rs.getFloat("Rating");
 
         Tour result = new Tour(id, name, "", "", date, quota, reviews, duration, price, rating, "", "");
-        if(id_user != 0) {
+        if(id_user == null || id_user != 0) {
             DaoLikeTour dlt = new DaoLikeTour();
             Boolean liked = dlt.getByTour(id, id_user);
             result.setLiked(liked);
