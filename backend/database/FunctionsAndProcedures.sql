@@ -1,5 +1,5 @@
 -- File: FunctionsAndProcedures.sql
--- Date: 2021/04/04
+-- Date: 2021/06/11
 -- Author: Luis Villalobos
 
 USE [GYTModel]
@@ -13,8 +13,8 @@ GO
 CREATE OR ALTER FUNCTION F_FilterTours
 (
 	@place varchar(100) = '', 
-	@DepartureDate date = '01/01/2000',
-	@ArrivalDate date = '12/31/9999'
+	@DepartureDate date = '2000-01-01',
+	@ArrivalDate date = '9999-12-31'
 )
 RETURNS TABLE 
 AS
