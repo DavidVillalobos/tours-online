@@ -1,5 +1,5 @@
 -- File: Data.sql
--- Date: 2021/04/04
+-- Date: 2021/06/10
 -- Author: Luis Villalobos
 USE [GYTModel]
 
@@ -10,6 +10,7 @@ insert into Country(Name) values ('Mexico');
 insert into Country(Name) values ('Colombia');
 insert into Country(Name) values ('Estados Unidos');
 insert into Country(Name) values ('Francia');
+insert into Country(Name) values ('Otro');
 -- Insert of Countries
 insert into City(Id_Country, Name) values (1, 'San Jose');
 insert into City(Id_Country, Name) values (1, 'Heredia');
@@ -23,20 +24,20 @@ insert into City(Id_Country, Name) values (5, 'Paris');
 insert into City(Id_Country, Name) values (5, 'Marsella');
 -- Insert of User
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(1, 'admin@hotmail.com', 'admin1234!', 'Juan', 'Perez',  '111111111', '09-07-1999', 1)
+VALUES(1, 'admin@hotmail.com', 'Admin1234!', 'Juan', 'Perez',  '111111111', '09-07-1999', 1)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(2, '2', 'Andres1234!', 'Andres', 'Gonzalez Villalobos', '222222222', '12-28-2004', 0)
+VALUES(2, 'andres@hotmail.com', 'Andres1234!', 'Andres', 'Gonzalez Villalobos', '222222222', '12-28-2004', 0)
 INSERT INTO [User](Id_Country, Email, Password, Name, LastName, Identification, Birthday, Admin) 
-VALUES(3, '4', 'Maria1234!', 'Maria', 'Arias Rodriguez', '4444444444', '01-01-2000', 0)
+VALUES(3, 'maria@hotmail.com', 'Maria1234!', 'Maria', 'Arias Rodriguez', '4444444444', '01-01-2000', 0)
 -- Insert of Tour
 INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
 Reviews, Duration, Price, Rating, Includes, NotIncludes) 
 VALUES (1, 'Visita Museo Nacional', 'Museo', 'Tour guiado por el museo nacional de Costa Rica',
-'04-29-2021', 20, 0, '02:00', 10.5, 0, 'Almuerzo en el Museo', 'Transporte al lugar');
+'2021-07-10', 20, 0, '02:00', 10.5, 0, 'Almuerzo en el Museo', 'Transporte al lugar');
 INSERT INTO [Tour](Id_City, Name, Category, Description, StartDate, Quota, 
 Reviews, Duration, Price, Rating, Includes, NotIncludes) 
 VALUES (9, 'Visita al Museo de Louvre', 'Museo', 'Tour guiado con un historiador atraves del museo de louvre en paris',
-'05-14-2021', 18, 0, '03:45', 15.5, 0, 'Transporte al lugar y fotos en la plaza', 'Alimentacion');
+'2021-07-14', 18, 0, '03:45', 15.5, 0, 'Transporte al lugar y fotos en la plaza', 'Alimentacion');
 
 -- Insert of Images
 -- Museo nacional
