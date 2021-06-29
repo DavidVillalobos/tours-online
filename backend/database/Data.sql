@@ -18,7 +18,7 @@ insert into City(Id_Country, Name) values (1, 'Heredia');
 insert into City(Id_Country, Name) values (2, 'Ciudad Mexico');
 insert into City(Id_Country, Name) values (2, 'Monterrey');
 insert into City(Id_Country, Name) values (3, 'Bogota');
-insert into City(Id_Country, Name) values (3, 'Medellín');
+insert into City(Id_Country, Name) values (3, 'Medellin');
 insert into City(Id_Country, Name) values (4, 'New York');
 insert into City(Id_Country, Name) values (4, 'San Francisco');
 insert into City(Id_Country, Name) values (5, 'Paris');
